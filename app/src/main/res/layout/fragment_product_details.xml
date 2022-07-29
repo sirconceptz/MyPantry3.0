@@ -1,0 +1,558 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.hermanowicz.pantry.ui.product_details.ProductDetailsViewModel"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="@dimen/button_filter_bottom_padding">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/productNameText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="@string/Product_name"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/productName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
+                    android:text="@={viewModel.productName}"
+                    android:textAppearance="?android:textAppearanceLarge"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/productNameText" />
+
+                <View
+                    android:id="@+id/dividerAfterProductName"
+                    style="@style/Divider"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/productName" />
+
+                <TextView
+                    android:id="@+id/productMainCategoryText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="@string/Product_category"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/dividerAfterProductName" />
+
+                <TextView
+                    android:id="@+id/mainCategory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
+                    android:text="@={viewModel.mainCategory}"
+                    android:textAppearance="?android:textAppearanceLarge"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/productMainCategoryText" />
+
+                <View
+                    android:id="@+id/dividerAfterMainCategory"
+                    style="@style/Divider"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/mainCategory" />
+
+                <TextView
+                    android:id="@+id/productDetailCategoryText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="@string/Product_category"
+                    android:visibility="@{viewModel.detailCategoryVisibility, default=gone}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/dividerAfterMainCategory" />
+
+                <TextView
+                    android:id="@+id/detailCategory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
+                    android:text="@={viewModel.detailCategory}"
+                    android:textAppearance="?android:textAppearanceLarge"
+                    android:visibility="@{viewModel.detailCategoryVisibility, default=gone}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/productDetailCategoryText" />
+
+                <View
+                    android:id="@+id/dividerAfterDetailCategory"
+                    style="@style/Divider"
+                    android:visibility="@{viewModel.detailCategoryVisibility, default=gone}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/detailCategory" />
+
+                <TextView
+                    android:id="@+id/productStorageLocationText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="@string/Product_storage_location"
+                    android:visibility="@{viewModel.storageLocationVisibility, default=gone}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/dividerAfterDetailCategory" />
+
+                <TextView
+                    android:id="@+id/storageLocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
+                    android:text="@={viewModel.storageLocation}"
+                    android:visibility="@{viewModel.storageLocationVisibility, default=gone}"
+                    android:textAppearance="?android:textAppearanceLarge"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/productStorageLocationText" />
+
+                <View
+                    android:id="@+id/dividerAfterStorageLocation"
+                    style="@style/Divider"
+                    android:visibility="@{viewModel.storageLocationVisibility, default=gone}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/storageLocation" />
+
+                <TextView
+                    android:id="@+id/productExpirationDateText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="@string/Product_expiration_date"
+                    android:visibility="@{viewModel.expirationDateVisibility, default=gone}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/dividerAfterStorageLocation" />
+
+                <TextView
+                    android:id="@+id/expirationDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
+                    android:text="@={viewModel.expirationDate}"
+                    android:visibility="@{viewModel.expirationDateVisibility, default=gone}"
+                    android:textAppearance="?android:textAppearanceLarge"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/productExpirationDateText" />
+
+                <View
+                    android:id="@+id/dividerAfterExpirationDate"
+                    style="@style/Divider"
+                    android:visibility="@{viewModel.expirationDateVisibility, default=gone}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/expirationDate" />
+
+                <TextView
+                    android:id="@+id/productProductionDateText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="@string/Product_production_date"
+                    android:visibility="@{viewModel.productionDateVisibility, default=gone}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/dividerAfterExpirationDate" />
+
+                <TextView
+                    android:id="@+id/productionDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
+                    android:text="@={viewModel.productionDate}"
+                    android:visibility="@{viewModel.productionDateVisibility, default=gone}"
+                    android:textAppearance="?android:textAppearanceLarge"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/productProductionDateText" />
+
+                <View
+                    android:id="@+id/dividerAfterProductionDate"
+                    style="@style/Divider"
+                    android:visibility="@{viewModel.productionDateVisibility, default=gone}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/productionDate" />
+
+                <TextView
+                    android:id="@+id/productQuantityText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="@string/Product_quantity"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/dividerAfterProductionDate" />
+
+                <TextView
+                    android:id="@+id/quantity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
+                    android:text="@={viewModel.quantity}"
+                    android:textAppearance="?android:textAppearanceLarge"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/productQuantityText" />
+
+                <View
+                    android:id="@+id/dividerAfterProductQuantity"
+                    style="@style/Divider"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/quantity" />
+
+                <TextView
+                    android:id="@+id/productCompositionText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="@string/Product_composition"
+                    android:visibility="@{viewModel.compositionVisibility, default=gone}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/dividerAfterProductQuantity" />
+
+                <TextView
+                    android:id="@+id/composition"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
+                    android:text="@={viewModel.composition}"
+                    android:visibility="@{viewModel.compositionVisibility, default=gone}"
+                    android:textAppearance="?android:textAppearanceLarge"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/productCompositionText" />
+
+                <View
+                    android:id="@+id/dividerAfterComposition"
+                    style="@style/Divider"
+                    android:visibility="@{viewModel.compositionVisibility, default=gone}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/composition" />
+
+                <TextView
+                    android:id="@+id/productHealingPropertiesText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="@string/Product_healing_properties"
+                    android:visibility="@{viewModel.healingPropertiesVisibility, default=gone}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/dividerAfterComposition" />
+
+                <TextView
+                    android:id="@+id/healingProperties"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
+                    android:text="@={viewModel.healingProperties}"
+                    android:visibility="@{viewModel.healingPropertiesVisibility, default=gone}"
+                    android:textAppearance="?android:textAppearanceLarge"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/productHealingPropertiesText" />
+
+                <View
+                    android:id="@+id/dividerAfterHealingProperties"
+                    style="@style/Divider"
+                    android:visibility="@{viewModel.healingPropertiesVisibility, default=gone}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/healingProperties" />
+
+                <TextView
+                    android:id="@+id/productDosageText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="@string/Product_dosage"
+                    android:visibility="@{viewModel.dosageVisibility, default=gone}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/dividerAfterHealingProperties" />
+
+                <TextView
+                    android:id="@+id/dosage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
+                    android:text="@={viewModel.dosage}"
+                    android:visibility="@{viewModel.dosageVisibility, default=gone}"
+                    android:textAppearance="?android:textAppearanceLarge"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/productDosageText" />
+
+                <View
+                    android:id="@+id/dividerAfterDosage"
+                    style="@style/Divider"
+                    android:visibility="@{viewModel.dosageVisibility, default=gone}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/dosage" />
+
+                <TextView
+                    android:id="@+id/productWeightText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="@string/Product_weight"
+                    android:visibility="@{viewModel.weightVisibility, default=gone}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/dividerAfterDosage" />
+
+                <TextView
+                    android:id="@+id/weight"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
+                    android:text="@={viewModel.weight}"
+                    android:visibility="@{viewModel.weightVisibility, default=gone}"
+                    android:textAppearance="?android:textAppearanceLarge"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/productWeightText" />
+
+                <View
+                    android:id="@+id/dividerAfterProductWeight"
+                    style="@style/Divider"
+                    android:visibility="@{viewModel.weightVisibility, default=gone}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/weight" />
+
+                <TextView
+                    android:id="@+id/productVolumeText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="@string/Product_volume"
+                    android:visibility="@{viewModel.volumeVisibility, default=gone}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/dividerAfterProductWeight" />
+
+                <TextView
+                    android:id="@+id/volume"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
+                    android:text="@={viewModel.volume}"
+                    android:visibility="@{viewModel.volumeVisibility, default=gone}"
+                    android:textAppearance="?android:textAppearanceLarge"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/productVolumeText" />
+
+                <View
+                    android:id="@+id/dividerAfterProductVolume"
+                    style="@style/Divider"
+                    android:visibility="@{viewModel.volumeVisibility, default=gone}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/volume" />
+
+                <TextView
+                    android:id="@+id/productTasteText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="@string/Product_taste"
+                    android:visibility="@{viewModel.tasteVisibility, default=gone}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/dividerAfterProductVolume" />
+
+                <TextView
+                    android:id="@+id/taste"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
+                    android:text="@={viewModel.taste}"
+                    android:visibility="@{viewModel.tasteVisibility, default=gone}"
+                    android:textAppearance="?android:textAppearanceLarge"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/productTasteText" />
+
+                <View
+                    android:id="@+id/dividerAfterProductTaste"
+                    style="@style/Divider"
+                    android:visibility="@{viewModel.tasteVisibility, default=gone}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/taste" />
+
+                <TextView
+                    android:id="@+id/productIsVegeText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="@string/Product_vege"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/dividerAfterProductTaste" />
+
+                <TextView
+                    android:id="@+id/isVege"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
+                    android:text="@={viewModel.isVege}"
+                    android:textAppearance="?android:textAppearanceLarge"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/productIsVegeText" />
+
+                <View
+                    android:id="@+id/dividerAfterIsVege"
+                    style="@style/Divider"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/isVege" />
+
+                <TextView
+                    android:id="@+id/productIsBioText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="@string/Product_bio"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/dividerAfterIsVege" />
+
+                <TextView
+                    android:id="@+id/isBio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
+                    android:text="@={viewModel.isBio}"
+                    android:textAppearance="?android:textAppearanceLarge"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/productIsBioText" />
+
+                <View
+                    android:id="@+id/dividerAfterIsBio"
+                    style="@style/Divider"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/isBio" />
+
+                <TextView
+                    android:id="@+id/productHasSugarText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="@string/Product_has_sugar"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/dividerAfterIsBio" />
+
+                <TextView
+                    android:id="@+id/hasSugar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
+                    android:text="@={viewModel.hasSugar}"
+                    android:textAppearance="?android:textAppearanceLarge"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/productHasSugarText" />
+
+                <View
+                    android:id="@+id/dividerAfterHasSugar"
+                    style="@style/Divider"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/hasSugar" />
+
+                <TextView
+                    android:id="@+id/productHasSaltText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="@string/Product_has_salt"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/dividerAfterHasSugar" />
+
+                <TextView
+                    android:id="@+id/hasSalt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
+                    android:text="@={viewModel.hasSalt}"
+                    android:textAppearance="?android:textAppearanceLarge"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/productHasSaltText" />
+
+                <View
+                    android:id="@+id/dividerAfterHasSalt"
+                    style="@style/Divider"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/hasSalt" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </ScrollView>
+
+        <Button
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_marginStart="@dimen/button_sides_margin"
+            android:layout_marginEnd="@dimen/button_sides_margin"
+            android:text="@string/ProductDetailsActivity_edit_product"
+            style="@style/CustomButton"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent=".45"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <Button
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_marginStart="@dimen/button_sides_margin"
+            android:layout_marginEnd="@dimen/button_sides_margin"
+            android:text="@string/ProductDetailsActivity_delete_product"
+            style="@style/CustomButton"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent=".45"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

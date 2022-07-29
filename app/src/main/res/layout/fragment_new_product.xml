@@ -1,0 +1,610 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.hermanowicz.pantry.ui.new_product.NewProductViewModel"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="@dimen/button_filter_bottom_padding">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/productNameText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="@string/Product_name"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/layout_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
+                    app:endIconMode="clear_text"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="40"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/productNameText"
+                    tools:ignore="Autofill">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        style="@style/CustomEditText"
+                        android:id="@+id/productNameInput"
+                        android:inputType="textCapSentences|textAutoCorrect"
+                        android:text="@={viewModel.productName}"
+                        android:maxLength="40"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <View
+                    android:id="@+id/dividerAfterProductName"
+                    style="@style/Divider"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/layout_name" />
+
+                <TextView
+                    android:id="@+id/productMainCategoryText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="@string/Product_category"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/dividerAfterProductName" />
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/mainCategoryInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:spinnerMode="dropdown"
+                    android:entries="@array/Product_type_of_product_array"
+                    tools:setOnItemSelectedListener="@{viewModel.categorySelectionListener}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/productMainCategoryText" />
+
+                <View
+                    android:id="@+id/dividerAfterMainCategory"
+                    style="@style/Divider"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/mainCategoryInput" />
+
+                <TextView
+                    android:id="@+id/productDetailCategoryText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="@string/Product_features"
+                    android:visibility="@{viewModel.detailCategoryVisibility, default=gone}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/dividerAfterMainCategory" />
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/detailCategoryInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:spinnerMode="dropdown"
+                    tools:setOnItemSelectedListener="@{viewModel.categorySelectionListener}"
+                    android:visibility="@{viewModel.detailCategoryVisibility, default=gone}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/productDetailCategoryText" />
+
+                <View
+                    android:id="@+id/dividerAfterDetailCategory"
+                    style="@style/Divider"
+                    android:visibility="@{viewModel.detailCategoryVisibility, default=gone}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/detailCategoryInput" />
+
+                <TextView
+                    android:id="@+id/productStorageLocationText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="@string/Product_storage_location"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/dividerAfterDetailCategory" />
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/storageLocationInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:spinnerMode="dropdown"
+                    tools:setOnItemSelectedListener="@{viewModel.storageLocationSelectionListener}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/productStorageLocationText" />
+
+                <View
+                    android:id="@+id/dividerAfterStorageLocation"
+                    style="@style/Divider"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/storageLocationInput" />
+
+                <TextView
+                    android:id="@+id/productExpirationDateText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="@string/Product_expiration_date"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/dividerAfterStorageLocation" />
+
+                <DatePicker
+                    android:id="@+id/productExpirationDateInput"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/edittext_sides_margin"
+                    android:year="@={viewModel.expirationDateYear}"
+                    android:month="@={viewModel.expirationDateMonth}"
+                    android:day="@={viewModel.expirationDateDay}"
+                    android:onDateChanged="@{(v, year, month, day) -> viewModel.onExpirationDateChanged(year, month, day)}"
+                    android:datePickerMode="spinner"
+                    android:calendarViewShown="false"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/productExpirationDateText" />
+
+                <View
+                    android:id="@+id/dividerAfterExpirationDate"
+                    style="@style/Divider"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/productExpirationDateInput" />
+
+                <TextView
+                    android:id="@+id/productProductionDateText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="@string/Product_production_date"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/dividerAfterExpirationDate" />
+
+                <DatePicker
+                    android:id="@+id/productProductionDateInput"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/edittext_sides_margin"
+                    android:year="@={viewModel.productionDateYear}"
+                    android:month="@={viewModel.productionDateMonth}"
+                    android:day="@={viewModel.productionDateDay}"
+                    android:onDateChanged="@{(v, year, month, day) -> viewModel.onProductionDateChanged(year, month, day)}"
+                    android:datePickerMode="spinner"
+                    android:calendarViewShown="false"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/productProductionDateText" />
+
+                <View
+                    android:id="@+id/dividerAfterProductionDate"
+                    style="@style/Divider"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/productProductionDateInput" />
+
+                <TextView
+                    android:id="@+id/productQuantityText"
+                    android:layout_width="388dp"
+                    android:layout_height="18dp"
+                    android:layout_margin="8dp"
+                    android:text="@string/Product_quantity"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/dividerAfterProductionDate" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/layout_quantity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
+                    app:endIconMode="clear_text"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/productQuantityText"
+                    tools:ignore="Autofill">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        style="@style/CustomEditText"
+                        android:id="@+id/productQuantityInput"
+                        android:text="@={viewModel.quantity}"
+                        android:inputType="numberDecimal"
+                        android:maxLength="4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <View
+                    android:id="@+id/dividerAfterProductQuantity"
+                    style="@style/Divider"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/layout_quantity" />
+
+                <TextView
+                    android:id="@+id/productCompositionText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="@string/Product_composition"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/dividerAfterProductQuantity" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/layout_composition"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
+                    app:endIconMode="clear_text"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="200"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/productCompositionText"
+                    tools:ignore="Autofill">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        style="@style/CustomEditText"
+                        android:id="@+id/productCompositionInput"
+                        android:text="@={viewModel.composition}"
+                        android:inputType="textCapSentences|textMultiLine"
+                        android:maxLength="200"
+                        android:minLines="2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <View
+                    android:id="@+id/dividerAfterComposition"
+                    style="@style/Divider"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/layout_composition" />
+
+                <TextView
+                    android:id="@+id/productHealingPropertiesText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="@string/Product_healing_properties"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/dividerAfterComposition" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/layout_healingProperties"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
+                    app:endIconMode="clear_text"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="200"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/productHealingPropertiesText"
+                    tools:ignore="Autofill">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        style="@style/CustomEditText"
+                        android:id="@+id/productHealingPropertiesInput"
+                        android:text="@={viewModel.healingProperties}"
+                        android:inputType="textCapSentences|textMultiLine"
+                        android:maxLength="200"
+                        android:minLines="2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <View
+                    android:id="@+id/dividerAfterHealingProperties"
+                    style="@style/Divider"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/layout_healingProperties" />
+
+                <TextView
+                    android:id="@+id/productDosageText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="@string/Product_dosage"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/dividerAfterHealingProperties" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/layout_dosage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
+                    app:endIconMode="clear_text"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="150"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/productDosageText"
+                    tools:ignore="Autofill">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        style="@style/CustomEditText"
+                        android:id="@+id/productDosageInput"
+                        android:text="@={viewModel.dosage}"
+                        android:inputType="textCapSentences|textMultiLine"
+                        android:maxLength="150"
+                        android:minLines="2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <View
+                    android:id="@+id/dividerAfterDosage"
+                    style="@style/Divider"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/layout_dosage" />
+
+                <TextView
+                    android:id="@+id/productWeightText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="@string/Product_weight"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/dividerAfterDosage" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/layout_weight"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
+                    app:endIconMode="clear_text"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/productWeightText"
+                    tools:ignore="Autofill">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        style="@style/CustomEditText"
+                        android:id="@+id/productWeightInput"
+                        android:text="@={viewModel.weight}"
+                        android:inputType="numberDecimal"
+                        android:maxLength="10"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <View
+                    android:id="@+id/dividerAfterProductWeight"
+                    style="@style/Divider"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/layout_weight" />
+
+                <TextView
+                    android:id="@+id/productVolumeText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="@string/Product_volume"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/dividerAfterProductWeight" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/layout_volume"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
+                    app:endIconMode="clear_text"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/productVolumeText"
+                    tools:ignore="Autofill">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        style="@style/CustomEditText"
+                        android:id="@+id/productVolumeInput"
+                        android:text="@={viewModel.volume}"
+                        android:inputType="numberDecimal"
+                        android:maxLength="10"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <View
+                    android:id="@+id/dividerAfterProductVolume"
+                    style="@style/Divider"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/layout_volume" />
+
+                <TextView
+                    android:id="@+id/productTasteText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="@string/Product_taste"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/dividerAfterProductVolume" />
+
+                <RadioGroup
+                    android:id="@+id/radiogroup_taste"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/productTasteText">
+
+                    <RadioButton
+                        android:id="@+id/radiobtn_isSweet"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="@string/Product_sweet" />
+
+                    <RadioButton
+                        android:id="@+id/radiobtn_isSour"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="@string/Product_sour" />
+
+                    <RadioButton
+                        android:id="@+id/radiobtn_isSweetAndSour"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="@string/Product_sweet_and_sour" />
+
+                    <RadioButton
+                        android:id="@+id/radiobtn_isBitter"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="@string/Product_bitter" />
+
+                    <RadioButton
+                        android:id="@+id/radiobtn_isSalty"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="@string/Product_salty" />
+
+                    <RadioButton
+                        android:id="@+id/radiobtn_isSpicy"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="@string/Product_spicy" />
+
+                </RadioGroup>
+
+                <View
+                    android:id="@+id/dividerAfterProductTaste"
+                    style="@style/Divider"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radiogroup_taste" />
+
+                <TextView
+                    android:id="@+id/productFeaturesText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="@string/Product_features"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/dividerAfterProductTaste" />
+
+                <CheckBox
+                    android:id="@+id/product_isVege"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Product_vege"
+                    android:layout_marginHorizontal="@dimen/edittext_sides_margin"
+                    android:checked="@={viewModel.isVege}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/productFeaturesText" />
+
+                <CheckBox
+                    android:id="@+id/product_isBio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Product_bio"
+                    android:layout_marginHorizontal="@dimen/edittext_sides_margin"
+                    android:checked="@={viewModel.isBio}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/product_isVege" />
+
+                <CheckBox
+                    android:id="@+id/product_hasSugar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Product_has_sugar"
+                    android:layout_marginHorizontal="@dimen/edittext_sides_margin"
+                    android:checked="@={viewModel.hasSugar}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/product_isBio" />
+
+                <CheckBox
+                    android:id="@+id/product_hasSalt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Product_has_salt"
+                    android:layout_marginHorizontal="@dimen/edittext_sides_margin"
+                    android:checked="@={viewModel.hasSalt}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/product_hasSugar" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </ScrollView>
+
+        <Button
+            android:id="@+id/button_addNewProduct"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:text="@string/NewProductActivity_add_a_product"
+            android:layout_marginStart="@dimen/button_sides_margin"
+            android:layout_marginEnd="@dimen/button_sides_margin"
+            style="@style/CustomButton"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent=".45"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <Button
+            android:id="@+id/button_clearFields"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_marginStart="@dimen/button_sides_margin"
+            android:layout_marginEnd="@dimen/button_sides_margin"
+            android:text="@string/MyPantryActivity_clear"
+            style="@style/CustomButton"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent=".45"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

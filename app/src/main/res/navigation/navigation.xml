@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/app_navigation"
+    app:startDestination="@+id/nav_my_pantry">
+
+    <fragment
+        android:id="@+id/nav_my_pantry"
+        android:name="com.hermanowicz.pantry.ui.fragments.MyPantryFragment"
+        android:label="@string/Menu_main_pantry"
+        tools:layout="@layout/fragment_my_pantry" >
+        <action
+            android:id="@+id/action_nav_my_pantry_to_nav_new_product"
+            app:destination="@id/nav_new_product"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
+        <action
+            android:id="@+id/action_nav_my_pantry_to_nav_filter_product"
+            app:destination="@id/nav_filter_product"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
+        <action
+            android:id="@+id/action_nav_my_pantry_to_nav_product_details"
+            app:destination="@id/nav_product_details" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_new_product"
+        android:name="com.hermanowicz.pantry.ui.fragments.NewProductFragment"
+        android:label="@string/Menu_new_product"
+        tools:layout="@layout/fragment_new_product">
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_scan_product"
+        android:name="com.hermanowicz.pantry.ui.fragments.ScanProductFragment"
+        android:label="@string/Menu_scan_product"
+        tools:layout="@layout/fragment_scan_product" />
+
+    <fragment
+        android:id="@+id/nav_own_categories"
+        android:name="com.hermanowicz.pantry.ui.fragments.OwnCategoriesFragment"
+        android:label="@string/Menu_own_categories"
+        tools:layout="@layout/fragment_own_categories">
+        <action
+            android:id="@+id/action_nav_own_categories_to_nav_own_category_detail"
+            app:destination="@id/nav_own_category_detail"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
+        <action
+            android:id="@+id/action_nav_own_categories_to_nav_new_category"
+            app:destination="@id/nav_new_category"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:popEnterAnim="@android:anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_own_category_detail"
+        android:name="com.hermanowicz.pantry.ui.fragments.OwnCategoryDetailFragment"
+        android:label="@string/Menu_own_category_detail"
+        tools:layout="@layout/fragment_own_category_detail">
+        <argument
+            android:name="category"
+            app:argType="com.hermanowicz.pantry.dao.db.category.Category" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_storage_location_detail"
+        android:name="com.hermanowicz.pantry.ui.fragments.StorageLocationDetailFragment"
+        android:label="@string/Menu_own_category_detail"
+        tools:layout="@layout/fragment_storage_location_detail">
+        <argument
+            android:name="storageLocation"
+            app:argType="com.hermanowicz.pantry.dao.db.storagelocation.StorageLocation" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_storage_locations"
+        android:name="com.hermanowicz.pantry.ui.fragments.StorageLocationsFragment"
+        android:label="@string/Menu_storage_locations"
+        tools:layout="@layout/fragment_storage_locations">
+        <action
+            android:id="@+id/action_nav_storage_locations_to_nav_storage_location_detail"
+            app:destination="@id/nav_storage_location_detail"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
+        <action
+            android:id="@+id/action_nav_storage_locations_to_nav_new_storage_location"
+            app:destination="@id/nav_new_storage_location"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_settings"
+        android:name="com.hermanowicz.pantry.ui.fragments.SettingsFragment"
+        android:label="@string/Menu_app_settings" />
+
+    <fragment
+        android:id="@+id/nav_about_author"
+        android:name="com.hermanowicz.pantry.ui.fragments.AboutAuthorFragment"
+        android:label="@string/Menu_about_author"
+        tools:layout="@layout/fragment_about_author" />
+
+    <fragment
+        android:id="@+id/nav_edit_product"
+        android:name="com.hermanowicz.pantry.ui.fragments.EditProductFragment"
+        android:label="@string/ProductDetailsActivity_edit_product"
+        tools:layout="@layout/fragment_edit_product" >
+        <argument
+            android:name="product"
+            app:argType="com.hermanowicz.pantry.dao.db.product.Product" />
+        <argument
+            android:name="productQuantity"
+            app:argType="integer" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_filter_product"
+        android:name="com.hermanowicz.pantry.ui.fragments.FilterProductFragment"
+        android:label="@string/ProductDetailsActivity_filter"
+        tools:layout="@layout/fragment_filter_product" />
+
+    <fragment
+        android:id="@+id/nav_product_details"
+        android:name="com.hermanowicz.pantry.ui.fragments.ProductDetailsFragment"
+        android:label="@string/title_activity_product_details"
+        tools:layout="@layout/fragment_product_details">
+        <argument
+            android:name="productQuantity"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <action
+            android:id="@+id/action_nav_product_details_to_nav_edit_product"
+            app:destination="@id/nav_edit_product"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_new_category"
+        android:name="com.hermanowicz.pantry.ui.fragments.NewCategoryFragment"
+        android:label="@string/CategoriesActivity_new_category"
+        tools:layout="@layout/fragment_new_category" />
+
+    <fragment
+        android:id="@+id/nav_new_storage_location"
+        android:name="com.hermanowicz.pantry.ui.fragments.NewStorageLocationFragment"
+        android:label="@string/StorageLocationsActivity_new_storage_location"
+        tools:layout="@layout/fragment_new_storage_location" />
+</navigation>

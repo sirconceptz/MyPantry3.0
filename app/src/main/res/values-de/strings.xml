@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2019-2022
+  ~ Mateusz Hermanowicz - All rights reserved.
+  ~ My Pantry
+  ~ https://www.mypantry.eu
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<resources>
+    <string name="navigation_drawer_open">Navigationsschublade öffnen</string>
+    <string name="navigation_drawer_close">Navigationsschublade schließen</string>
+    <string name="nav_header_subtitle">Was möchten Sie tun?</string>
+
+    <string name="app_name">Meine Speisekammer</string>
+    <string name="title_activity_my_pantry">Meine Speisekammer</string>
+    <string name="title_activity_scan_the_product">Scannen Sie den Code des Produkts</string>
+    <string name="title_activity_new_product">Neues produkt</string>
+    <string name="title_activity_app_settings">Anwendungseinstellungen</string>
+    <string name="title_activity_print_qrcodes">QR-Codes drucken</string>
+    <string name="title_activity_product_details">Angaben zum Produkt</string>
+    <string name="title_activity_edit_product">Produkt bearbeiten</string>
+    <string name="title_activity_add_photo">Bild hinzufügen</string>
+    <string name="title_activity_error_and_maintenance_work">Fehler und Wartungsarbeiten</string>
+    <!--General-->
+    <string name="General_choose">Wählen</string>
+    <string name="General_char_counter">Max. Zeichen</string>
+    <string name="General_press_back_agait_to_exit">Zum Beenden erneut drücken</string>
+    <string name="General_required">(Erforderlich)</string>
+    <string name="General_not_required">(Nicht erforderlich)</string>
+    <string name="General_cancel">Abbestellen</string>
+    <string name="General_author_label">Autor</string>
+    <string name="General_save">Zuschreiben</string>
+    <string name="General_user_is_premium">Der User ist schon Premium ;-)</string>
+    <string name="General_user">Benutzer</string>
+    <string name="General_loggedOut">Abgemeldet</string>
+    <string name="General_premium_purchase_done">Vielen Dank für Ihren Premium-Kauf! Ich wünsche Ihnen viel Spaß bei der Verwendung!</string>
+    <string name="General_are_you_sure_delete_product">Möchten Sie dieses Produkt wirklich löschen?</string>
+    <!--Menu-->
+    <string name="Menu_main_pantry">Meine speisekammer</string>
+    <string name="Menu_scan_product">Scannen Sie den Code des Produkts</string>
+    <string name="Menu_new_product">Neues produkt</string>
+    <string name="Menu_own_categories">Eigene Produktkategorien</string>
+    <string name="Menu_own_category_detail">Own category detail</string>
+    <string name="Menu_storage_locations">Lagerorte</string>
+    <string name="Menu_app_settings">Anwendungseinstellungen</string>
+    <string name="Menu_about_author">Über den Autor</string>
+    <!--MyPantryActivity-->
+    <string name="MyPantryActivity_products_not_found">Hoppla! Nicht gefundene Produkte :(</string>
+    <string name="MyPantryActivity_clear">Löschen</string>
+    <string name="MyPantryActivity_since">von</string>
+    <string name="MyPantryActivity_for">zu</string>
+    <string name="MyPantryActivity_set">Set</string>
+    <string name="MyPantryActivity_clear_filters">Filter löschen</string>
+    <string name="MyPantryActivity_delete_products">Produkte löschen</string>
+    <string name="MyPantryActivity_do_you_want_to_delete_products">Wollen Sie Produkte löschen?</string>
+    <string name="MyPantryActivity_with_sugar">+Zucker</string>
+    <string name="MyPantryActivity_with_salt">+Salz</string>
+    <!--ScanProductActivity-->
+    <string name="ScanProductActivity_choose_scan_type">Wählen Sie aus, ob der QR des von der Anwendung erstellten Produkts oder der Barcode des Geschäftsprodukts gescannt werden soll.</string>
+    <string name="ScanProductActivity_choose_product_to_copy">Der Barcode wurde den folgenden Produkten hinzugefügt. Wählen Sie das Produkt aus der Liste aus, das Sie hinzufügen möchten.</string>
+    <string name="ScanProductActivity_scan_qr_code">Scannen Sie den QR-Code des Produkts</string>
+    <string name="ScanProductActivity_scan_barcode">Scannen Sie den Produkt-Barcode</string>
+    <string name="ScanProductActivity_enter_barcode_manually">Geben Sie den Barcode manuell ein</string>
+    <string name="ScanProductActivity_product_not_found">Das Produkt wurde nicht gefunden.</string>
+    <string name="ScanProductActivity_scanner_hint">Wichtig: Der Barcode-Scanner sucht nicht nach Produkten, die noch nicht der Anwendung hinzugefügt wurden.</string>
+    <string name="ScanProductActivity_barcode_is_updated">Barcode wurde aktualisiert</string>
+    <!--NewProductActivity-->
+    <string name="NewProductActivity_add_a_product">Produkt hinzufügen</string>
+    <string name="NewProductActivity_product_added_successful">Das Produkt wurde erfolgreich zur Produktdatenbank hinzugefügt.</string>
+    <string name="NewProductActivity_products_added_successful">Die Produkte wurden erfolgreich zur Produktdatenbank hinzugefügt.</string>
+    <string name="NewProductActivity_cancel_product_adding">Möchten Sie das Hinzufügen eines neuen Produkts abbrechen?</string>
+    <!--StorageLocationsActivity-->
+    <string name="StorageLocationsActivity_new_storage_location">Neuer Lagerort</string>
+    <string name="StorageLocationsActivity_no_storage_locations_statement">Keine Lagerort hinzugefügt. Fügen Sie oben auf dem Bildschirm eine neue Schaltfläche hinzu.</string>
+    <!--StorageLocationDetailsActivity-->
+    <string name="StorageLocationDetailsActivity_name">Lagerort Name</string>
+    <string name="StorageLocationDetailsActivity_description">Lagerort beschreibung</string>
+    <string name="StorageLocationDetailsActivity_update_storage_location">Änderungen Speichern</string>
+    <string name="StorageLocationDetailsActivity_delete_storage_location">Lagerort Löschen</string>
+    <string name="StorageLocationDetailsActivity_storage_location_delete_warning">>Möchten Sie diese Lagerort wirklich löschen?</string>
+    <string name="StorageLocationDetailsActivity_storage_location_was_saved">Lagerort wurde gespeichert</string>
+    <!--CategoriesActivity-->
+    <string name="CategoriesActivity_new_category">Neue Kategorie</string>
+    <string name="CategoriesActivity_no_categories_statement">Keine Kategorien hinzugefügt. Fügen Sie oben auf dem Bildschirm eine neue Schaltfläche hinzu.</string>
+    <!--CategoriesActivity-->
+    <string name="CategoryDetailsActivity_name">Kategoriename</string>
+    <string name="CategoryDetailsActivity_description">Kategorie beschreibung</string>
+    <string name="CategoryDetailsActivity_update_category">Änderungen Speichern</string>
+    <string name="CategoryDetailsActivity_delete_category">Kategorie Löschen</string>
+    <string name="CategoryDetailsActivity_category_delete_warning">Möchten Sie diese Kategorie wirklich löschen?</string>
+    <string name="CategoryDetailsActivity_category_was_saved">Kategorie wurde gespeichert</string>
+    <!--EditProductActivity-->
+    <string name="EditProductActivity_save_product">Produkt speichern</string>
+    <string name="EditProductActivity_cancel">Stornieren</string>
+    <string name="EditProductActivity_product_was_updated">Produkt wurde gespeichert</string>
+    <!--AddPhotoActivity-->
+    <string name="AddPhotoActivity_photo_description">Fotobeschreibung</string>
+    <string name="AddPhotoActivity_take_photo">Foto machen</string>
+    <string name="AddPhotoActivity_save_photo">Foto speichern</string>
+    <string name="AddPhotoActivity_delete_photo">Foto löschen</string>
+    <string name="AddPhotoActivity_take_photo_of_product">Machen Sie ein Foto des Produkts</string>
+    <string name="AddPhotoActivity_no_camera_access">Kein Kamera Zugang</string>
+    <string name="AddPhotoActivity_invalid_photo_description">Ungültige Fotobeschreibung</string>
+    <string name="AddPhotoActivity_add_photo_successful">Das Foto wurde hinzugefügt</string>
+    <string name="AddPhotoActivity_add_photo_not_successful">Das Foto wurde nicht hinzugefügt</string>
+    <string name="AddPhotoActivity_delete_photo_successful">Das Foto wurde gelöscht</string>
+    <!--Product-->
+    <string name="Product_name">Produktname</string>
+    <string name="Product_quantity">Anzahl</string>
+    <string name="Product_expiration_date">Ablaufdatum</string>
+    <string name="Product_production_date">Herstellungsdatum</string>
+    <string name="Product_composition">Zusammensetzung</string>
+    <string name="Product_features">Produktmerkmale</string>
+    <string name="Product_has_sugar">Mit Zucker?</string>
+    <string name="Product_has_salt">Mit salz?</string>
+    <string name="Product_bio">BIO</string>
+    <string name="Product_vege">VEGE</string>
+    <string name="Product_taste">Geschmack</string>
+    <string name="Product_sweet">Süß</string>
+    <string name="Product_sour">Sauer</string>
+    <string name="Product_sweet_and_sour">Süß sauer</string>
+    <string name="Product_bitter">Bitter</string>
+    <string name="Product_salty">Salzig</string>
+    <string name="Product_spicy">Würzig</string>
+    <string name="Product_weight">Gewicht</string>
+    <string name="Product_weight_unit">g</string>
+    <string name="Product_volume">Volumen</string>
+    <string name="Product_volume_unit">ml</string>
+    <string name="Product_healing_properties">Gesundheitseigenschaften</string>
+    <string name="Product_dosage">Dosierung</string>
+    <string name="Product_type">Produkttyp</string>
+    <string-array name="Product_type_of_product_array">
+        <item>Wählen</item>
+        <item>Eigene Kategorien</item>
+        <item>Einkaufen produkte</item>
+        <item>Fertiggerichte</item>
+        <item>Gemüse</item>
+        <item>Obst</item>
+        <item>Kräuter</item>
+        <item>Likören</item>
+        <item>Weine</item>
+        <item>Pilze</item>
+        <item>Essige</item>
+        <item>Chemische produkte</item>
+        <item>Andere</item>
+    </string-array>
+    <string-array name="Product_choose_array">
+        <item>Wählen</item>
+    </string-array>
+    <string name="Product_choose">Wählen</string>
+    <string name="Product_category">Produktkategorie</string>
+    <string-array name="ProductDetailsActivity_store_products_array">
+        <item>Wählen</item>
+        <item>Einkaufen produkte</item>
+    </string-array>
+    <string-array name="Product_ready_meals_array">
+        <item>Wählen</item>
+        <item>Fertiggerichte</item>
+    </string-array>
+    <string-array name="Product_vegetables_array">
+        <item>Wählen</item>
+        <item>Konserviert</item>
+        <item>Salate</item>
+        <item>Marinierte</item>
+        <item>Ketchups</item>
+        <item>Frisch</item>
+        <item>Andere</item>
+    </string-array>
+    <string-array name="Product_fruits_array">
+        <item>Wählen</item>
+        <item>Konfitüren</item>
+        <item>Säfte</item>
+        <item>Sirupe</item>
+        <item>Mousses</item>
+        <item>Kompotte</item>
+        <item>Gelee</item>
+        <item>Marmeladen</item>
+        <item>Frisch</item>
+        <item>Andere</item>
+    </string-array>
+    <string-array name="Product_herbs_array">
+        <item>Wählen</item>
+        <item>Getrocknet</item>
+        <item>Andere</item>
+    </string-array>
+    <string-array name="Product_liqueurs_array">
+        <item>Wählen</item>
+        <item>Likören</item>
+    </string-array>
+    <string-array name="Product_wines_type_array">
+        <item>Wählen</item>
+        <item>Trockener</item>
+        <item>Halbtrockener</item>
+        <item>Halb süßer</item>
+        <item>Süßer</item>
+    </string-array>
+    <string-array name="Product_mushrooms_array">
+        <item>Wählen</item>
+        <item>Marinierte</item>
+        <item>Gesalzen</item>
+        <item>Getrocknet</item>
+    </string-array>
+    <string-array name="Product_vinegars_array">
+        <item>Wählen</item>
+        <item>Apfelessig</item>
+        <item>Kräuteressig</item>
+        <item>Fruchtessig</item>
+        <item>Andere</item>
+    </string-array>
+    <string-array name="Product_chemical_products_array">
+        <item>Wählen</item>
+        <item>Reinigungsmittel</item>
+        <item>Flüssigkeiten</item>
+        <item>Pulver</item>
+        <item>Andere</item>
+    </string-array>
+    <string-array name="Product_other_products_array">
+        <item>Wählen</item>
+        <item>Andere</item>
+    </string-array>
+    <string-array name="Product_taste_array">
+        <item>Wählen</item>
+        <item>Süss</item>
+        <item>Sauer</item>
+        <item>Süß sauer</item>
+        <item>Bitter</item>
+        <item>Salzig</item>
+        <item>Würzig</item>
+    </string-array>
+    <string name="Product_storage_location">Lagerort</string>
+    <!--ProductDetailsActivity-->
+    <string name="ProductDetailsActivity_not_set">Unbestimmt</string>
+    <string name="ProductDetailsActivity_delete_product">Löschen Sie das Produkt</string>
+    <string name="ProductDetailsActivity_filter">Filtern</string>
+    <string name="ProductDetailsActivity_yes">Ja</string>
+    <string name="ProductDetailsActivity_no">Nein</string>
+    <string name="ProductDetailsActivity_product_has_been_removed">Das Produkt wurde entfernt.</string>
+    <string name="ProductDetailsActivity_edit_product">Produkt bearbeiten</string>
+    <string name="ProductDetailsActivity_add_barcode_to_product">Strichcode hinzufügen</string>
+    <string name="ProductDetailsActivity_delete_similar_products">Alle Produkte</string>
+    <string name="ProductDetailsActivity_delete_single_product">Einzelnes Produkt</string>
+    <string name="ProductDetailsActivity_delete_one_or_all">Möchten Sie nur ein Produkt oder alle löschen?</string>
+    <!--PrintQRCodesActivity-->
+    <string name="PrintQRCodesActivity_print_qr_codes">QR-Codes drucken</string>
+    <string name="PrintQRCodesActivity_skip">überspringen</string>
+    <string name="PrintQRCodesActivity_send_pdf_via_email">Senden Sie eine PDF-Datei per E-Mail</string>
+    <!--AppSettingsActivity-->
+    <string name="AppSettingsActivity_general_settings">Allgemeine Einstellungen</string>
+    <string name="AppSettingsActivity_notifications_settings">Benachrichtigungseinstellungen</string>
+    <string name="AppSettingsActivity_enabled">Aktiviert</string>
+    <string name="AppSettingsActivity_disabled">Deaktiviert</string>
+    <string name="AppSettingsActivity_qr_code_sizes">Größe der gedruckten QR-Code-Etiketten</string>
+    <string name="AppSettingsActivity_which_theme_user_prefer">Wählen Sie den Anwendungsmodus</string>
+    <string name="AppSettingsActivity_which_camera_to_scan_products">Kamera zum Scannen von QR-Codes</string>
+    <string name="AppSettingsActivity_scanner_vibration_mode">Vibration beim Scannen</string>
+    <string name="AppSettingsActivity_scanner_sound_mode">Ton beim Scannen</string>
+    <string name="AppSettingsActivity_notifications_push">Benachrichtigungen über Push-Benachrichtigungen</string>
+    <string name="AppSettingsActivity_notifications_email">Benachrichtigungen per E-Mail</string>
+    <string name="AppSettingsActivity_give_email_adress">Zeitpunkt der Benachrichtigungen</string>
+    <string name="AppSettingsActivity_how_many_days_before_the_expiration_date_send_a_notification">Wie viele Tage vor Ablauf?</string>
+    <string name="AppSettingsActivity_save_settings">Einstellungen speichern</string>
+    <string name="AppSettingsActivity_import_product_database">Produktdatenbank importieren</string>
+    <string name="AppSettingsActivity_export_product_database">Produktdatenbank exportieren</string>
+    <string name="AppSettingsActivity_clear_product_database">Produktdatenbank löschen</string>
+    <string name="AppSettingsActivity_import_category_database">Kategoriedatenbank importieren</string>
+    <string name="AppSettingsActivity_export_category_database">Kategoriedatenbank exportieren</string>
+    <string name="AppSettingsActivity_clear_category_database">Kategoriedatenbank löschen</string>
+    <string name="AppSettingsActivity_import_storage_location_database">Speicherortdatenbank importieren</string>
+    <string name="AppSettingsActivity_export_storage_location_database">Speicherortdatenbank exportieren</string>
+    <string name="AppSettingsActivity_clear_storage_location_database">Löschen Sie die Speicherortdatenbank</string>
+    <string name="AppSettingsActivity_choose_file_to_restore">Wählen Sie die wiederherzustellende Datenbankdatei aus</string>
+    <string name="AppSettingsActivity_clear_database_statement">Möchten Sie die Datenbank löschen? Alle Einträge werden entfernt und der Vorgang ist irreversibel.</string>
+    <string name="AppSettingsActivity_database_is_clear">Die Datenbank wurde gelöscht.</string>
+    <string name="AppSettingsActivity_database_backup">Datenbanksicherung</string>
+    <string name="AppSettingsActivity_version">Version</string>
+    <string name="AppSettingsActivity_product_db">Produktdatenbank</string>
+    <string name="AppSettingsActivity_category_db">Kategoriedatenbank</string>
+    <string name="AppSettingsActivity_storage_location_db">Speicherortdatenbank</string>
+    <string name="AppSettingsActivity_import_statement">Möchten Sie Datenbanken aus einer externen Datei importieren? Dies führt zum Verlust der Produkte, die derzeit zur Anwendung hinzugefügt werden.</string>
+    <string name="AppSettingsActivity_export_statement">Möchten Sie Datenbanken in eine externe Datei exportieren?</string>
+    <string name="AppSettingsActivity_db_backup_has_been_made">Das Backup wurde erstellt</string>
+    <string name="AppSettingsActivity_db_has_been_restored">Die Sicherung wurde wiederhergestellt</string>
+    <string name="AppSettingsActivity_db_has_been_clear">Die Datenbank wurde gelöscht</string>
+    <string name="AppSettingsActivity_active_user">Aktiver Nutzer</string>
+    <string name="AppSettingsActivity_go_premium">Wechseln Sie zum Premium-Konto</string>
+    <string name="AppSettingsActivity_database_mode">Produktdatenbankmodus</string>
+    <string name="AppSettingsActivity_qr_code_size_big">Groß</string>
+    <string name="AppSettingsActivity_qr_code_size_small">Klein</string>
+    <string name="AppSettingsActivity_import_db">Datenbank vom Telefon in die Cloud importieren</string>
+    <string name="AppSettingsActivity_import_db_statement">Importieren Sie die Produktdatenbank vom Gerät in die Cloud (in ein Internetkonto). AKTUELL GESPEICHERTE DATEN IN DER CLOUD WERDEN GELÖSCHT UND DURCH TELEFONPRODUKTE ERSETZT.</string>
+    <string-array name="AppSettingsActivity_camera_to_scan">
+        <item>Rückkamera</item>
+        <item>Front-Kamera</item>
+    </string-array>
+    <string-array name="AppSettingsActivity_darkmode_selector">
+        <item>Automatisch</item>
+        <item>Täglich</item>
+        <item>Nacht</item>
+    </string-array>
+    <string-array name="AppSettingsActivity_database_mode">
+        <item>Lokal (im Telefon)</item>
+        <item>Online</item>
+    </string-array>
+    <!--ErrorActivity-->
+    <string name="ErrorActivity_title">Titel</string>
+    <string name="ErrorActivity_date">Datum</string>
+    <string name="ErrorActivity_content">Inhalt</string>
+    <!--Notifications-->
+    <string name="Notifications_title">[Meine Speisekammer] Das Produkt wird bald verfallen</string>
+    <string name="Notifications_statement">%PRODUCT_NAME% läuft bald ab. Sie haben noch %DAYS% Tage bis zu diesem Datum.</string>
+    <!--Error-->
+    <string name="Error_error">Error</string>
+    <string name="Error_wrong_data">Falschen Daten</string>
+    <string name="Error_permission_is_needed_to_save_the_file">Zum Erstellen einer Datei ist eine Berechtigung erforderlich</string>
+    <string name="Error_category_not_selected">Kategorie wurde nicht ausgewählt</string>
+    <string name="Error_product_name_is_required">Der Produktname ist erforderlich</string>
+    <string name="Error_char_counter">Falscher Wert</string>
+    <string name="Error_for_premium_users_only">Funktion nur für Premium-Benutzer</string>
+    <string name="Error_billing_client_not_ready">Zahlungsfunktion derzeit nicht verfügbar</string>
+    <string name="Error_incorrect_barcode_value">Ungültiger Strichcode</string>
+    <!--Author-->
+    <string name="Author_contact_with_author">Contact with author</string>
+</resources>
