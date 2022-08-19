@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (c) 2019-2021
   ~ Mateusz Hermanowicz - All rights reserved.
   ~ My Pantry
@@ -16,8 +15,7 @@
   ~ limitations under the License.
   -->
 
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
@@ -57,7 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="34dp"
-            android:text="@string/Product_quantity"
+            android:text="@string/product_quantity"
             android:textSize="16sp" />
 
         <TextView
@@ -66,7 +64,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="56dp"
-            android:text="@string/Product_weight"
+            android:text="@string/product_weight"
             android:textSize="16sp" />
 
         <TextView
@@ -76,7 +74,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="78dp"
             android:layout_marginBottom="4dp"
-            android:text="@string/Product_volume"
+            android:text="@string/product_volume"
             android:textSize="16sp" />
 
         <TextView
@@ -86,7 +84,7 @@
             android:layout_gravity="end"
             android:layout_marginTop="78dp"
             android:layout_marginEnd="60dp"
-            android:text="@string/MyPantryActivity_with_sugar"
+            android:text="@string/product_features_with_sugar"
             android:textSize="16sp"
             android:visibility="invisible" />
 
@@ -97,7 +95,7 @@
             android:layout_gravity="end"
             android:layout_marginTop="78dp"
             android:layout_marginEnd="130dp"
-            android:text="@string/Product_vege"
+            android:text="@string/product_vege"
             android:textSize="18sp"
             android:visibility="invisible" />
 
@@ -108,7 +106,7 @@
             android:layout_gravity="end"
             android:layout_marginTop="78dp"
             android:layout_marginEnd="190dp"
-            android:text="@string/Product_bio"
+            android:text="@string/product_bio"
             android:textSize="18sp"
             android:visibility="invisible" />
 
@@ -121,7 +119,7 @@
             android:layout_marginTop="78dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="4dp"
-            android:text="@string/MyPantryActivity_with_salt"
+            android:text="@string/product_features_with_salt"
             android:textSize="16sp"
             android:visibility="invisible" />
 
@@ -132,7 +130,7 @@
             android:layout_gravity="end"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="8dp"
-            android:text="@string/Product_expiration_date"
+            android:text="@string/product_expiration_date"
             android:textSize="16sp" />
 
         <TextView

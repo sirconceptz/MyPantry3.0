@@ -4,5 +4,6 @@ import com.hermanowicz.pantry.dao.db.category.Category;
 
 public interface OwnCategoryDetailUseCase {
     void deleteCategory(Category category);
+
     void updateCategory(Category category);
 }

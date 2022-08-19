@@ -30,7 +30,7 @@ import java.util.List;
  * <h1>CategoryDao</h1>
  * Categories dao needed to support database.
  *
- * @author  Mateusz Hermanowicz
+ * @author Mateusz Hermanowicz
  */
 
 @Dao

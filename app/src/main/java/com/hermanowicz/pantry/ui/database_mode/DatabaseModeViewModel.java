@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.hermanowicz.pantry.model.DatabaseMode;
+import com.hermanowicz.pantry.model.Database;
 
 import javax.inject.Inject;
 
@@ -18,28 +18,28 @@ public class DatabaseModeViewModel extends ViewModel {
     DatabaseModeUseCaseImpl databaseModeUseCase;
 
     @Inject
-    public DatabaseModeViewModel(DatabaseModeUseCaseImpl databaseModeUseCase){
+    public DatabaseModeViewModel(DatabaseModeUseCaseImpl databaseModeUseCase) {
         this.databaseModeUseCase = databaseModeUseCase;
         setDatabaseFromSettings();
     }
 
     public SharedPreferences.OnSharedPreferenceChangeListener sharedPreferencesListener = (sharedPreferences, key) -> {
-        if(key.equals("DATABASE_MODE")){
+        if (key.equals("DATABASE_MODE")) {
             setDatabaseFromSettings();
         }
     };
 
     private void setDatabaseFromSettings() {
-        DatabaseMode databaseMode = databaseModeUseCase.getDatabaseModeFromSettings();
+        Database databaseMode = databaseModeUseCase.getDatabaseModeFromSettings();
         setDatabaseMode(databaseMode);
     }
 
-    private void setDatabaseMode(DatabaseMode databaseMode){
-        if(databaseModeUseCase.isDatabaseChanged())
+    private void setDatabaseMode(Database databaseMode) {
+        if (databaseModeUseCase.isDatabaseChanged())
             databaseModeUseCase.setDatabaseMode(databaseMode);
     }
 
-    public LiveData<DatabaseMode> getDatabaseMode(){
+    public LiveData<Database> getDatabaseMode() {
         return databaseModeUseCase.getDatabaseMode();
     }
 }

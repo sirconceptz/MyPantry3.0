@@ -10,10 +10,16 @@ import android.widget.RadioButton;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
+import com.hermanowicz.pantry.R;
+import com.hermanowicz.pantry.dao.db.product.Product;
 import com.hermanowicz.pantry.databinding.FragmentNewProductBinding;
+import com.hermanowicz.pantry.ui.database_mode.DatabaseModeViewModel;
 import com.hermanowicz.pantry.ui.new_product.NewProductViewModel;
 import com.hermanowicz.pantry.util.DetailCategoryAdapter;
+
+import java.util.ArrayList;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -21,56 +27,75 @@ import dagger.hilt.android.AndroidEntryPoint;
 public class NewProductFragment extends Fragment {
 
     private FragmentNewProductBinding binding;
-    private NewProductViewModel viewModel;
+    private DatabaseModeViewModel databaseModeViewModel;
+    private NewProductViewModel newProductViewModel;
     private View view;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        viewModel = new ViewModelProvider(this).get(NewProductViewModel.class);
-
-        binding = FragmentNewProductBinding.inflate(inflater, container, false);
-        binding.setViewModel(viewModel);
-        view = binding.getRoot();
-
+        initView(inflater, container);
+        getArgumentsAndShowData();
         setObservers();
         setListeners();
 
         return view;
     }
 
+    private void initView(@NonNull LayoutInflater inflater, ViewGroup container) {
+        databaseModeViewModel = new ViewModelProvider(this).get(DatabaseModeViewModel.class);
+        newProductViewModel = new ViewModelProvider(this).get(NewProductViewModel.class);
+        binding = FragmentNewProductBinding.inflate(inflater, container, false);
+        binding.setViewModel(newProductViewModel);
+        view = binding.getRoot();
+    }
+
     private void setListeners() {
-        binding.buttonAddNewProduct.setOnClickListener(view -> onClickAddNewProduct());
-        binding.buttonClearFields.setOnClickListener(view -> onClickClearFields());
+        binding.buttonAddNewProduct.setOnClickListener(this::onClickAddNewProduct);
+        binding.buttonClearFields.setOnClickListener(this::onClickClearFields);
     }
 
     private void setObservers() {
-        viewModel.getMainCategoryValue().observe(getViewLifecycleOwner(), this::updateDetailCategoryAdapter);
-        viewModel.getStorageLocations().observe(getViewLifecycleOwner(), this::updateStorageLocationAdapter);
-        viewModel.getOwnCategoriesNamesLiveData().observe(getViewLifecycleOwner(), viewModel::setOwnCategoriesNamesArray);
+        databaseModeViewModel.getDatabaseMode().observe(getViewLifecycleOwner(),
+                newProductViewModel::setDatabaseMode);
+        newProductViewModel.getMainCategoryValue().observe(getViewLifecycleOwner(), this::updateDetailCategoryAdapter);
+        newProductViewModel.getStorageLocations().observe(getViewLifecycleOwner(), this::updateStorageLocationAdapter);
+        newProductViewModel.getOwnCategoriesNamesLiveData().observe(getViewLifecycleOwner(), newProductViewModel::setOwnCategoriesNamesArray);
     }
 
-    private void updateDetailCategoryAdapter(String selectedMainCategory){
+    private void getArgumentsAndShowData() {
+        newProductViewModel.setArguments(getArguments());
+        newProductViewModel.showProductDataIfExists();
+    }
+
+    private void updateDetailCategoryAdapter(String selectedMainCategory) {
         ArrayAdapter<CharSequence> detailCategoryAdapter =
-                DetailCategoryAdapter.getDetailCategoryAdapter(requireContext(), selectedMainCategory, viewModel.getOwnCategoriesNamesArray());
+                DetailCategoryAdapter.getDetailCategoryAdapter(requireContext(), selectedMainCategory, newProductViewModel.getOwnCategoriesNamesArray());
         binding.detailCategoryInput.setAdapter(detailCategoryAdapter);
     }
 
-    private void updateStorageLocationAdapter(String[] storageLocations){
+    private void updateStorageLocationAdapter(String[] storageLocations) {
         ArrayAdapter<CharSequence> storageLocationAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_dropdown_item, storageLocations);
         binding.storageLocationInput.setAdapter(storageLocationAdapter);
     }
 
-    private void onClickAddNewProduct(){
+    private void onClickAddNewProduct(View view) {
         int selectedTasteId = binding.radiogroupTaste.getCheckedRadioButtonId();
         RadioButton taste = view.findViewById(selectedTasteId);
-        viewModel.setTaste(taste);
-        viewModel.onClickAddProduct();
+        newProductViewModel.setTaste(taste);
+        newProductViewModel.insertProducts();
+        navigateToPrintQRCodes(newProductViewModel.getProductListToInsert());
     }
 
-    private void onClickClearFields() {
+    private void navigateToPrintQRCodes(ArrayList<Product> productArrayList) {
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList("productArrayList", productArrayList);
+        Navigation.findNavController(view).navigate(R.id.nav_print_qr_codes, bundle);
+    }
+
+    private void onClickClearFields(View view) {
         binding.radiogroupTaste.clearCheck();
-        viewModel.onClickClearFields();
+        newProductViewModel.onClickClearFields();
     }
 
     @Override

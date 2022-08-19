@@ -30,7 +30,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
  * <h1>ProductDb/h1>
  * Product database class
  *
- * @author  Mateusz Hermanowicz
+ * @author Mateusz Hermanowicz
  */
 
 @Database(entities = {Product.class}, version = 6)
@@ -45,7 +45,7 @@ public abstract class ProductDb extends RoomDatabase {
         synchronized (sLock) {
             if (INSTANCE == null) {
                 INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                        ProductDb.class, "ProductDb.db")
+                                ProductDb.class, "ProductDb.db")
                         .allowMainThreadQueries()
                         .addCallback(new Callback() {
                             @Override

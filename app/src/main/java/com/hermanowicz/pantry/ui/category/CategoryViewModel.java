@@ -15,10 +15,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.hermanowicz.pantry.dao.db.category.Category;
-import com.hermanowicz.pantry.model.DatabaseMode;
+import com.hermanowicz.pantry.interfaces.AvailableDataListener;
+import com.hermanowicz.pantry.model.Database;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -33,15 +35,20 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class CategoryViewModel extends ViewModel {
 
     @Inject
-    CategoryUseCaseImpl categoryUseCase;
-    private LiveData<List<Category>> categoryListLiveData = new MutableLiveData<>();
-
+    CategoryUseCaseImpl useCase;
     private final String TAG = "RxJava-Categories";
+    private LiveData<List<Category>> categoryAllListLiveData = new MutableLiveData<>();
+    private final CompositeDisposable disposable = new CompositeDisposable();
+    private AvailableDataListener availableDataListener;
 
     @Inject
-    public CategoryViewModel(CategoryUseCaseImpl categoryUseCase){
-        this.categoryUseCase = categoryUseCase;
+    public CategoryViewModel(CategoryUseCaseImpl categoryUseCase) {
+        useCase = categoryUseCase;
         loadOnlineCategories();
+    }
+
+    public LiveData<List<Category>> getCategoryList() {
+        return categoryAllListLiveData;
     }
 
     private void loadOnlineCategories() {
@@ -84,7 +91,10 @@ public class CategoryViewModel extends ViewModel {
                         list.add(category);
                     }
                     emitter.onNext(list);
-                    categoryListLiveData = new MutableLiveData<>(list);
+
+                    MutableLiveData<List<Category>> tempCategoryList = new MutableLiveData<>(list);
+                    useCase.setOnlineCategoryList(tempCategoryList);
+                    availableDataListener.observeAvailableData();
                 }
 
                 @Override
@@ -95,10 +105,23 @@ public class CategoryViewModel extends ViewModel {
         });
     }
 
-    public void showDataForSelectedDatabase(DatabaseMode databaseMode) {
-        if(databaseMode.getDatabaseMode() == DatabaseMode.Mode.ONLINE)
-            loadOnlineCategories();
-        else
-            categoryListLiveData = categoryUseCase.getAllCategories();
+    public void clearDisposable() {
+        disposable.clear();
+    }
+
+    public void setAvailableDataListener(AvailableDataListener listener) {
+        availableDataListener = listener;
+    }
+
+    public void showDataForSelectedDatabase(Database databaseMode) {
+        categoryAllListLiveData = useCase.getAllCategories(databaseMode);
+    }
+
+    public Category getCategory(int position) {
+        return Objects.requireNonNull(categoryAllListLiveData.getValue()).get(position);
+    }
+
+    public boolean isAvailableData(){
+        return categoryAllListLiveData != null;
     }
 }

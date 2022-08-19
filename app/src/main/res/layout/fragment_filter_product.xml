@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
-            type="com.hermanowicz.pantry.ui.filter_product.FilterProductViewModel"/>
+            type="com.hermanowicz.pantry.ui.filter_product.FilterProductViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -27,7 +28,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:text="@string/Product_name"
+                    android:text="@string/product_name"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -66,7 +67,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:text="@string/Product_category"
+                    android:text="@string/product_category"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dividerAfterProductName" />
@@ -77,7 +78,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:spinnerMode="dropdown"
-                    android:entries="@array/Product_type_of_product_array"
+                    android:entries="@array/product_type_of_product_array"
                     tools:setOnItemSelectedListener="@{viewModel.mainCategorySelectedListener}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -95,7 +96,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:text="@string/Product_features"
+                    android:text="@string/product_features"
                     android:visibility="@{viewModel.detailCategoryVisibility, default=gone}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -107,7 +108,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:spinnerMode="dropdown"
-                    android:entries="@array/Product_type_of_product_array"
+                    android:entries="@array/product_type_of_product_array"
                     tools:setOnItemSelectedListener="@{viewModel.mainCategorySelectedListener}"
                     android:visibility="@{viewModel.detailCategoryVisibility, default=gone}"
                     app:layout_constraintStart_toStartOf="parent"
@@ -127,7 +128,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:text="@string/Product_storage_location"
+                    android:text="@string/product_storage_location"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dividerAfterDetailCategory" />
@@ -155,10 +156,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:text="@string/Product_expiration_date"
+                    android:text="@string/product_expiration_date"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dividerAfterStorageLocation" />
+
+                <CheckBox
+                    android:id="@+id/productExpirationDateSinceCheckbox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:checked="true"
+                    android:text="Nie podano"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/productExpirationDateSinceText" />
 
                 <DatePicker
                     android:id="@+id/productExpirationDateSinceInput"
@@ -173,7 +185,7 @@
                     android:calendarViewShown="false"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/productExpirationDateSinceText" />
+                    app:layout_constraintTop_toBottomOf="@id/productExpirationDateSinceCheckbox" />
 
                 <View
                     android:id="@+id/dividerAfterExpirationSinceDate"
@@ -187,10 +199,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:text="@string/Product_expiration_date"
+                    android:text="@string/product_expiration_date"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dividerAfterExpirationSinceDate" />
+
+                <CheckBox
+                    android:id="@+id/productExpirationDateForCheckbox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:checked="true"
+                    android:text="Nie podano"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/productExpirationDateForText" />
 
                 <DatePicker
                     android:id="@+id/productExpirationDateForInput"
@@ -205,7 +228,7 @@
                     android:calendarViewShown="false"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/productExpirationDateForText" />
+                    app:layout_constraintTop_toBottomOf="@id/productExpirationDateForCheckbox" />
 
                 <View
                     android:id="@+id/dividerAfterExpirationForDate"
@@ -219,10 +242,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:text="@string/Product_production_date"
+                    android:text="@string/product_production_date"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dividerAfterExpirationForDate" />
+
+                <CheckBox
+                    android:id="@+id/productProductionDateSinceCheckbox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:checked="true"
+                    android:text="Nie podano"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/productProductionDateSinceText" />
 
                 <DatePicker
                     android:id="@+id/productProductionDateSinceInput"
@@ -237,7 +271,7 @@
                     android:calendarViewShown="false"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/productProductionDateSinceText" />
+                    app:layout_constraintTop_toBottomOf="@id/productProductionDateSinceCheckbox" />
 
                 <View
                     android:id="@+id/dividerAfterProductionSinceDate"
@@ -251,10 +285,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:text="@string/Product_production_date"
+                    android:text="@string/product_production_date"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dividerAfterProductionSinceDate" />
+
+                <CheckBox
+                    android:id="@+id/productProductionDateForCheckbox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:checked="true"
+                    android:text="Nie podano"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/productProductionDateForText" />
 
                 <DatePicker
                     android:id="@+id/productProductionDateForInput"
@@ -269,7 +314,7 @@
                     android:calendarViewShown="false"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/productProductionDateForText" />
+                    app:layout_constraintTop_toBottomOf="@id/productProductionDateForCheckbox" />
 
                 <View
                     android:id="@+id/dividerAfterProductionForDate"
@@ -283,7 +328,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:text="@string/Product_composition"
+                    android:text="@string/product_composition"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dividerAfterProductionForDate" />
@@ -325,7 +370,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:text="@string/Product_healing_properties"
+                    android:text="@string/product_healing_properties"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dividerAfterComposition" />
@@ -367,7 +412,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:text="@string/Product_dosage"
+                    android:text="@string/product_dosage"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dividerAfterHealingProperties" />
@@ -409,7 +454,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:text="@string/Product_weight"
+                    android:text="@string/product_weight"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dividerAfterDosage" />
@@ -482,7 +527,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:text="@string/Product_volume"
+                    android:text="@string/product_volume"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dividerAfterProductWeight" />
@@ -555,7 +600,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:text="@string/Product_taste"
+                    android:text="@string/product_taste"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dividerAfterProductVolume" />
@@ -564,7 +609,7 @@
                     android:id="@+id/taste_sweet"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/Product_sweet"
+                    android:text="@string/product_sweet"
                     android:layout_marginHorizontal="@dimen/edittext_sides_margin"
                     android:checked="@={viewModel.isSweet}"
                     app:layout_constraintStart_toStartOf="parent"
@@ -574,7 +619,7 @@
                     android:id="@+id/taste_sour"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/Product_sour"
+                    android:text="@string/product_sour"
                     android:layout_marginHorizontal="@dimen/edittext_sides_margin"
                     android:checked="@={viewModel.isSour}"
                     app:layout_constraintStart_toStartOf="parent"
@@ -586,7 +631,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/edittext_sides_margin"
                     android:checked="@={viewModel.isSweetAndSour}"
-                    android:text="@string/Product_sweet_and_sour"
+                    android:text="@string/product_sweet_and_sour"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/taste_sour" />
 
@@ -594,7 +639,7 @@
                     android:id="@+id/taste_bitter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/Product_bitter"
+                    android:text="@string/product_bitter"
                     android:layout_marginHorizontal="@dimen/edittext_sides_margin"
                     android:checked="@={viewModel.isBitter}"
                     app:layout_constraintStart_toStartOf="parent"
@@ -604,7 +649,7 @@
                     android:id="@+id/taste_salty"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/Product_salty"
+                    android:text="@string/product_salty"
                     android:layout_marginHorizontal="@dimen/edittext_sides_margin"
                     android:checked="@={viewModel.isSalty}"
                     app:layout_constraintStart_toStartOf="parent"
@@ -622,7 +667,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:text="@string/Product_features"
+                    android:text="@string/product_features"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dividerAfterProductTaste" />
@@ -631,7 +676,7 @@
                     android:id="@+id/product_isVege"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/Product_vege"
+                    android:text="@string/product_vege"
                     android:layout_marginHorizontal="@dimen/edittext_sides_margin"
                     android:checked="@={viewModel.isVege}"
                     app:layout_constraintStart_toStartOf="parent"
@@ -641,7 +686,7 @@
                     android:id="@+id/product_isBio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/Product_bio"
+                    android:text="@string/product_bio"
                     android:layout_marginHorizontal="@dimen/edittext_sides_margin"
                     android:checked="@={viewModel.isBio}"
                     app:layout_constraintStart_toStartOf="parent"
@@ -651,7 +696,7 @@
                     android:id="@+id/product_hasSugar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/Product_has_sugar"
+                    android:text="@string/product_has_sugar"
                     android:layout_marginHorizontal="@dimen/edittext_sides_margin"
                     android:checked="@={viewModel.hasSugar}"
                     app:layout_constraintStart_toStartOf="parent"
@@ -661,7 +706,7 @@
                     android:id="@+id/product_hasSalt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/Product_has_salt"
+                    android:text="@string/product_has_salt"
                     android:layout_marginHorizontal="@dimen/edittext_sides_margin"
                     android:checked="@={viewModel.hasSalt}"
                     app:layout_constraintStart_toStartOf="parent"
@@ -675,7 +720,7 @@
             android:layout_height="wrap_content"
             android:layout_width="0dp"
             android:onClick="@{() -> viewModel.onClickFilterProducts()}"
-            android:text="@string/ProductDetailsActivity_filter"
+            android:text="@string/button_filter"
             android:layout_marginStart="@dimen/button_sides_margin"
             android:layout_marginEnd="@dimen/button_sides_margin"
             app:layout_constraintWidth_default="percent"
@@ -689,7 +734,7 @@
             android:onClick="@{() -> viewModel.onClickClearFilter()}"
             android:layout_marginStart="@dimen/button_sides_margin"
             android:layout_marginEnd="@dimen/button_sides_margin"
-            android:text="@string/MyPantryActivity_clear_filters"
+            android:text="@string/button_clear_filters"
             app:layout_constraintWidth_default="percent"
             app:layout_constraintWidth_percent=".45"
             app:layout_constraintEnd_toEndOf="parent"

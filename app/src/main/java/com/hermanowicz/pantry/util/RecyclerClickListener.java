@@ -30,14 +30,15 @@ import com.google.firebase.database.annotations.NotNull;
  * <h1>RecyclerClickListener</h1>
  * Class to detect long click in products view
  *
- * @author  Mateusz Hermanowicz
+ * @author Mateusz Hermanowicz
  */
 
 public class RecyclerClickListener implements RecyclerView.OnItemTouchListener {
 
     public interface OnItemClickListener {
-            void onItemClick(View view, int position);
-            void onItemLongClick(View view, int position);
+        void onItemClick(View view, int position);
+
+        void onItemLongClick(View view, int position);
     }
 
     private final OnItemClickListener listener;
@@ -48,16 +49,15 @@ public class RecyclerClickListener implements RecyclerView.OnItemTouchListener {
 
         gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
             @Override
-            public boolean onSingleTapUp(MotionEvent e)
-                {
-                    return true;
-                }
+            public boolean onSingleTapUp(MotionEvent e) {
+                return true;
+            }
 
             @Override
             public void onLongPress(MotionEvent e) {
                 View childView = recyclerView.findChildViewUnder(e.getX(), e.getY());
 
-                if(childView != null && RecyclerClickListener.this.listener != null) {
+                if (childView != null && RecyclerClickListener.this.listener != null) {
                     RecyclerClickListener.this.listener.onItemLongClick(childView, recyclerView.getChildAdapterPosition(childView));
                 }
             }
@@ -68,15 +68,17 @@ public class RecyclerClickListener implements RecyclerView.OnItemTouchListener {
     public boolean onInterceptTouchEvent(RecyclerView view, MotionEvent e) {
         View childView = view.findChildViewUnder(e.getX(), e.getY());
 
-        if(childView != null && listener != null && gestureDetector.onTouchEvent(e)) {
+        if (childView != null && listener != null && gestureDetector.onTouchEvent(e)) {
             listener.onItemClick(childView, view.getChildAdapterPosition(childView));
         }
         return false;
     }
 
     @Override
-    public void onTouchEvent(@NotNull RecyclerView view, @NotNull MotionEvent motionEvent){}
+    public void onTouchEvent(@NotNull RecyclerView view, @NotNull MotionEvent motionEvent) {
+    }
 
     @Override
-    public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) { }
+    public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+    }
 }

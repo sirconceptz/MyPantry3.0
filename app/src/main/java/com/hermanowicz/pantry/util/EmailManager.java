@@ -29,7 +29,7 @@ import com.android.volley.toolbox.Volley;
  * <h1>EmailManager</h1>
  * Class used to send notifications by email
  *
- * @author  Mateusz Hermanowicz
+ * @author Mateusz Hermanowicz
  */
 
 public class EmailManager extends Application {

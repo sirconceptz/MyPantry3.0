@@ -30,7 +30,7 @@ import java.util.List;
  * <h1>StorageLocationDao</h1>
  * Storage location dao needed to support database.
  *
- * @author  Mateusz Hermanowicz
+ * @author Mateusz Hermanowicz
  */
 
 @Dao

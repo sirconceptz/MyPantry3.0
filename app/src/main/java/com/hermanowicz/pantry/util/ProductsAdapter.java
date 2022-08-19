@@ -43,7 +43,7 @@ import java.util.List;
  * <h1>ProductsAdapter</h1>
  * View's adapter for products view
  *
- * @author  Mateusz Hermanowicz
+ * @author Mateusz Hermanowicz
  */
 
 public class ProductsAdapter extends
@@ -63,12 +63,12 @@ public class ProductsAdapter extends
         this.preferences = preferences;
     }
 
-    public void setData(@NonNull List<GroupProduct> newData){
+    public void setData(@NonNull List<GroupProduct> newData) {
         this.productList = newData;
         notifyDataSetChanged();
     }
 
-    public void setMultiSelectList(@NonNull List<Product> multiSelectList){
+    public void setMultiSelectList(@NonNull List<Product> multiSelectList) {
         this.multiSelectList = multiSelectList;
         notifyDataSetChanged();
     }
@@ -88,39 +88,38 @@ public class ProductsAdapter extends
         Context context = nameTv.getContext();
         Resources resources = context.getResources();
         final Product product = productList.get(position).getProduct();
-        String quantityString = String.format("%s: %s", resources.getString(R.string.Product_quantity), productList.get(position).getQuantity());
-        String weightString = String.format("%s: %s%s", resources.getString(R.string.Product_weight), product.getWeight(), resources.getString(R.string.Product_weight_unit));
-        String volumeString = String.format("%s: %s%s", resources.getString(R.string.Product_volume), product.getVolume(), resources.getString(R.string.Product_volume_unit));
+        String quantityString = String.format("%s: %s", resources.getString(R.string.product_quantity), productList.get(position).getQuantity());
+        String weightString = String.format("%s: %s%s", resources.getString(R.string.product_weight), product.getWeight(), resources.getString(R.string.product_weight_unit));
+        String volumeString = String.format("%s: %s%s", resources.getString(R.string.product_volume), product.getVolume(), resources.getString(R.string.product_volume_unit));
 
         nameTv.setText(product.getShortName());
         quantity.setText(quantityString);
         weightTv.setText(weightString);
         volumeTv.setText(volumeString);
-        if(product.getHasSugar())
+        if (product.getHasSugar())
             hasSugar.setVisibility(View.VISIBLE);
         else
             hasSugar.setVisibility(View.GONE);
-        if(product.getHasSalt())
+        if (product.getHasSalt())
             hasSalt.setVisibility(View.VISIBLE);
         else
             hasSalt.setVisibility(View.GONE);
-        if(product.getIsVege())
+        if (product.getIsVege())
             isVege.setVisibility(View.VISIBLE);
         else
             isVege.setVisibility(View.GONE);
-        if(product.getIsBio())
+        if (product.getIsBio())
             isBio.setVisibility(View.VISIBLE);
         else
             isBio.setVisibility(View.GONE);
-        if(product.getExpirationDate().length() > 1) {
+        if (product.getExpirationDate().length() > 1) {
             DateHelper dateHelper = new DateHelper(product.getExpirationDate());
             expirationDateTv.setText(dateHelper.getDateInLocalFormat());
-        }
-        else{
+        } else {
             expirationDateTv.setText(product.getExpirationDate());
         }
 
-        if(viewHolder.getAdapterPosition() > itemAnimPosition) {
+        if (viewHolder.getAdapterPosition() > itemAnimPosition) {
             Animation animation = AnimationUtils.loadAnimation(context, R.anim.slide_in);
             viewHolder.itemView.startAnimation(animation);
             itemAnimPosition = viewHolder.getAdapterPosition();
@@ -148,7 +147,7 @@ public class ProductsAdapter extends
         return new ViewHolder(binding.getRoot());
     }
 
-   static class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
 
         ViewHolder(View itemView) {
             super(itemView);

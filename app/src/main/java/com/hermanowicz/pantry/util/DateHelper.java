@@ -29,7 +29,7 @@ import java.util.Date;
  * <h1>DateHelper</h1>
  * Class used to get date in specific formats
  *
- * @author  Mateusz Hermanowicz
+ * @author Mateusz Hermanowicz
  */
 
 public class DateHelper {
@@ -39,51 +39,49 @@ public class DateHelper {
     private final SimpleDateFormat sqlDateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private String[] dateArray;
 
-    public DateHelper(@NonNull String date){
+    public DateHelper(@NonNull String date) {
         dateArray = date.split("\\.");
-        if(dateArray.length < 2)
+        if (dateArray.length < 2)
             dateArray = date.split("-");
     }
 
-    public int getDayFromDate(){
+    public int getDayFromDate() {
         return Integer.parseInt(dateArray[2]);
     }
 
-    public int getMonthFromDate(){
+    public int getMonthFromDate() {
         return Integer.parseInt(dateArray[1]);
     }
 
-    public int getYearFromDate(){
+    public int getYearFromDate() {
         return Integer.parseInt(dateArray[0]);
     }
 
     public String getDateInLocalFormat() {
-        if (dateArray.length >= 2){
-            calendar.set(Integer.parseInt(dateArray[0]), Integer.parseInt(dateArray[1])-1, Integer.parseInt(dateArray[2]));
+        if (dateArray.length >= 2) {
+            calendar.set(Integer.parseInt(dateArray[0]), Integer.parseInt(dateArray[1]) - 1, Integer.parseInt(dateArray[2]));
             Date date = calendar.getTime();
             return localDateFormat.format(date);
-        }
-        else
+        } else
             return "-";
     }
 
     public String getDateInSqlFormat() {
-        if (dateArray.length >= 2){
-            calendar.set(Integer.parseInt(dateArray[0]), Integer.parseInt(dateArray[1])-1, Integer.parseInt(dateArray[2]));
+        if (dateArray.length >= 2) {
+            calendar.set(Integer.parseInt(dateArray[0]), Integer.parseInt(dateArray[1]) - 1, Integer.parseInt(dateArray[2]));
             Date date = calendar.getTime();
             return sqlDateFormat.format(date);
-        }
-        else
+        } else
             return "-";
     }
 
-    public static int getActualDay(int addDayToDate){
+    public static int getActualDay(int addDayToDate) {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DAY_OF_MONTH, addDayToDate);
         return calendar.get(Calendar.DAY_OF_MONTH);
     }
 
-    public static int getActualMonth(){
+    public static int getActualMonth() {
         Calendar calendar = Calendar.getInstance();
         return calendar.get(Calendar.MONTH);
     }

@@ -17,36 +17,46 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.hermanowicz.pantry.R;
 import com.hermanowicz.pantry.dao.db.storagelocation.StorageLocation;
 import com.hermanowicz.pantry.databinding.FragmentStorageLocationsBinding;
+import com.hermanowicz.pantry.interfaces.AvailableDataListener;
+import com.hermanowicz.pantry.ui.database_mode.DatabaseModeViewModel;
 import com.hermanowicz.pantry.ui.storage_locations.StorageLocationsViewModel;
 import com.hermanowicz.pantry.util.RecyclerClickListener;
 import com.hermanowicz.pantry.util.StorageLocationsAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
-public class StorageLocationsFragment extends Fragment {
+public class StorageLocationsFragment extends Fragment implements AvailableDataListener {
 
-    private StorageLocationsViewModel viewModel;
     private FragmentStorageLocationsBinding binding;
+    private DatabaseModeViewModel databaseModeViewModel;
+    private StorageLocationsViewModel storageLocationsViewModel;
     private View view;
     private final StorageLocationsAdapter storageLocationsAdapter = new StorageLocationsAdapter();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        viewModel = new ViewModelProvider(this).get(StorageLocationsViewModel.class);
-
-        binding = FragmentStorageLocationsBinding.inflate(inflater, container, false);
-        binding.setViewModel(viewModel);
-        view = binding.getRoot();
-
+        initView(inflater, container);
         setupFloatingActionButton();
         setupRecyclerView();
-        setObservers(viewModel);
+        setDatabaseObserver();
         setListeners();
 
         return view;
+    }
+
+    private void initView(@NonNull LayoutInflater inflater, ViewGroup container) {
+        databaseModeViewModel = new ViewModelProvider(this).get(DatabaseModeViewModel.class);
+        storageLocationsViewModel = new ViewModelProvider(this).get(StorageLocationsViewModel.class);
+        storageLocationsViewModel.setAvailableDataListener(this);
+
+        binding = FragmentStorageLocationsBinding.inflate(inflater, container, false);
+        binding.setViewModel(storageLocationsViewModel);
+        view = binding.getRoot();
     }
 
     private void setupFloatingActionButton() {
@@ -61,9 +71,7 @@ public class StorageLocationsFragment extends Fragment {
         binding.recyclerviewStorageLocations.setItemAnimator(new DefaultItemAnimator());
     }
 
-    private void setObservers(StorageLocationsViewModel viewModel) {
-        viewModel.getAllStorageLocationList().observe(getViewLifecycleOwner(),
-                this::setDataRecyclerViewAdapter);
+    private void setDatabaseObserver() {
     }
 
     private void setListeners() {
@@ -71,7 +79,7 @@ public class StorageLocationsFragment extends Fragment {
                 binding.recyclerviewStorageLocations, new RecyclerClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                StorageLocation storageLocation = viewModel.getStorageLocation(position);
+                StorageLocation storageLocation = storageLocationsViewModel.getStorageLocation(position);
                 navigateToStorageLocationDetails(view, storageLocation);
             }
 
@@ -93,13 +101,38 @@ public class StorageLocationsFragment extends Fragment {
     }
 
     private void onClickNewStorageLocation() {
+        ArrayList<StorageLocation> storageLocationArrayList =
+                new ArrayList<>(Objects.requireNonNull(storageLocationsViewModel.getAllStorageLocationList().getValue()));
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList("storageLocationArrayList", storageLocationArrayList);
         Navigation.findNavController(view)
-                .navigate(R.id.action_nav_storage_locations_to_nav_new_storage_location);
+                .navigate(R.id.action_nav_storage_locations_to_nav_new_storage_location, bundle);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    @Override
+    public void observeAvailableData() {
+        databaseModeViewModel.getDatabaseMode().observe(getViewLifecycleOwner(),
+                storageLocationsViewModel::showDataForSelectedDatabase);
+        storageLocationsViewModel.getAllStorageLocationList().observe(getViewLifecycleOwner(),
+                this::setDataRecyclerViewAdapter);
+    }
+
+    @Override
+    public void onStart(){
+        if(storageLocationsViewModel.isAvailableData())
+            observeAvailableData();
+        super.onStart();
+    }
+
+    @Override
+    public void onPause() {
+        storageLocationsViewModel.clearDisposable();
+        super.onPause();
     }
 }

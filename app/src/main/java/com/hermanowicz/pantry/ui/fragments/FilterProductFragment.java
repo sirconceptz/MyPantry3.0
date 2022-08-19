@@ -21,34 +21,37 @@ import dagger.hilt.android.AndroidEntryPoint;
 public class FilterProductFragment extends Fragment {
 
     private FragmentFilterProductBinding binding;
-    private FilterProductViewModel viewModel;
+    private FilterProductViewModel filterProductViewModel;
+    private View view;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        viewModel = new ViewModelProvider(this).get(FilterProductViewModel.class);
-
-        binding = FragmentFilterProductBinding.inflate(inflater, container, false);
-        binding.setViewModel(viewModel);
-        View root = binding.getRoot();
-
+        initView(inflater, container);
         setObservers();
 
-        return root;
+        return view;
+    }
+
+    private void initView(@NonNull LayoutInflater inflater, ViewGroup container) {
+        filterProductViewModel = new ViewModelProvider(this).get(FilterProductViewModel.class);
+        binding = FragmentFilterProductBinding.inflate(inflater, container, false);
+        binding.setViewModel(filterProductViewModel);
+        view = binding.getRoot();
     }
 
     private void setObservers() {
-        viewModel.getMainCategoryValue().observe(getViewLifecycleOwner(), this::updateDetailCategoryAdapter);
-        viewModel.getStorageLocations().observe(getViewLifecycleOwner(), this::updateStorageLocationAdapter);
-        viewModel.getOwnCategoriesNamesLiveData().observe(getViewLifecycleOwner(), viewModel::setOwnCategoriesNamesArray);
+        filterProductViewModel.getMainCategoryValue().observe(getViewLifecycleOwner(), this::updateDetailCategoryAdapter);
+        filterProductViewModel.getStorageLocations().observe(getViewLifecycleOwner(), this::updateStorageLocationAdapter);
+        filterProductViewModel.getOwnCategoriesNamesLiveData().observe(getViewLifecycleOwner(), filterProductViewModel::setOwnCategoriesNamesArray);
     }
 
-    private void updateDetailCategoryAdapter(String selectedMainCategory){
+    private void updateDetailCategoryAdapter(String selectedMainCategory) {
         ArrayAdapter<CharSequence> detailCategoryAdapter =
-                DetailCategoryAdapter.getDetailCategoryAdapter(requireContext(), selectedMainCategory, viewModel.getOwnCategoriesNamesArray());
+                DetailCategoryAdapter.getDetailCategoryAdapter(requireContext(), selectedMainCategory, filterProductViewModel.getOwnCategoriesNamesArray());
         binding.detailCategoryInput.setAdapter(detailCategoryAdapter);
     }
 
-    private void updateStorageLocationAdapter(String[] storageLocations){
+    private void updateStorageLocationAdapter(String[] storageLocations) {
         ArrayAdapter<CharSequence> storageLocationAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_dropdown_item, storageLocations);
         binding.storageLocationInput.setAdapter(storageLocationAdapter);
     }

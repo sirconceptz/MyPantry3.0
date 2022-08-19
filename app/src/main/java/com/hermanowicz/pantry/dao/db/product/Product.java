@@ -42,27 +42,48 @@ import java.util.List;
 public class Product implements Parcelable {
 
     @PrimaryKey(autoGenerate = true)
-    @SerializedName("id") private int id;
-    @SerializedName("name") private String name = "";
-    @SerializedName("hashCode") private String hashCode = "";
-    @SerializedName("typeOfProduct") private String mainCategory = "";
-    @SerializedName("productFeatures") private String detailCategory = "";
-    @SerializedName("storageLocation") private String storageLocation = "";
-    @SerializedName("expirationDate") private String expirationDate = "";
-    @SerializedName("productionDate") private String productionDate = "";
-    @SerializedName("composition") private String composition = "";
-    @SerializedName("healingProperties") private String healingProperties = "";
-    @SerializedName("dosage") private String dosage = "";
-    @SerializedName("volume") private int volume;
-    @SerializedName("weight") private int weight;
-    @SerializedName("hasSugar") private boolean hasSugar;
-    @SerializedName("hasSalt") private boolean hasSalt;
-    @SerializedName("isVege") private boolean isVege;
-    @SerializedName("isBio") private boolean isBio;
-    @SerializedName("taste") private String taste = "";
-    @SerializedName("photoName") private String photoName = "";
-    @SerializedName("photoDescription") private String photoDescription = "";
-    @SerializedName("barcode") private String barcode = "";
+    @SerializedName("id")
+    private int id;
+    @SerializedName("name")
+    private String name = "";
+    @SerializedName("hashCode")
+    private String hashCode = "";
+    @SerializedName("typeOfProduct")
+    private String mainCategory = "";
+    @SerializedName("productFeatures")
+    private String detailCategory = "";
+    @SerializedName("storageLocation")
+    private String storageLocation = "";
+    @SerializedName("expirationDate")
+    private String expirationDate = "";
+    @SerializedName("productionDate")
+    private String productionDate = "";
+    @SerializedName("composition")
+    private String composition = "";
+    @SerializedName("healingProperties")
+    private String healingProperties = "";
+    @SerializedName("dosage")
+    private String dosage = "";
+    @SerializedName("volume")
+    private int volume;
+    @SerializedName("weight")
+    private int weight;
+    @SerializedName("hasSugar")
+    private boolean hasSugar;
+    @SerializedName("hasSalt")
+    private boolean hasSalt;
+    @SerializedName("isVege")
+    private boolean isVege;
+    @SerializedName("isBio")
+    private boolean isBio;
+    @SerializedName("taste")
+    private String taste = "";
+    @SerializedName("photoName")
+    private String photoName = "";
+    @SerializedName("photoDescription")
+    private String photoDescription = "";
+    @SerializedName("barcode")
+    private String barcode = "";
 
     public Product(Parcel in) {
         id = in.readInt();
@@ -88,7 +109,8 @@ public class Product implements Parcelable {
         barcode = in.readString();
     }
 
-    public Product() {}
+    public Product() {
+    }
 
     public static final Creator<Product> CREATOR = new Creator<Product>() {
         @Override
@@ -114,8 +136,8 @@ public class Product implements Parcelable {
         return name;
     }
 
-    public String getShortName(){
-        if(name.length()>18)
+    public String getShortName() {
+        if (name.length() > 18)
             return name.substring(0, 17) + "...";
         else
             return name;
@@ -277,10 +299,10 @@ public class Product implements Parcelable {
         this.barcode = barcode;
     }
 
-    public static ArrayList<Product> getSimilarProductsList(@NonNull Product testedProduct, @NonNull List<Product> productList){
+    public static ArrayList<Product> getSimilarProductsList(@NonNull Product testedProduct, @NonNull List<Product> productList) {
         ArrayList<Product> similarProductList = new ArrayList<>();
-        for(Product singleProduct : productList){
-            if(singleProduct.getName().equals(testedProduct.getName())
+        for (Product singleProduct : productList) {
+            if (singleProduct.getName().equals(testedProduct.getName())
                     && singleProduct.getMainCategory().equals(testedProduct.getMainCategory())
                     && singleProduct.getDetailCategory().equals(testedProduct.getDetailCategory())
                     && singleProduct.getExpirationDate().equals(testedProduct.getExpirationDate())

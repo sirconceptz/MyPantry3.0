@@ -20,11 +20,14 @@ public class AboutAuthorFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        binding = FragmentAboutAuthorBinding.inflate(inflater, container, false);
-
+        initView(inflater, container);
         setImageViewListeners();
 
         return binding.getRoot();
+    }
+
+    private void initView(@NonNull LayoutInflater inflater, ViewGroup container) {
+        binding = FragmentAboutAuthorBinding.inflate(inflater, container, false);
     }
 
     private void setImageViewListeners() {
@@ -32,7 +35,7 @@ public class AboutAuthorFragment extends Fragment {
         binding.facebook.setOnClickListener(view -> onClickFacebook());
     }
 
-    private Intent prepareIntent(String websiteAddress){
+    private Intent prepareIntent(String websiteAddress) {
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_VIEW);
         intent.addCategory(Intent.CATEGORY_BROWSABLE);
@@ -47,12 +50,12 @@ public class AboutAuthorFragment extends Fragment {
     }
 
     public void onClickLinkedIn() {
-        Intent intent = prepareIntent(getString(R.string.Author_linkedin_profile));
+        Intent intent = prepareIntent(getString(R.string.author_linkedin_profile));
         startActivity(intent);
     }
 
     public void onClickFacebook() {
-        Intent intent = prepareIntent(getString(R.string.Author_facebook_profile));
+        Intent intent = prepareIntent(getString(R.string.author_facebook_profile));
         startActivity(intent);
     }
 }

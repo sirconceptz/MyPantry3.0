@@ -1,8 +1,14 @@
 package com.hermanowicz.pantry.ui.scan_product;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
+import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
+
+import com.hermanowicz.pantry.dao.db.product.Product;
+import com.hermanowicz.pantry.interfaces.ScanDecodedResult;
+import com.hermanowicz.pantry.util.ScanIntentResult;
+import com.hermanowicz.pantry.util.ScanOptions;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -13,16 +19,34 @@ public class ScanProductViewModel extends ViewModel {
 
     @Inject
     ScanProductUseCaseImpl useCase;
-    private final MutableLiveData<String> text;
 
     @Inject
     public ScanProductViewModel(ScanProductUseCaseImpl scanProductUseCase) {
         useCase = scanProductUseCase;
-        text = new MutableLiveData<>();
-        text.setValue("SCAN PRODUCT");
     }
 
-    public LiveData<String> getText() {
-        return text;
+    public void setProductList(List<Product> productList) {
+        useCase.setProductList(productList);
+    }
+
+    public void setResult(ScanIntentResult result) {
+        useCase.setScanResult(result);
+    }
+
+    public void setViewListener(ScanDecodedResult scanDecodedResult){
+        useCase.setScanDecodedResultListener(scanDecodedResult);
+    }
+
+    public void setScanType(String scanType){
+        useCase.setScanType(scanType);
+    }
+
+    @NonNull
+    public ScanOptions getScanOptions() {
+        return useCase.getScanOptions();
+    }
+
+    public void setBarcode(String barcode) {
+        useCase.setBarcode(barcode);
     }
 }

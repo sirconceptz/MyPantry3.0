@@ -16,10 +16,8 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.hermanowicz.pantry.dao.db.product.Product;
 import com.hermanowicz.pantry.interfaces.AvailableDataListener;
-import com.hermanowicz.pantry.model.DatabaseMode;
+import com.hermanowicz.pantry.model.Database;
 import com.hermanowicz.pantry.model.GroupProduct;
-
-import org.checkerframework.checker.units.qual.C;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,13 +39,11 @@ public class ProductViewModel extends ViewModel {
 
     @Inject
     ProductUseCaseImpl productUseCase;
-
     private final String TAG = "RxJava-Products";
-    private LiveData<List<Product>> productListLiveData = new MutableLiveData<>();
+    private LiveData<List<Product>> productListLiveData;
     private final MutableLiveData<List<GroupProduct>> groupProductList = new MutableLiveData<>();
-    private CompositeDisposable disposable = new CompositeDisposable();
+    private final CompositeDisposable disposable = new CompositeDisposable();
     private AvailableDataListener availableDataListener;
-    private DatabaseMode databaseMode;
 
     @Inject
     public ProductViewModel(ProductUseCaseImpl productUseCase) {
@@ -75,15 +71,17 @@ public class ProductViewModel extends ViewModel {
         disposable.add(productDisposable);
     }
 
-    private final DisposableObserver<List<Product>> disposableObserver = new DisposableObserver<List<Product>>() {
+    private final DisposableObserver<List<Product>> disposableObserver = new DisposableObserver<>() {
         @Override
         public void onComplete() {
             Log.d(TAG, "onComplete()");
         }
+
         @Override
         public void onError(@NonNull Throwable e) {
             Log.e(TAG, "onError()", e);
         }
+
         @Override
         public void onNext(@NonNull List<Product> productList) {
             Log.i(TAG, "onNext()");
@@ -94,9 +92,14 @@ public class ProductViewModel extends ViewModel {
         return Observable.create(emitter -> {
             String user = FirebaseAuth.getInstance().getUid();
             FirebaseDatabase database = FirebaseDatabase.getInstance();
-            assert user != null;
-            Query query = database.getReference().child("products").child(user);
-            query.addValueEventListener(valueEventListener(emitter));
+            if(user != null && productUseCase.checkIsInternetConnection()) {
+                Query query = database.getReference().child("products").child(user);
+                query.addValueEventListener(valueEventListener(emitter));
+            }
+            else{
+                productUseCase.setOnlineProductList(new MutableLiveData<>());
+                availableDataListener.observeAvailableData();
+            }
         });
     }
 
@@ -112,8 +115,10 @@ public class ProductViewModel extends ViewModel {
                     list.add(product);
                 }
                 emitter.onNext(list);
+
                 MutableLiveData<List<Product>> tempProductList = new MutableLiveData<>(list);
                 productUseCase.setOnlineProductList(tempProductList);
+                availableDataListener.observeAvailableData();
             }
 
             @Override
@@ -123,13 +128,11 @@ public class ProductViewModel extends ViewModel {
         };
     }
 
-    public void showDataForSelectedDatabase(@NonNull DatabaseMode databaseMode) {
-        this.databaseMode = databaseMode;
+    public void updateDataForSelectedDatabase(@NonNull Database databaseMode) {
         productListLiveData = productUseCase.getAllProducts(databaseMode);
-        availableDataListener.observeAvailableData();
     }
 
-    public void clearDisposable(){
+    public void clearDisposable() {
         disposable.clear();
     }
 
@@ -139,5 +142,21 @@ public class ProductViewModel extends ViewModel {
 
     public LiveData<List<Product>> getAllProductList() {
         return productListLiveData;
+    }
+
+    public ArrayList<Product> getProductSimilarProductsList(int position) {
+        Product product = getGroupProduct(position).getProduct();
+        List<Product> productList = getAllProductList().getValue();
+        assert productList != null;
+        List<Product> similarProducts = Product.getSimilarProductsList(product, productList);
+        return new ArrayList<>(similarProducts);
+    }
+
+    public boolean isAvailableData(){
+        return productListLiveData != null;
+    }
+
+    public boolean isInternetConnection() {
+        return productUseCase.checkIsInternetConnection();
     }
 }

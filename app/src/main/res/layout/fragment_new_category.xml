@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
-            type="com.hermanowicz.pantry.ui.new_category.NewCategoryViewModel"/>
+            type="com.hermanowicz.pantry.ui.new_category.NewCategoryViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -23,23 +24,13 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:id="@+id/fragmentLabel"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:text="@string/CategoriesActivity_new_category"
-                    android:textAppearance="?android:textAppearanceLarge"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
                     android:id="@+id/categoryNameText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:text="@string/CategoryDetailsActivity_name"
+                    android:text="@string/form_category_name"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/fragmentLabel" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/layout_name"
@@ -76,7 +67,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:text="@string/CategoryDetailsActivity_description"
+                    android:text="@string/form_category_description"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dividerAfterCategoryName" />
 
@@ -115,10 +106,11 @@
         </ScrollView>
 
         <Button
+            android:id="@+id/button_addNewCategory"
             android:layout_height="wrap_content"
             android:layout_width="0dp"
             android:onClick="@{() -> viewModel.onClickAddCategory()}"
-            android:text="@string/CategoriesActivity_new_category"
+            android:text="@string/title_new_category"
             android:layout_marginStart="@dimen/button_sides_margin"
             android:layout_marginEnd="@dimen/button_sides_margin"
             style="@style/CustomButton"
@@ -128,12 +120,13 @@
             app:layout_constraintBottom_toBottomOf="parent" />
 
         <Button
+            android:id="@+id/button_clearFields"
             android:layout_height="wrap_content"
             android:layout_width="0dp"
             android:onClick="@{() -> viewModel.onClickClearFields()}"
             android:layout_marginStart="@dimen/button_sides_margin"
             android:layout_marginEnd="@dimen/button_sides_margin"
-            android:text="@string/MyPantryActivity_clear"
+            android:text="@string/button_clear"
             style="@style/CustomButton"
             app:layout_constraintWidth_default="percent"
             app:layout_constraintWidth_percent=".45"

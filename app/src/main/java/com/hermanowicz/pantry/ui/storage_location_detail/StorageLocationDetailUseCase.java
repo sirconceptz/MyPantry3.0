@@ -4,5 +4,6 @@ import com.hermanowicz.pantry.dao.db.storagelocation.StorageLocation;
 
 interface StorageLocationDetailUseCase {
     void deleteStorageLocation(StorageLocation storageLocation);
+
     void updateStorageLocation(StorageLocation storageLocation);
 }

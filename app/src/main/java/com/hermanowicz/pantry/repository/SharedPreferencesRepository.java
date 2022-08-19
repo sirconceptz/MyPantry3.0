@@ -2,10 +2,18 @@ package com.hermanowicz.pantry.repository;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.hermanowicz.pantry.model.DatabaseMode;
+import com.hermanowicz.pantry.model.Database;
 
 public interface SharedPreferencesRepository {
-    MutableLiveData<DatabaseMode> getDatabaseMode();
-    void setDatabaseMode(DatabaseMode databaseMode);
-    DatabaseMode getDatabaseModeFromSettings();
+    MutableLiveData<Database> getDatabaseMode();
+
+    void setDatabaseMode(Database databaseMode);
+
+    Database getDatabaseModeFromSettings();
+
+    int getSelectedCameraType();
+
+    boolean getSelectedSoundMode();
+
+    boolean getIsBigPrintQRCode();
 }

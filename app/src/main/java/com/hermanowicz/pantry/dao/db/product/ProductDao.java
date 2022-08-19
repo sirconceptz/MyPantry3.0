@@ -30,7 +30,7 @@ import java.util.List;
  * <h1>ProductsDao</h1>
  * Products dao needed to support database.
  *
- * @author  Mateusz Hermanowicz
+ * @author Mateusz Hermanowicz
  */
 
 @Dao
@@ -42,14 +42,14 @@ public interface ProductDao {
     LiveData<List<Product>> getAllProducts();
 
     @Insert
-    void insert(Product... products);
+    void insert(List<Product> productList);
 
     @Delete
-    void delete(Product... products);
+    void delete(List<Product> productList);
 
     @Query("DELETE FROM products")
     void deleteAll();
 
     @Update
-    void update(Product... products);
+    void update(List<Product> productList);
 }

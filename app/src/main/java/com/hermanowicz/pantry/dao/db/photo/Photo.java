@@ -43,7 +43,8 @@ public class Photo implements Parcelable {
         this.content = content;
     }
 
-    public Photo() {}
+    public Photo() {
+    }
 
     public static final Creator<Photo> CREATOR = new Creator<Photo>() {
         @Override

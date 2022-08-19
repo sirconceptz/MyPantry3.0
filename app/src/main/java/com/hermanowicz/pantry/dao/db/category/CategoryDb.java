@@ -29,7 +29,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
  * <h1>CategoryDb/h1>
  * Category database class
  *
- * @author  Mateusz Hermanowicz
+ * @author Mateusz Hermanowicz
  */
 
 @Database(entities = {Category.class}, version = 1, exportSchema = false)
@@ -44,7 +44,7 @@ public abstract class CategoryDb extends RoomDatabase {
         synchronized (sLock) {
             if (INSTANCE == null) {
                 INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                        CategoryDb.class, "CategoryDb.db")
+                                CategoryDb.class, "CategoryDb.db")
                         .allowMainThreadQueries()
                         .addCallback(new Callback() {
                             @Override

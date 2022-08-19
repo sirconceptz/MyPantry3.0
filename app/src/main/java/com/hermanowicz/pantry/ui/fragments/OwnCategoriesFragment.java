@@ -17,36 +17,44 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.hermanowicz.pantry.R;
 import com.hermanowicz.pantry.dao.db.category.Category;
 import com.hermanowicz.pantry.databinding.FragmentOwnCategoriesBinding;
-import com.hermanowicz.pantry.ui.own_categories.OwnCategoriesViewModel;
+import com.hermanowicz.pantry.interfaces.AvailableDataListener;
+import com.hermanowicz.pantry.ui.category.CategoryViewModel;
+import com.hermanowicz.pantry.ui.database_mode.DatabaseModeViewModel;
 import com.hermanowicz.pantry.util.OwnCategoriesAdapter;
 import com.hermanowicz.pantry.util.RecyclerClickListener;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
-public class OwnCategoriesFragment extends Fragment {
+public class OwnCategoriesFragment extends Fragment implements AvailableDataListener {
 
-    private OwnCategoriesViewModel viewModel;
     private FragmentOwnCategoriesBinding binding;
+    private CategoryViewModel categoryViewModel;
+    private DatabaseModeViewModel databaseModeViewModel;
     private View view;
     private final OwnCategoriesAdapter ownCategoriesAdapter = new OwnCategoriesAdapter();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        viewModel = new ViewModelProvider(this).get(OwnCategoriesViewModel.class);
-
-        binding = FragmentOwnCategoriesBinding.inflate(inflater, container, false);
-        binding.setViewModel(viewModel);
-        view = binding.getRoot();
-
+        initView(inflater, container);
         setupFloatingActionButton();
         setupRecyclerView();
-        setObservers(viewModel);
         setListeners();
 
         return view;
+    }
+
+    private void initView(@NonNull LayoutInflater inflater, ViewGroup container) {
+        databaseModeViewModel = new ViewModelProvider(this).get(DatabaseModeViewModel.class);
+        categoryViewModel = new ViewModelProvider(this).get(CategoryViewModel.class);
+        categoryViewModel.setAvailableDataListener(this);
+        binding = FragmentOwnCategoriesBinding.inflate(inflater, container, false);
+        binding.setViewModel(categoryViewModel);
+        view = binding.getRoot();
     }
 
     private void setupFloatingActionButton() {
@@ -61,17 +69,12 @@ public class OwnCategoriesFragment extends Fragment {
         binding.recyclerviewCategories.setItemAnimator(new DefaultItemAnimator());
     }
 
-    private void setObservers(OwnCategoriesViewModel viewModel) {
-        viewModel.getAllCategories().observe(getViewLifecycleOwner(),
-                this::setDataRecyclerViewAdapter);
-    }
-
     private void setListeners() {
         binding.recyclerviewCategories.addOnItemTouchListener(new RecyclerClickListener(getContext(),
                 binding.recyclerviewCategories, new RecyclerClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Category category = viewModel.getCategory(position);
+                Category category = categoryViewModel.getCategory(position);
                 navigateToCategoryDetails(view, category);
             }
 
@@ -92,13 +95,38 @@ public class OwnCategoriesFragment extends Fragment {
     }
 
     private void onClickNewCategory() {
+        ArrayList<Category> categoryArrayList =
+                new ArrayList<>(Objects.requireNonNull(categoryViewModel.getCategoryList().getValue()));
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList("categoryArrayList", categoryArrayList);
         Navigation.findNavController(view)
-                .navigate(R.id.action_nav_own_categories_to_nav_new_category);
+                .navigate(R.id.action_nav_own_categories_to_nav_new_category, bundle);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    @Override
+    public void observeAvailableData() {
+        databaseModeViewModel.getDatabaseMode().observe(getViewLifecycleOwner(),
+                categoryViewModel::showDataForSelectedDatabase);
+        categoryViewModel.getCategoryList().observe(getViewLifecycleOwner(),
+                this::setDataRecyclerViewAdapter);
+    }
+
+    @Override
+    public void onStart(){
+        if(categoryViewModel.isAvailableData())
+            observeAvailableData();
+        super.onStart();
+    }
+
+    @Override
+    public void onPause() {
+        categoryViewModel.clearDisposable();
+        super.onPause();
     }
 }

@@ -20,29 +20,27 @@ package com.hermanowicz.pantry.util;
 import android.content.Context;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
 /**
  * <h1>PremiumAccess</h1>
  * Class to support check user is premium. Saved in encrypted preferences.
  *
- * @author  Mateusz Hermanowicz
+ * @author Mateusz Hermanowicz
  */
 
 public class PremiumAccess {
 
     private final Context context;
 
-    public PremiumAccess(@NonNull Context context){
+    public PremiumAccess(@NonNull Context context) {
         this.context = context;
     }
 
-    public void enablePremiumAccess(){
+    public void enablePremiumAccess() {
         new SecurePreferences(context).edit().putBoolean("PREMIUM", true).apply();
     }
 
-    public boolean isPremium(){
+    public boolean isPremium() {
         return new SecurePreferences(context).getBoolean("PREMIUM", false);
     }
 }

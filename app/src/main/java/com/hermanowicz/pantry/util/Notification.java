@@ -38,7 +38,7 @@ import java.util.List;
  * <h1>Notification</h1>
  * Class to support the notification in the application.
  *
- * @author  Mateusz Hermanowicz
+ * @author Mateusz Hermanowicz
  */
 
 public class Notification {
@@ -47,13 +47,13 @@ public class Notification {
     public static final String NOTIFICATION_DEFAULT_DAYS = "3";
     private static final String PREFERENCES_DAYS_TO_NOTIFICATIONS = "HOW_MANY_DAYS_BEFORE_EXPIRATION_DATE_SEND_A_NOTIFICATION?";
 
-    private static Calendar createCalendar(@NonNull Context context, @NonNull String expirationDate){
+    private static Calendar createCalendar(@NonNull Context context, @NonNull String expirationDate) {
         String[] dateArray = expirationDate.split("-");
         Calendar calendar = Calendar.getInstance();
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
 
         calendar.set(Calendar.YEAR, Integer.parseInt(dateArray[0]));
-        calendar.set(Calendar.MONTH, (Integer.parseInt(dateArray[1]))-1);
+        calendar.set(Calendar.MONTH, (Integer.parseInt(dateArray[1])) - 1);
         calendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(dateArray[2]));
         calendar.set(Calendar.HOUR_OF_DAY, Notification.NOTIFICATION_DEFAULT_HOUR);
         calendar.set(Calendar.MINUTE, 0);
@@ -70,9 +70,9 @@ public class Notification {
         intent.putExtra("product_name", product.getName());
         intent.putExtra("product_id", product.getId());
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, product.getId(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        AlarmManager alarmManager = (AlarmManager)(context.getSystemService(Context.ALARM_SERVICE));
+        AlarmManager alarmManager = (AlarmManager) (context.getSystemService(Context.ALARM_SERVICE));
 
-        if(!product.getExpirationDate().equals("-")) {
+        if (!product.getExpirationDate().equals("-")) {
             Calendar calendar = createCalendar(context, product.getExpirationDate());
             assert alarmManager != null;
             alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,
@@ -80,20 +80,21 @@ public class Notification {
         }
     }
 
-    public static void createNotificationsForAllProducts(@NonNull Context context, List<Product> productList){
-        for(int counter=0; counter < productList.size(); counter++){
+    public static void createNotificationsForAllProducts(@NonNull Context context, List<Product> productList) {
+        for (int counter = 0; counter < productList.size(); counter++) {
             Product selectedProduct = productList.get(counter);
             String productExpiration = selectedProduct.getExpirationDate();
-            if(!productExpiration.equals("-")){
+            if (!productExpiration.equals("-")) {
                 Date expirationDate = Date.valueOf(productExpiration);
                 Date currentTime = new Date(System.currentTimeMillis());
                 if (expirationDate.after(currentTime))
                     Notification.createNotification(context, selectedProduct);
-        }}
+            }
+        }
     }
 
     public static void cancelNotification(@NonNull Context context, @NonNull Product product) {
-        if(!product.getExpirationDate().equals("-")) {
+        if (!product.getExpirationDate().equals("-")) {
             AlarmManager alarmManager = (AlarmManager) (context.getSystemService(Context.ALARM_SERVICE));
             Intent intent = new Intent(context, NotificationBroadcastReceiver.class);
             PendingIntent pendingIntent = PendingIntent.getBroadcast(

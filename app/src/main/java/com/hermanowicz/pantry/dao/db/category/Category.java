@@ -17,27 +17,49 @@
 
 package com.hermanowicz.pantry.dao.db.category;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.annotation.Keep;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-
-import java.io.Serializable;
 
 /**
  * <h1>Category/h1>
  * Category model.
  *
- * @author  Mateusz Hermanowicz
+ * @author Mateusz Hermanowicz
  */
 
 @Keep
 @Entity(tableName = "categories")
-public class Category implements Serializable {
+public class Category implements Parcelable {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String name;
     private String description;
+
+    public Category(Parcel in) {
+        id = in.readInt();
+        name = in.readString();
+        description = in.readString();
+    }
+
+    public static final Creator<Category> CREATOR = new Creator<Category>() {
+        @Override
+        public Category createFromParcel(Parcel in) {
+            return new Category(in);
+        }
+
+        @Override
+        public Category[] newArray(int size) {
+            return new Category[size];
+        }
+    };
+
+    public Category() {
+    }
 
     public int getId() {
         return id;
@@ -61,5 +83,17 @@ public class Category implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int flags) {
+        parcel.writeInt(id);
+        parcel.writeString(name);
+        parcel.writeString(description);
     }
 }

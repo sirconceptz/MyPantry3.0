@@ -31,7 +31,7 @@ import androidx.preference.PreferenceManager;
  * Notifications are set for all products from database with parameters from application
  * settings.
  *
- * @author  Mateusz Hermanowicz
+ * @author Mateusz Hermanowicz
  */
 
 public class BootDeviceReceiver extends BroadcastReceiver {

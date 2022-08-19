@@ -7,7 +7,7 @@ public class StorageLocationListener implements AdapterView.OnItemSelectedListen
 
     public String storageLocation;
 
-    public StorageLocationListener(String storageLocation){
+    public StorageLocationListener(String storageLocation) {
         this.storageLocation = storageLocation;
     }
 

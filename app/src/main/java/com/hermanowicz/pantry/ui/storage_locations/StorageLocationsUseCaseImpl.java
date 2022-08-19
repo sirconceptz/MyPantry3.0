@@ -1,8 +1,10 @@
 package com.hermanowicz.pantry.ui.storage_locations;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.hermanowicz.pantry.dao.db.storagelocation.StorageLocation;
+import com.hermanowicz.pantry.model.Database;
 import com.hermanowicz.pantry.repository.StorageLocationRepository;
 
 import java.util.List;
@@ -19,7 +21,17 @@ public class StorageLocationsUseCaseImpl implements StorageLocationsUseCase {
     }
 
     @Override
-    public LiveData<List<StorageLocation>> getAllStorageLocations() {
-        return repository.getAllStorageLocations();
+    public LiveData<List<StorageLocation>> getAllStorageLocations(Database databaseMode) {
+        return repository.getAllStorageLocations(databaseMode);
+    }
+
+    @Override
+    public void setOnlineStorageLocationList(MutableLiveData<List<StorageLocation>> onlineStorageLocationList) {
+        repository.setOnlineStorageLocationList(onlineStorageLocationList);
+    }
+
+    @Override
+    public boolean checkIsInternetConnection() {
+        return repository.checkIsInternetConnection();
     }
 }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" >
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.hermanowicz.pantry.ui.storage_locations.StorageLocationsViewModel" />
@@ -20,7 +20,7 @@
 
         <TextView
             android:id="@+id/text_statement"
-            android:text="@string/StorageLocationsActivity_no_storage_locations_statement"
+            android:text="@string/statement_no_storage_locations"
             android:layout_margin="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -3,9 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="viewModel"
-            type="com.hermanowicz.pantry.ui.product_details.ProductDetailsViewModel"/>
+            type="com.hermanowicz.pantry.ui.product_details.ProductDetailsViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,7 +27,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:text="@string/Product_name"
+                    android:text="@string/product_name"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -53,7 +54,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:text="@string/Product_category"
+                    android:text="@string/product_category"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dividerAfterProductName" />
@@ -81,7 +82,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:text="@string/Product_category"
+                    android:text="@string/product_category"
                     android:visibility="@{viewModel.detailCategoryVisibility, default=gone}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -112,7 +113,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:text="@string/Product_storage_location"
+                    android:text="@string/product_storage_location"
                     android:visibility="@{viewModel.storageLocationVisibility, default=gone}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -143,7 +144,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:text="@string/Product_expiration_date"
+                    android:text="@string/product_expiration_date"
                     android:visibility="@{viewModel.expirationDateVisibility, default=gone}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -174,7 +175,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:text="@string/Product_production_date"
+                    android:text="@string/product_production_date"
                     android:visibility="@{viewModel.productionDateVisibility, default=gone}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -205,7 +206,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:text="@string/Product_quantity"
+                    android:text="@string/product_quantity"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dividerAfterProductionDate" />
@@ -233,7 +234,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:text="@string/Product_composition"
+                    android:text="@string/product_composition"
                     android:visibility="@{viewModel.compositionVisibility, default=gone}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -264,7 +265,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:text="@string/Product_healing_properties"
+                    android:text="@string/product_healing_properties"
                     android:visibility="@{viewModel.healingPropertiesVisibility, default=gone}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -295,7 +296,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:text="@string/Product_dosage"
+                    android:text="@string/product_dosage"
                     android:visibility="@{viewModel.dosageVisibility, default=gone}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -326,7 +327,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:text="@string/Product_weight"
+                    android:text="@string/product_weight"
                     android:visibility="@{viewModel.weightVisibility, default=gone}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -357,7 +358,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:text="@string/Product_volume"
+                    android:text="@string/product_volume"
                     android:visibility="@{viewModel.volumeVisibility, default=gone}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -388,7 +389,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:text="@string/Product_taste"
+                    android:text="@string/product_taste"
                     android:visibility="@{viewModel.tasteVisibility, default=gone}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -419,7 +420,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:text="@string/Product_vege"
+                    android:text="@string/product_vege"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dividerAfterProductTaste" />
@@ -447,7 +448,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:text="@string/Product_bio"
+                    android:text="@string/product_bio"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dividerAfterIsVege" />
@@ -475,7 +476,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:text="@string/Product_has_sugar"
+                    android:text="@string/product_has_sugar"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dividerAfterIsBio" />
@@ -503,7 +504,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:text="@string/Product_has_salt"
+                    android:text="@string/product_has_salt"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dividerAfterHasSugar" />
@@ -531,11 +532,12 @@
         </ScrollView>
 
         <Button
+            android:id="@+id/button_editProduct"
             android:layout_height="wrap_content"
             android:layout_width="0dp"
             android:layout_marginStart="@dimen/button_sides_margin"
             android:layout_marginEnd="@dimen/button_sides_margin"
-            android:text="@string/ProductDetailsActivity_edit_product"
+            android:text="@string/button_edit_product"
             style="@style/CustomButton"
             app:layout_constraintWidth_default="percent"
             app:layout_constraintWidth_percent=".45"
@@ -543,11 +545,12 @@
             app:layout_constraintBottom_toBottomOf="parent" />
 
         <Button
+            android:id="@+id/button_deleteProduct"
             android:layout_height="wrap_content"
             android:layout_width="0dp"
             android:layout_marginStart="@dimen/button_sides_margin"
             android:layout_marginEnd="@dimen/button_sides_margin"
-            android:text="@string/ProductDetailsActivity_delete_product"
+            android:text="@string/button_delete_product"
             style="@style/CustomButton"
             app:layout_constraintWidth_default="percent"
             app:layout_constraintWidth_percent=".45"

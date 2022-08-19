@@ -1,8 +1,9 @@
 package com.hermanowicz.pantry.ui.new_product;
 
-import android.util.Log;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.CompoundButton;
 import android.widget.RadioButton;
 
 import androidx.annotation.NonNull;
@@ -12,13 +13,15 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.hermanowicz.pantry.R;
 import com.hermanowicz.pantry.dao.db.product.Product;
-import com.hermanowicz.pantry.model.GroupProduct;
+import com.hermanowicz.pantry.model.Database;
 import com.hermanowicz.pantry.util.CategorySpinnerListener;
 import com.hermanowicz.pantry.util.DatePickerUtil;
 import com.hermanowicz.pantry.util.StorageLocationListener;
 
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -27,8 +30,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 @HiltViewModel
 public class NewProductViewModel extends ViewModel {
 
-   @Inject
-   NewProductUseCaseImpl useCase;
+    @Inject
+    NewProductUseCaseImpl useCase;
 
     //fields
     public ObservableField<String> productName = new ObservableField<>("");
@@ -61,8 +64,13 @@ public class NewProductViewModel extends ViewModel {
     public ObservableField<Integer> productionDateMonth = new ObservableField<>();
     public ObservableField<Integer> productionDateDay = new ObservableField<>();
 
+    public ObservableField<Integer> expirationDatePickerVisibility = new ObservableField<>(View.GONE);
+    public ObservableField<Integer> productionDatePickerVisibility = new ObservableField<>(View.GONE);
+
     private final LiveData<String[]> ownCategoriesNamesLiveData;
     private String[] ownCategoriesNamesArray;
+
+    private Bundle arguments = new Bundle();
 
     //spinners listeners
     public AdapterView.OnItemSelectedListener categorySelectionListener =
@@ -71,17 +79,29 @@ public class NewProductViewModel extends ViewModel {
             new StorageLocationListener(storageLocation);
 
     @Inject
-    public NewProductViewModel(NewProductUseCaseImpl newProductUseCase){
+    public NewProductViewModel(NewProductUseCaseImpl newProductUseCase) {
         useCase = newProductUseCase;
         storageLocations = useCase.getAllStorageLocations();
         ownCategoriesNamesLiveData = useCase.getAllOwnCategories();
     }
 
-    public void onClickAddProduct(){
+    public void insertProducts() {
+        List<Product> productList = getProductList();
+        useCase.insert(productList);
+    }
+
+    public ArrayList<Product> getProductListToInsert() {
+        return useCase.getProductListToInsert();
+    }
+
+    private List<Product> getProductList() {
         Product product = getProduct();
-        int productQuantity = getIntValue(quantity);
-        GroupProduct groupProduct = new GroupProduct(product, productQuantity);
-        useCase.insert(groupProduct);
+        int productQuantity = useCase.getIntValueFromObservableField(quantity);
+        List<Product> productList = new ArrayList<>();
+        for (int counter = 0; counter <= productQuantity; counter++) {
+            productList.add(product);
+        }
+        return productList;
     }
 
     public LiveData<String> getMainCategoryValue() {
@@ -96,20 +116,24 @@ public class NewProductViewModel extends ViewModel {
         return ownCategoriesNamesLiveData;
     }
 
-    public void onExpirationDateChanged(int year, int month, int day){
+    public String[] getOwnCategoriesNamesArray() {
+        return ownCategoriesNamesArray;
+    }
+
+    public void onExpirationDateChanged(int year, int month, int day) {
         month++;
         expirationDate = year + "." + month + "." + day;
     }
 
-    public void onProductionDateChanged(int year, int month, int day){
+    public void onProductionDateChanged(int year, int month, int day) {
         month++;
         productionDate = year + "." + month + "." + day;
     }
 
     @NonNull
-    private Product getProduct(){
-        int productWeight = getIntValue(weight);
-        int productVolume = getIntValue(volume);
+    private Product getProduct() {
+        int productWeight = useCase.getIntValueFromObservableField(weight);
+        int productVolume = useCase.getIntValueFromObservableField(volume);
 
         Product product = new Product();
         product.setName(productName.get());
@@ -118,6 +142,9 @@ public class NewProductViewModel extends ViewModel {
         product.setStorageLocation(storageLocation);
         product.setExpirationDate(expirationDate);
         product.setProductionDate(productionDate);
+        product.setComposition(composition.get());
+        product.setHealingProperties(healingProperties.get());
+        product.setDosage(dosage.get());
         product.setWeight(productWeight);
         product.setVolume(productVolume);
         product.setTaste(taste);
@@ -128,25 +155,14 @@ public class NewProductViewModel extends ViewModel {
         return product;
     }
 
-    private int getIntValue(ObservableField<String> quantity){
-        int value = 0;
-        try {
-            value = Integer.parseInt(Objects.requireNonNull(quantity.get()));
-        }
-        catch (NullPointerException | NumberFormatException e){
-            Log.e("Parse error:", e.toString());
-        }
-        return value;
-    }
-
-    public void setTaste(@Nullable RadioButton selectedTasteButton){
-        if(selectedTasteButton == null)
+    public void setTaste(@Nullable RadioButton selectedTasteButton) {
+        if (selectedTasteButton == null)
             taste = "";
         else
             taste = selectedTasteButton.getText().toString();
     }
 
-    public void onClickClearFields(){
+    public void onClickClearFields() {
         clearFields();
     }
 
@@ -170,7 +186,54 @@ public class NewProductViewModel extends ViewModel {
         this.ownCategoriesNamesArray = ownCategoriesNamesArray;
     }
 
-    public String[] getOwnCategoriesNamesArray(){
-        return ownCategoriesNamesArray;
+    public void setDatePickerEnabled(CompoundButton checkBox, boolean isChecked){
+        if(checkBox.getId() == R.id.productExpirationDateCheckbox) {
+            if (isChecked) {
+                expirationDatePickerVisibility.set(View.GONE);
+                expirationDate = "";
+            }
+            else
+                expirationDatePickerVisibility.set(View.VISIBLE);
+        }
+        if(checkBox.getId() == R.id.productProductionDateCheckbox) {
+            if (isChecked) {
+                productionDatePickerVisibility.set(View.GONE);
+                productionDate = "";
+            }
+            else
+                productionDatePickerVisibility.set(View.VISIBLE);
+        }
+    }
+
+    public void setDatabaseMode(Database databaseMode) {
+        useCase.setDatabaseMode(databaseMode);
+    }
+
+    public void setArguments(Bundle arguments) {
+        this.arguments = arguments;
+    }
+
+    public void showProductDataIfExists() {
+        if(arguments != null){
+            ArrayList<Product> productArrayList =
+                    arguments.getParcelableArrayList("productArrayList");
+            if(productArrayList.size() == 1){
+                Product product = productArrayList.get(0);
+                showProductData(product);
+            }
+            else if (productArrayList.size() > 1) {
+                //todo: choose product to copy
+            }
+        }
+    }
+
+    private void showProductData(Product product) {
+        productName.set(product.getName());
+        weight.set(String.valueOf(product.getWeight()));
+        volume.set(String.valueOf(product.getVolume()));
+        isVege.set(product.getIsVege());
+        isBio.set(product.getIsBio());
+        hasSugar.set(product.getHasSugar());
+        hasSalt.set(product.getHasSalt());
     }
 }

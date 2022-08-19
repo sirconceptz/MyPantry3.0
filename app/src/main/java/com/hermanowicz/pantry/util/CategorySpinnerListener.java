@@ -16,7 +16,7 @@ public class CategorySpinnerListener implements AdapterView.OnItemSelectedListen
 
     public CategorySpinnerListener(MutableLiveData<String> mainCategoryOut,
                                    MutableLiveData<String> detailCategoryOut,
-                                   ObservableField<Integer> detailCategoryVisibilityOut){
+                                   ObservableField<Integer> detailCategoryVisibilityOut) {
         this.mainCategoryOut = mainCategoryOut;
         this.detailCategoryOut = detailCategoryOut;
         this.detailCategoryVisibilityOut = detailCategoryVisibilityOut;
@@ -27,7 +27,7 @@ public class CategorySpinnerListener implements AdapterView.OnItemSelectedListen
         int selected = parent.getId();
         if (selected == R.id.mainCategoryInput)
             setMainCategoryIfChanged(parent, position);
-        else if(selected == R.id.detailCategoryInput)
+        else if (selected == R.id.detailCategoryInput)
             setDetailCategoryIfChanged(parent, position);
     }
 

@@ -4,6 +4,7 @@ import androidx.databinding.ObservableField;
 import androidx.lifecycle.ViewModel;
 
 import com.hermanowicz.pantry.dao.db.storagelocation.StorageLocation;
+import com.hermanowicz.pantry.model.Database;
 
 import javax.inject.Inject;
 
@@ -29,18 +30,22 @@ public class StorageLocationDetailViewModel extends ViewModel {
         storageLocationDescription.set(storageLocation.getDescription());
     }
 
-    private StorageLocation getUpdatedStorageLocation(){
+    private StorageLocation getUpdatedStorageLocation() {
         storageLocation.setName(storageLocationName.get());
         storageLocation.setDescription(storageLocationDescription.get());
         return storageLocation;
     }
 
-    public void onClickUpdateStorageLocation(){
+    public void onClickUpdateStorageLocation() {
         StorageLocation storageLocation = getUpdatedStorageLocation();
         useCase.updateStorageLocation(storageLocation);
     }
 
-    public void onClickDeleteStorageLocation(){
+    public void onClickDeleteStorageLocation() {
         useCase.deleteStorageLocation(storageLocation);
+    }
+
+    public void setDatabaseMode(Database databaseMode) {
+        useCase.setDatabaseMode(databaseMode);
     }
 }

@@ -39,7 +39,7 @@ import java.util.List;
  * <h1>CategoriesAdapter</h1>
  * View's adapter for categories view
  *
- * @author  Mateusz Hermanowicz
+ * @author Mateusz Hermanowicz
  */
 
 public class OwnCategoriesAdapter extends RecyclerView.Adapter<OwnCategoriesAdapter.ViewHolder> {
@@ -49,7 +49,7 @@ public class OwnCategoriesAdapter extends RecyclerView.Adapter<OwnCategoriesAdap
     private List<Category> categoryList = new ArrayList<>();
     private int itemAnimPosition;
 
-    public void setData(List<Category> categoryList){
+    public void setData(List<Category> categoryList) {
         this.categoryList = categoryList;
         notifyDataSetChanged();
     }
@@ -74,7 +74,7 @@ public class OwnCategoriesAdapter extends RecyclerView.Adapter<OwnCategoriesAdap
 
         Context context = name.getContext();
 
-        if(viewHolder.getAdapterPosition() > itemAnimPosition) {
+        if (viewHolder.getAdapterPosition() > itemAnimPosition) {
             Animation animation = AnimationUtils.loadAnimation(context, R.anim.slide_in);
             viewHolder.itemView.startAnimation(animation);
             itemAnimPosition = viewHolder.getAdapterPosition();

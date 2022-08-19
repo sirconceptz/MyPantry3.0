@@ -3,9 +3,13 @@ package com.hermanowicz.pantry.module;
 import android.content.Context;
 import android.content.res.Resources;
 
-import com.hermanowicz.pantry.repository.OwnCategoryRepositoryImpl;
+import androidx.preference.PreferenceManager;
+
 import com.hermanowicz.pantry.repository.OwnCategoryRepository;
+import com.hermanowicz.pantry.repository.OwnCategoryRepositoryImpl;
+import com.hermanowicz.pantry.repository.PdfDocumentsRepositoryImpl;
 import com.hermanowicz.pantry.repository.ProductRepositoryImpl;
+import com.hermanowicz.pantry.repository.SharedPreferencesRepository;
 import com.hermanowicz.pantry.repository.SharedPreferencesRepositoryImpl;
 import com.hermanowicz.pantry.repository.StorageLocationRepositoryImpl;
 import com.hermanowicz.pantry.ui.category.CategoryUseCaseImpl;
@@ -16,8 +20,8 @@ import com.hermanowicz.pantry.ui.my_pantry.MyPantryUseCaseImpl;
 import com.hermanowicz.pantry.ui.new_category.NewCategoryUseCaseImpl;
 import com.hermanowicz.pantry.ui.new_product.NewProductUseCaseImpl;
 import com.hermanowicz.pantry.ui.new_storage_location.NewStorageLocationUseCaseImpl;
-import com.hermanowicz.pantry.ui.own_categories.OwnCategoriesUseCaseImpl;
 import com.hermanowicz.pantry.ui.own_category_detail.OwnCategoryDetailUseCaseImpl;
+import com.hermanowicz.pantry.ui.print_qr_codes.PrintQRCodesUseCaseImpl;
 import com.hermanowicz.pantry.ui.product.ProductUseCaseImpl;
 import com.hermanowicz.pantry.ui.product_details.ProductDetailsUseCaseImpl;
 import com.hermanowicz.pantry.ui.scan_product.ScanProductUseCaseImpl;
@@ -67,10 +71,9 @@ public final class AppModule {
     @Provides
     @Singleton
     public FilterProductUseCaseImpl provideFilterProductUseCase(@ApplicationContext Context context) {
-        ProductRepositoryImpl productRepository = new ProductRepositoryImpl(context);
         StorageLocationRepositoryImpl storageLocationRepository = new StorageLocationRepositoryImpl(context);
         OwnCategoryRepositoryImpl ownCategoryRepository = new OwnCategoryRepositoryImpl(context);
-        return new FilterProductUseCaseImpl(productRepository, storageLocationRepository, ownCategoryRepository);
+        return new FilterProductUseCaseImpl(storageLocationRepository, ownCategoryRepository);
     }
 
     @Provides
@@ -89,23 +92,9 @@ public final class AppModule {
 
     @Provides
     @Singleton
-    public OwnCategoriesUseCaseImpl provideOwnCategoriesUseCase(@ApplicationContext Context context) {
-        OwnCategoryRepositoryImpl ownCategoryRepository = new OwnCategoryRepositoryImpl(context);
-        return new OwnCategoriesUseCaseImpl(ownCategoryRepository);
-    }
-
-    @Provides
-    @Singleton
     public OwnCategoryDetailUseCaseImpl provideOwnCategoryDetailUseCase(@ApplicationContext Context context) {
         OwnCategoryRepositoryImpl ownCategoryRepository = new OwnCategoryRepositoryImpl(context);
         return new OwnCategoryDetailUseCaseImpl(ownCategoryRepository);
-    }
-
-    @Provides
-    @Singleton
-    public StorageLocationsUseCaseImpl provideStorageLocationsUseCase(@ApplicationContext Context context) {
-        StorageLocationRepositoryImpl storageLocationRepository = new StorageLocationRepositoryImpl(context);
-        return new StorageLocationsUseCaseImpl(storageLocationRepository);
     }
 
     @Provides
@@ -126,8 +115,9 @@ public final class AppModule {
     @Provides
     @Singleton
     public ScanProductUseCaseImpl provideScanProductUseCase(@ApplicationContext Context context) {
-        ProductRepositoryImpl productRepository = new ProductRepositoryImpl(context);
-        return new ScanProductUseCaseImpl(productRepository);
+        SharedPreferencesRepositoryImpl sharedPreferencesRepository = new SharedPreferencesRepositoryImpl(context);
+        Resources resources = context.getResources();
+        return new ScanProductUseCaseImpl(sharedPreferencesRepository, resources);
     }
 
     @Provides
@@ -156,5 +146,20 @@ public final class AppModule {
     public CategoryUseCaseImpl provideCategoryUseCase(@ApplicationContext Context context) {
         OwnCategoryRepository ownCategoryRepository = new OwnCategoryRepositoryImpl(context);
         return new CategoryUseCaseImpl(ownCategoryRepository);
+    }
+
+    @Provides
+    @Singleton
+    public StorageLocationsUseCaseImpl provideStorageLocationsUseCase(@ApplicationContext Context context) {
+        StorageLocationRepositoryImpl storageLocationRepository = new StorageLocationRepositoryImpl(context);
+        return new StorageLocationsUseCaseImpl(storageLocationRepository);
+    }
+
+    @Provides
+    @Singleton
+    public PrintQRCodesUseCaseImpl providePrintQRCodesUseCase(@ApplicationContext Context context) {
+        PdfDocumentsRepositoryImpl pdfDocumentsRepository = new PdfDocumentsRepositoryImpl(context);
+        SharedPreferencesRepository sharedPreferencesRepository = new SharedPreferencesRepositoryImpl(context);
+        return new PrintQRCodesUseCaseImpl(pdfDocumentsRepository, sharedPreferencesRepository);
     }
 }

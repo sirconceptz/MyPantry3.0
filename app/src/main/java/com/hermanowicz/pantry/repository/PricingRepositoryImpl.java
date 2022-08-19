@@ -27,7 +27,7 @@ public class PricingRepositoryImpl implements PricingRepository, PurchasesUpdate
     private PricingListener pricingListener;
 
     @Override
-    public void setPremiumActivationListenerAndBuildBillingClient(Context context, PricingListener pricingListener){
+    public void setPremiumActivationListenerAndBuildBillingClient(Context context, PricingListener pricingListener) {
         this.pricingListener = pricingListener;
         billingClient = BillingClient
                 .newBuilder(context)
@@ -53,7 +53,7 @@ public class PricingRepositoryImpl implements PricingRepository, PurchasesUpdate
                 (billingResult, productDetailsList) -> {
                     this.productDetailsList = productDetailsList;
                     pricingListener.isBillingClientReady();
-                    if(isAlreadyOwned(billingResult.getResponseCode())){
+                    if (isAlreadyOwned(billingResult.getResponseCode())) {
                         pricingListener.activatePremiumFeatures();
                     }
                 });
@@ -62,12 +62,12 @@ public class PricingRepositoryImpl implements PricingRepository, PurchasesUpdate
     @Override
     public void onPurchasesUpdated(@NonNull BillingResult billingResult, @Nullable List<Purchase> purchaseList) {
         int responseCode = billingResult.getResponseCode();
-        if(ifAvailableToBuy(responseCode, purchaseList)) {
+        if (ifAvailableToBuy(responseCode, purchaseList)) {
             for (Purchase purchase : purchaseList) {
                 handlePurchase(purchase);
             }
         }
-        if(isAlreadyOwned(responseCode)){
+        if (isAlreadyOwned(responseCode)) {
             pricingListener.activatePremiumFeatures();
         }
     }
@@ -77,14 +77,14 @@ public class PricingRepositoryImpl implements PricingRepository, PurchasesUpdate
     }
 
     private boolean ifAvailableToBuy(int responseCode, @Nullable List<Purchase> purchaseList) {
-        if(responseCode == BillingClient.BillingResponseCode.OK)
+        if (responseCode == BillingClient.BillingResponseCode.OK)
             return purchaseList != null;
         else
             return false;
     }
 
     private void handlePurchase(Purchase purchase) {
-        if(isAlreadyOwned(purchase.getPurchaseState())){
+        if (isAlreadyOwned(purchase.getPurchaseState())) {
             if (!purchase.isAcknowledged()) {
                 AcknowledgePurchaseParams acknowledgePurchaseParams =
                         AcknowledgePurchaseParams.newBuilder()
@@ -98,7 +98,7 @@ public class PricingRepositoryImpl implements PricingRepository, PurchasesUpdate
     }
 
     @Override
-    public void initPremiumPurchase(Activity activity){
+    public void initPremiumPurchase(Activity activity) {
         ProductDetails productDetails = productDetailsList.get(0);
         ImmutableList<BillingFlowParams.ProductDetailsParams> productDetailsParamsList =
                 ImmutableList.of(

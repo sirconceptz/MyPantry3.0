@@ -49,18 +49,18 @@ public final class GroupProduct {
         return quantity;
     }
 
-    public void setProduct(Product product){
+    public void setProduct(Product product) {
         this.secondProductToCompare = product;
     }
 
-    public void setQuantity(int quantity){
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 
     //TODO: do refakturyzacji
-    public static List<GroupProduct> getGroupProducts(List<Product> productList){
+    public static List<GroupProduct> getGroupProducts(List<Product> productList) {
         List<GroupProduct> groupProductList = new ArrayList<>();
-        if(productList != null) {
+        if (productList != null) {
             List<GroupProduct> toAddGroupProductList = new ArrayList<>();
             List<GroupProduct> toRemoveGroupProductList = new ArrayList<>();
             for (Product product : productList) {
@@ -87,18 +87,17 @@ public final class GroupProduct {
         return groupProductList;
     }
 
-    //TODO: do refakturyzacji
     private static GroupProduct getGroupIfOnList(Product product, List<GroupProduct> groupProductList) {
         GroupProduct groupProductReturned = null;
         for (GroupProduct groupProduct : groupProductList) {
             Product productToCompare = groupProduct.getProduct();
-            if(isProductsSimilar(product, productToCompare))
+            if (isProductsSimilar(product, productToCompare))
                 groupProductReturned = groupProduct;
         }
         return groupProductReturned;
     }
 
-    private static boolean isProductsSimilar(Product firstProductToCompare, Product secondProductToCompare){
+    private static boolean isProductsSimilar(Product firstProductToCompare, Product secondProductToCompare) {
         return firstProductToCompare.getName().toLowerCase().contains(secondProductToCompare.getName().toLowerCase())
                 && firstProductToCompare.getMainCategory().equals(secondProductToCompare.getMainCategory())
                 && firstProductToCompare.getDetailCategory().equals(secondProductToCompare.getDetailCategory())

@@ -22,28 +22,28 @@ public class SettingsViewModel extends ViewModel implements PricingListener {
     private final PremiumAccess isPremiumAccess;
 
     @Inject
-    public SettingsViewModel(SettingsUseCaseImpl settingsUseCase){
+    public SettingsViewModel(SettingsUseCaseImpl settingsUseCase) {
         useCase = settingsUseCase;
         isPremiumAccess = useCase.getPremiumAccess();
     }
 
     private void activatePremiumFeaturesIfPremiumUser() {
-        if(isPremiumAccess.isPremium())
+        if (isPremiumAccess.isPremium())
             activatePremiumFeatures();
     }
 
-    public void showPreferences(ShowPreferencesListener showPreferencesListener){
+    public void showPreferences(ShowPreferencesListener showPreferencesListener) {
         showPreferencesListener.showAppVersion(useCase.getAppVersion());
         showPreferencesListener.showActiveUserEmail(useCase.getActiveUserEmail());
     }
 
-    public void setPremiumActivationListenerAndSetupBillingClient(Context context, PricingListener pricingListener){
+    public void setPremiumActivationListenerAndSetupBillingClient(Context context, PricingListener pricingListener) {
         this.pricingListener = pricingListener;
         useCase.setPremiumActivationListenerAndSetupBillingClient(context, this);
         activatePremiumFeaturesIfPremiumUser();
     }
 
-    public void initPremiumPurchase(Activity activity){
+    public void initPremiumPurchase(Activity activity) {
         useCase.initPremiumPurchase(activity);
     }
 

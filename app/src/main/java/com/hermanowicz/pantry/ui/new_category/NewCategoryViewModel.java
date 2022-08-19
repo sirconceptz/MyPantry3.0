@@ -5,7 +5,9 @@ import androidx.databinding.ObservableField;
 import androidx.lifecycle.ViewModel;
 
 import com.hermanowicz.pantry.dao.db.category.Category;
-import com.hermanowicz.pantry.model.DatabaseMode;
+import com.hermanowicz.pantry.model.Database;
+
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 
@@ -19,13 +21,14 @@ public class NewCategoryViewModel extends ViewModel {
 
     public ObservableField<String> categoryName = new ObservableField<>();
     public ObservableField<String> categoryDescription = new ObservableField<>();
+    private ArrayList<Category> categoryArrayList;
 
     @Inject
     public NewCategoryViewModel(NewCategoryUseCaseImpl newCategoryUseCase) {
         useCase = newCategoryUseCase;
     }
 
-    public void onClickAddCategory(){
+    public void onClickAddCategory() {
         Category category = getCategory();
         useCase.insert(category);
         clearFields();
@@ -33,13 +36,15 @@ public class NewCategoryViewModel extends ViewModel {
 
     @NonNull
     private Category getCategory() {
+        int nextId = getIdLastProduct() + 1;
         Category category = new Category();
+        category.setId(nextId);
         category.setName(categoryName.get());
         category.setDescription(categoryDescription.get());
         return category;
     }
 
-    public void onClickClearFields(){
+    public void onClickClearFields() {
         clearFields();
     }
 
@@ -48,7 +53,19 @@ public class NewCategoryViewModel extends ViewModel {
         categoryDescription.set("");
     }
 
-    public void setDatabaseMode(DatabaseMode databaseMode) {
+    public void setDatabaseMode(Database databaseMode) {
+        useCase.setDatabaseMode(databaseMode);
+    }
 
+    public void setCategoryList(ArrayList<Category> categoryArrayList) {
+        this.categoryArrayList = categoryArrayList;
+    }
+
+    private int getIdLastProduct(){
+        int categoryListSize = categoryArrayList.size();
+        int id = 0;
+        if(categoryArrayList.size() > 0)
+            id = categoryArrayList.get(categoryListSize-1).getId();
+        return id;
     }
 }

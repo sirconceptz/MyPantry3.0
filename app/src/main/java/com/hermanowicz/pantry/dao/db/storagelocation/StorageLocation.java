@@ -17,27 +17,49 @@
 
 package com.hermanowicz.pantry.dao.db.storagelocation;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.annotation.Keep;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-
-import java.io.Serializable;
 
 /**
  * <h1>StorageLocation/h1>
  * Storage location model.
  *
- * @author  Mateusz Hermanowicz
+ * @author Mateusz Hermanowicz
  */
 
 @Keep
 @Entity(tableName = "storage_locations")
-public class StorageLocation implements Serializable {
+public class StorageLocation implements Parcelable {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String name;
     private String description;
+
+    public StorageLocation(Parcel in) {
+        id = in.readInt();
+        name = in.readString();
+        description = in.readString();
+    }
+
+    public StorageLocation(){
+    }
+
+    public static final Creator<StorageLocation> CREATOR = new Creator<StorageLocation>() {
+        @Override
+        public StorageLocation createFromParcel(Parcel in) {
+            return new StorageLocation(in);
+        }
+
+        @Override
+        public StorageLocation[] newArray(int size) {
+            return new StorageLocation[size];
+        }
+    };
 
     public int getId() {
         return id;
@@ -61,5 +83,17 @@ public class StorageLocation implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int flags) {
+        parcel.writeInt(id);
+        parcel.writeString(name);
+        parcel.writeString(description);
     }
 }

@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.hermanowicz.pantry.R;
+import com.hermanowicz.pantry.dao.db.product.Product;
 import com.hermanowicz.pantry.databinding.FragmentMyPantryBinding;
 import com.hermanowicz.pantry.interfaces.AvailableDataListener;
 import com.hermanowicz.pantry.model.GroupProduct;
@@ -25,6 +26,7 @@ import com.hermanowicz.pantry.ui.product.ProductViewModel;
 import com.hermanowicz.pantry.util.ProductsAdapter;
 import com.hermanowicz.pantry.util.RecyclerClickListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
@@ -32,15 +34,24 @@ import dagger.hilt.android.AndroidEntryPoint;
 @AndroidEntryPoint
 public class MyPantryFragment extends Fragment implements AvailableDataListener {
 
+    private FragmentMyPantryBinding binding;
     private MyPantryViewModel myPantryViewModel;
     private ProductViewModel productViewModel;
     private DatabaseModeViewModel databaseModeViewModel;
-    private FragmentMyPantryBinding binding;
     private View view;
     private ProductsAdapter productsAdapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        initView(inflater, container);
+        setupFloatingActionButtons();
+        setupRecyclerView();
+        setListeners();
+
+        return view;
+    }
+
+    private void initView(@NonNull LayoutInflater inflater, ViewGroup container) {
         myPantryViewModel = new ViewModelProvider(this).get(MyPantryViewModel.class);
         productViewModel = new ViewModelProvider(this).get(ProductViewModel.class);
         databaseModeViewModel = new ViewModelProvider(this).get(DatabaseModeViewModel.class);
@@ -49,13 +60,6 @@ public class MyPantryFragment extends Fragment implements AvailableDataListener 
         binding = FragmentMyPantryBinding.inflate(inflater, container, false);
         view = binding.getRoot();
         binding.setViewModel(myPantryViewModel);
-
-        setupFloatingActionButtons();
-        setupRecyclerView();
-        setDatabaseObserver();
-        setListeners();
-
-        return view;
     }
 
     private void setupFloatingActionButtons() {
@@ -76,26 +80,13 @@ public class MyPantryFragment extends Fragment implements AvailableDataListener 
         binding.recyclerviewProducts.setItemAnimator(new DefaultItemAnimator());
     }
 
-    private void setDatabaseObserver() {
-        databaseModeViewModel.getDatabaseMode().observe(getViewLifecycleOwner(),
-                productViewModel::showDataForSelectedDatabase);
-    }
-
-    @Override
-    public void observeAvailableData() {
-        productViewModel.getAllProductList().observe(getViewLifecycleOwner(),
-                productViewModel::convertProductListToGroupProductList);
-        productViewModel.getAllGroupProductList().observe(getViewLifecycleOwner(),
-                this::setDataRecyclerViewAdapter);
-    }
-
     private void setListeners() {
         binding.recyclerviewProducts.addOnItemTouchListener(new RecyclerClickListener(getContext(),
                 binding.recyclerviewProducts, new RecyclerClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                GroupProduct groupProduct = productViewModel.getGroupProduct(position);
-                navigateToProductDetails(view, groupProduct);
+                ArrayList<Product> productArrayList = productViewModel.getProductSimilarProductsList(position);
+                navigateToProductDetails(view, productArrayList);
             }
 
             @Override
@@ -109,10 +100,9 @@ public class MyPantryFragment extends Fragment implements AvailableDataListener 
         binding.recyclerviewProducts.setAdapter(productsAdapter);
     }
 
-    private void navigateToProductDetails(View view, GroupProduct groupProduct){
+    private void navigateToProductDetails(View view, ArrayList<Product> productArrayList) {
         Bundle bundle = new Bundle();
-        bundle.putParcelable("product", groupProduct.getProduct());
-        bundle.putInt("productQuantity", groupProduct.getQuantity());
+        bundle.putParcelableArrayList("productArrayList", productArrayList);
         Navigation.findNavController(view).navigate(R.id.action_nav_my_pantry_to_nav_product_details, bundle);
     }
 
@@ -122,6 +112,23 @@ public class MyPantryFragment extends Fragment implements AvailableDataListener 
 
     public void onClickFilterProduct() {
         Navigation.findNavController(view).navigate(R.id.action_nav_my_pantry_to_nav_filter_product);
+    }
+
+    @Override
+    public void observeAvailableData() {
+        databaseModeViewModel.getDatabaseMode().observe(getViewLifecycleOwner(),
+                productViewModel::updateDataForSelectedDatabase);
+        productViewModel.getAllProductList().observe(getViewLifecycleOwner(),
+                productViewModel::convertProductListToGroupProductList);
+        productViewModel.getAllGroupProductList().observe(getViewLifecycleOwner(),
+                this::setDataRecyclerViewAdapter);
+    }
+
+    @Override
+    public void onStart(){
+        if(productViewModel.isAvailableData())
+            observeAvailableData();
+        super.onStart();
     }
 
     @Override

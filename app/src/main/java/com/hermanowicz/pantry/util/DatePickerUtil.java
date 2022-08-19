@@ -10,7 +10,7 @@ public class DatePickerUtil {
             ObservableField<Integer> year,
             ObservableField<Integer> month,
             ObservableField<Integer> day
-    ){
+    ) {
         Calendar now = Calendar.getInstance();
         year.set(now.get(Calendar.YEAR));
         month.set(now.get(Calendar.MONTH));

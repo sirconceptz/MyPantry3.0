@@ -3,9 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="viewModel"
-            type="com.hermanowicz.pantry.ui.storage_location_detail.StorageLocationDetailViewModel"/>
+            type="com.hermanowicz.pantry.ui.storage_location_detail.StorageLocationDetailViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -22,78 +23,69 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:id="@+id/fragmentLabel"
+                    android:id="@+id/storageLocationNameText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:text="@string/StorageLocationDetailsActivity_update_storage_location"
-                    android:textAppearance="?android:textAppearanceLarge"
+                    android:text="@string/form_storage_location_name"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/categoryNameText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:text="@string/StorageLocationDetailsActivity_name"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/fragmentLabel" />
-
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/categoryNameInput"
+                    android:id="@+id/storageLocationNameInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/edittext_sides_margin"
                     android:text="@={viewModel.storageLocationName}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/categoryNameText" />
+                    app:layout_constraintTop_toBottomOf="@id/storageLocationNameText" />
 
                 <View
-                    android:id="@+id/dividerAfterCategoryName"
+                    android:id="@+id/dividerAfterStorageLocationName"
                     style="@style/Divider"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/categoryNameInput" />
+                    app:layout_constraintTop_toBottomOf="@id/storageLocationNameInput" />
 
                 <TextView
-                    android:id="@+id/categoryDescriptionText"
+                    android:id="@+id/storageLocationDescriptionText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:text="@string/StorageLocationDetailsActivity_description"
+                    android:text="@string/form_storage_location_description"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/dividerAfterCategoryName" />
+                    app:layout_constraintTop_toBottomOf="@id/dividerAfterStorageLocationName" />
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/categoryDescriptionInput"
+                    android:id="@+id/storageLocationDescriptionInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/edittext_sides_margin"
                     android:text="@={viewModel.storageLocationDescription}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/categoryDescriptionText" />
+                    app:layout_constraintTop_toBottomOf="@id/storageLocationDescriptionText" />
 
                 <View
-                    android:id="@+id/dividerAfterCategoryDescription"
+                    android:id="@+id/dividerAfterStorageLocationDescription"
                     style="@style/Divider"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/categoryDescriptionInput" />
+                    app:layout_constraintTop_toBottomOf="@id/storageLocationDescriptionInput" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </ScrollView>
 
         <Button
+            android:id="@+id/button_updateStorageLocation"
             android:layout_height="wrap_content"
             android:layout_width="0dp"
             android:layout_marginStart="@dimen/button_sides_margin"
             android:layout_marginEnd="@dimen/button_sides_margin"
             android:onClick="@{() -> viewModel.onClickUpdateStorageLocation()}"
-            android:text="@string/StorageLocationDetailsActivity_update_storage_location"
+            android:text="@string/button_save_changes"
             style="@style/CustomButton"
             app:layout_constraintWidth_default="percent"
             app:layout_constraintWidth_percent=".45"
@@ -101,12 +93,13 @@
             app:layout_constraintBottom_toBottomOf="parent" />
 
         <Button
+            android:id="@+id/button_deleteStorageLocation"
             android:layout_height="wrap_content"
             android:layout_width="0dp"
             android:layout_marginStart="@dimen/button_sides_margin"
             android:layout_marginEnd="@dimen/button_sides_margin"
             android:onClick="@{() -> viewModel.onClickDeleteStorageLocation()}"
-            android:text="@string/StorageLocationDetailsActivity_delete_storage_location"
+            android:text="@string/button_delete_storage_location"
             style="@style/CustomButton"
             app:layout_constraintWidth_default="percent"
             app:layout_constraintWidth_percent=".45"

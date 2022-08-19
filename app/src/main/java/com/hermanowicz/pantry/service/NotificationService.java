@@ -50,7 +50,7 @@ import java.util.HashMap;
  * A service to handling the notifications in application. User will be informed about
  * expiration dates of products. Notification can be showed by push or email.
  *
- * @author  Mateusz Hermanowicz
+ * @author Mateusz Hermanowicz
  */
 
 public class NotificationService extends IntentService {
@@ -67,12 +67,12 @@ public class NotificationService extends IntentService {
     private String productName;
     private String daysToNotification;
 
-    public NotificationService(){
+    public NotificationService() {
         super("NotificationService");
     }
 
-    private String createStatement(){
-        String statement = getString(R.string.Notifications_statement);
+    private String createStatement() {
+        String statement = getString(R.string.notification_statement);
         statement = statement.replace(DAYS_TAG, String.valueOf(daysToNotification));
         statement = statement.replace(PRODUCT_NAME_TAG, productName);
         return statement;
@@ -94,7 +94,7 @@ public class NotificationService extends IntentService {
             NotificationManager notificationManager = (NotificationManager)
                     context.getSystemService(Context.NOTIFICATION_SERVICE);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                CharSequence name  = "my_channel";
+                CharSequence name = "my_channel";
                 String Description = "Products expiration dates notification channel";
                 int importance = NotificationManager.IMPORTANCE_DEFAULT;
                 NotificationChannel mChannel = new NotificationChannel(channelId, name, importance);
@@ -109,7 +109,7 @@ public class NotificationService extends IntentService {
             String notificationStatement = createStatement();
 
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelId);
-            builder.setContentTitle(getString(R.string.Notifications_title));
+            builder.setContentTitle(getString(R.string.notification_title));
             builder.setContentText(notificationStatement);
             builder.setStyle(new NotificationCompat.BigTextStyle().bigText(notificationStatement));
             builder.setSmallIcon(R.mipmap.ic_launcher_round);
@@ -132,13 +132,13 @@ public class NotificationService extends IntentService {
                 true)) {
             HashMap<String, String> params = new HashMap<>();
             params.put("to_email_address", preferences.getString(PREFERENCES_EMAIL_ADDRESS, ""));
-            params.put("subject", getString(R.string.Notifications_title));
+            params.put("subject", getString(R.string.notification_title));
             params.put("message", createStatement());
             String url = URL_API + API_MAIL_FILE;
 
             JsonObjectRequest request_json = new JsonObjectRequest(url, new JSONObject(params),
                     response -> {
-                    }, error -> VolleyLog.e(getString(R.string.Error_error), error.getMessage()));
+                    }, error -> VolleyLog.e(getString(R.string.error_error), error.getMessage()));
             EmailManager.getInstance().addEmailToRequestQueue(request_json);
         }
     }

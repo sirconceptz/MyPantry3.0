@@ -1,6 +1,7 @@
 package com.hermanowicz.pantry.ui.product_details;
 
 import android.content.res.Resources;
+import android.os.Bundle;
 import android.view.View;
 
 import androidx.databinding.ObservableField;
@@ -9,7 +10,9 @@ import androidx.lifecycle.ViewModel;
 
 import com.hermanowicz.pantry.R;
 import com.hermanowicz.pantry.dao.db.product.Product;
-import com.hermanowicz.pantry.model.GroupProduct;
+import com.hermanowicz.pantry.model.Database;
+
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 
@@ -52,17 +55,18 @@ public class ProductDetailsViewModel extends ViewModel {
     public ObservableField<Integer> volumeVisibility = new ObservableField<>(View.GONE);
     public ObservableField<Integer> tasteVisibility = new ObservableField<>(View.GONE);
 
+    private ArrayList<Product> productArrayList;
+    private Bundle arguments;
 
     @Inject
     public ProductDetailsViewModel(ProductDetailsUseCaseImpl productDetailsUseCase) {
         useCase = productDetailsUseCase;
     }
 
-    public void setGroupProduct(GroupProduct groupProduct) {
-        Product product = groupProduct.getProduct();
+    public void showProductData(Product product, int productListSize) {
         Resources resources = useCase.getResources();
-        String yes = resources.getString(R.string.ProductDetailsActivity_yes);
-        String no = resources.getString(R.string.ProductDetailsActivity_no);
+        String yes = resources.getString(R.string.general_yes);
+        String no = resources.getString(R.string.general_no);
 
         productName.setValue(product.getName());
         mainCategory.setValue(product.getMainCategory());
@@ -70,7 +74,7 @@ public class ProductDetailsViewModel extends ViewModel {
         expirationDate.setValue(product.getExpirationDate());
         productionDate.setValue(product.getProductionDate());
         storageLocation.setValue(product.getStorageLocation());
-        quantity.setValue(String.valueOf(groupProduct.getQuantity()));
+        quantity.setValue(String.valueOf(productListSize));
         composition.setValue(product.getComposition());
         healingProperties.setValue(product.getHealingProperties());
         dosage.setValue(product.getDosage());
@@ -78,22 +82,22 @@ public class ProductDetailsViewModel extends ViewModel {
         volume.setValue(String.valueOf(product.getVolume()));
         taste.setValue(product.getTaste());
 
-        if(product.getIsVege())
+        if (product.getIsVege())
             isVege.setValue(yes);
         else
             isVege.setValue(no);
 
-        if(product.getIsBio())
+        if (product.getIsBio())
             isBio.setValue(yes);
         else
             isBio.setValue(no);
 
-        if(product.getHasSugar())
+        if (product.getHasSugar())
             hasSugar.setValue(yes);
         else
             hasSugar.setValue(no);
 
-        if(product.getHasSalt())
+        if (product.getHasSalt())
             hasSalt.setValue(yes);
         else
             hasSalt.setValue(no);
@@ -102,25 +106,53 @@ public class ProductDetailsViewModel extends ViewModel {
     }
 
     private void setVisibleFieldsIfNotEmpty(Product product) {
-        if(!product.getDetailCategory().equals(""))
+        if (!product.getDetailCategory().equals(""))
             detailCategoryVisibility.set(View.VISIBLE);
-        if(!product.getExpirationDate().equals(""))
+        if (!product.getExpirationDate().equals(""))
             expirationDateVisibility.set(View.VISIBLE);
-        if(!product.getProductionDate().equals(""))
+        if (!product.getProductionDate().equals(""))
             productionDateVisibility.set(View.VISIBLE);
-        if(!product.getStorageLocation().equals(""))
+        if (!product.getStorageLocation().equals(""))
             storageLocationVisibility.set(View.VISIBLE);
-        if(!product.getComposition().equals(""))
+        if (!product.getComposition().equals(""))
             compositionVisibility.set(View.VISIBLE);
-        if(!product.getHealingProperties().equals(""))
+        if (!product.getHealingProperties().equals(""))
             healingPropertiesVisibility.set(View.VISIBLE);
-        if(!product.getDosage().equals(""))
+        if (!product.getDosage().equals(""))
             dosageVisibility.set(View.VISIBLE);
-        if(product.getWeight() > 0)
+        if (product.getWeight() > 0)
             weightVisibility.set(View.VISIBLE);
-        if(product.getVolume() > 0)
+        if (product.getVolume() > 0)
             volumeVisibility.set(View.VISIBLE);
-        if(!product.getTaste().equals(""))
+        if (!product.getTaste().equals(""))
             tasteVisibility.set(View.VISIBLE);
+    }
+
+    public ArrayList<Product> getProductArrayList() {
+        return productArrayList;
+    }
+
+    public void onClickDeleteProduct() {
+
+    }
+
+    public void setDatabaseMode(Database databaseMode) {
+        useCase.setDatabaseMode(databaseMode);
+    }
+
+    public void setArguments(Bundle arguments) {
+        this.arguments = arguments;
+    }
+
+    public void showProductDataIfExists(){
+        if(arguments != null){
+            int productId = arguments.getInt("productId");
+            String productHashCode = String.valueOf(arguments.getInt("productHashCode"));
+            productArrayList = arguments.getParcelableArrayList("productArrayList");
+            for(Product product : productArrayList){
+                if((product.getId() == productId) && productHashCode.equals(product.getHashCode()))
+                    showProductData(product, productArrayList.size());
+            }
+        }
     }
 }

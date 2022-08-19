@@ -3,9 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="viewModel"
-            type="com.hermanowicz.pantry.ui.own_category_detail.OwnCategoryDetailViewModel"/>
+            type="com.hermanowicz.pantry.ui.own_category_detail.OwnCategoryDetailViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -20,25 +21,14 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/fragmentLabel"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:text="@string/CategoryDetailsActivity_update_category"
-                    android:textAppearance="?android:textAppearanceLarge"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
                 <TextView
                     android:id="@+id/categoryNameText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:text="@string/CategoryDetailsActivity_name"
+                    android:text="@string/form_category_name"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/fragmentLabel" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/categoryNameInput"
@@ -62,7 +52,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:text="@string/CategoryDetailsActivity_description"
+                    android:text="@string/form_category_description"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dividerAfterCategoryName" />
 
@@ -88,10 +78,11 @@
         </ScrollView>
 
         <Button
+            android:id="@+id/button_updateCategory"
             android:layout_height="wrap_content"
             android:layout_width="0dp"
             android:onClick="@{() -> viewModel.onClickUpdateCategory()}"
-            android:text="@string/CategoryDetailsActivity_update_category"
+            android:text="@string/button_save_changes"
             android:layout_marginStart="@dimen/button_sides_margin"
             android:layout_marginEnd="@dimen/button_sides_margin"
             style="@style/CustomButton"
@@ -101,12 +92,13 @@
             app:layout_constraintBottom_toBottomOf="parent" />
 
         <Button
+            android:id="@+id/button_deleteCategory"
             android:layout_height="wrap_content"
             android:layout_width="0dp"
             android:onClick="@{() -> viewModel.onClickDeleteCategory()}"
             android:layout_marginStart="@dimen/button_sides_margin"
             android:layout_marginEnd="@dimen/button_sides_margin"
-            android:text="@string/CategoryDetailsActivity_delete_category"
+            android:text="@string/button_delete_category"
             style="@style/CustomButton"
             app:layout_constraintWidth_default="percent"
             app:layout_constraintWidth_percent=".45"

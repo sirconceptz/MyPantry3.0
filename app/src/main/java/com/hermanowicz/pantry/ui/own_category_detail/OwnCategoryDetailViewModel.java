@@ -4,6 +4,7 @@ import androidx.databinding.ObservableField;
 import androidx.lifecycle.ViewModel;
 
 import com.hermanowicz.pantry.dao.db.category.Category;
+import com.hermanowicz.pantry.model.Database;
 
 import javax.inject.Inject;
 
@@ -12,7 +13,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 @HiltViewModel
 public class OwnCategoryDetailViewModel extends ViewModel {
 
-    private OwnCategoryDetailUseCaseImpl useCase;
+    private final OwnCategoryDetailUseCaseImpl useCase;
 
     private Category category = new Category();
     public ObservableField<String> categoryName = new ObservableField<>();
@@ -29,18 +30,22 @@ public class OwnCategoryDetailViewModel extends ViewModel {
         categoryDescription.set(category.getDescription());
     }
 
-    private Category getUpdatedCategory(){
+    private Category getUpdatedCategory() {
         category.setName(categoryName.get());
         category.setDescription(categoryDescription.get());
         return category;
     }
 
-    public void onClickUpdateCategory(){
+    public void onClickUpdateCategory() {
         Category category = getUpdatedCategory();
         useCase.updateCategory(category);
     }
 
-    public void onClickDeleteCategory(){
+    public void onClickDeleteCategory() {
         useCase.deleteCategory(category);
+    }
+
+    public void setDatabaseMode(Database databaseMode) {
+        useCase.setDatabaseMode(databaseMode);
     }
 }

@@ -6,38 +6,54 @@ import android.content.SharedPreferences;
 import androidx.lifecycle.MutableLiveData;
 import androidx.preference.PreferenceManager;
 
-import com.hermanowicz.pantry.model.DatabaseMode;
+import com.hermanowicz.pantry.model.Database;
 
 import java.util.Objects;
 
 public class SharedPreferencesRepositoryImpl implements SharedPreferencesRepository {
 
     private final SharedPreferences sharedPreferences;
-    private MutableLiveData<DatabaseMode> databaseModeMutableLiveData = new MutableLiveData<>();
+    private final MutableLiveData<Database> databaseModeMutableLiveData = new MutableLiveData<>();
 
-    public SharedPreferencesRepositoryImpl(Context context){
+    public SharedPreferencesRepositoryImpl(Context context) {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         databaseModeMutableLiveData.setValue(getDatabaseModeFromSettings());
     }
 
     @Override
-    public DatabaseMode getDatabaseModeFromSettings(){
+    public Database getDatabaseModeFromSettings() {
         String databaseModeString = sharedPreferences.getString("DATABASE_MODE", "local");
-        DatabaseMode databaseMode = new DatabaseMode();
-        if(Objects.equals(databaseModeString, "online"))
-            databaseMode.setDatabaseMode(DatabaseMode.Mode.ONLINE);
+        Database databaseMode = new Database();
+        if (Objects.equals(databaseModeString, "online"))
+            databaseMode.setDatabaseMode(Database.DatabaseMode.ONLINE);
         else
-            databaseMode.setDatabaseMode(DatabaseMode.Mode.LOCAL);
+            databaseMode.setDatabaseMode(Database.DatabaseMode.LOCAL);
         return databaseMode;
     }
 
     @Override
-    public MutableLiveData<DatabaseMode> getDatabaseMode() {
+    public int getSelectedCameraType() {
+        String cameraType = sharedPreferences.getString("SCAN_CAMERA", "0");
+        return Integer.parseInt(cameraType);
+    }
+
+    @Override
+    public boolean getSelectedSoundMode() {
+        return sharedPreferences.getBoolean("SOUND_ON_SCANNER?", true);
+    }
+
+    @Override
+    public boolean getIsBigPrintQRCode() {
+        return sharedPreferences.getBoolean("QR_CODE_SIZE", false);
+    }
+
+    @Override
+    public MutableLiveData<Database> getDatabaseMode() {
         return databaseModeMutableLiveData;
     }
 
     @Override
-    public void setDatabaseMode(DatabaseMode databaseMode) {
+    public void setDatabaseMode(Database databaseMode) {
         databaseModeMutableLiveData.setValue(databaseMode);
     }
 }

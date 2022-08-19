@@ -9,7 +9,7 @@ public class MyPantryUseCaseImpl implements MyPantryUseCase {
     private final ProductRepository repository;
 
     @Inject
-    public MyPantryUseCaseImpl(ProductRepository productRepository){
+    public MyPantryUseCaseImpl(ProductRepository productRepository) {
         repository = productRepository;
     }
 }

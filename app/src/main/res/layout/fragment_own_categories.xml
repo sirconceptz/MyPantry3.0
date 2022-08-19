@@ -3,9 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="viewModel"
-            type="com.hermanowicz.pantry.ui.own_categories.OwnCategoriesViewModel" />
+            type="com.hermanowicz.pantry.ui.category.CategoryViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -19,7 +20,7 @@
 
         <TextView
             android:id="@+id/text_statement"
-            android:text="@string/CategoriesActivity_no_categories_statement"
+            android:text="@string/statement_no_categories"
             android:layout_margin="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -29,7 +29,7 @@ import com.hermanowicz.pantry.service.NotificationService;
  * <h1>NotificationBroadcastReceiver</h1>
  * Broadcast receiver for notifications. Sending details needed to prepare notification.
  *
- * @author  Mateusz Hermanowicz
+ * @author Mateusz Hermanowicz
  */
 
 public class NotificationBroadcastReceiver extends BroadcastReceiver {

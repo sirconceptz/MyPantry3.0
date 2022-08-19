@@ -76,17 +76,17 @@ public class FilterProductViewModel extends ViewModel {
             new StorageLocationListener(storageLocation);
 
     @Inject
-    public FilterProductViewModel(FilterProductUseCaseImpl filterProductUseCase){
+    public FilterProductViewModel(FilterProductUseCaseImpl filterProductUseCase) {
         useCase = filterProductUseCase;
         storageLocations = useCase.getAllStorageLocationsNames();
         ownCategoriesNamesLiveData = useCase.getAllOwnCategoriesNames();
     }
 
-    public void onClickFilterProducts(){
+    public void onClickFilterProducts() {
 
     }
 
-    public void onClickClearFilter(){
+    public void onClickClearFilter() {
         clearFields();
     }
 
@@ -110,27 +110,27 @@ public class FilterProductViewModel extends ViewModel {
         return storageLocations;
     }
 
-    public void onExpirationDateSinceChanged(int year, int month, int day){
+    public void onExpirationDateSinceChanged(int year, int month, int day) {
         month++;
         expirationDateSince = year + "." + month + "." + day;
     }
 
-    public void onExpirationDateForChanged(int year, int month, int day){
+    public void onExpirationDateForChanged(int year, int month, int day) {
         month++;
         expirationDateFor = year + "." + month + "." + day;
     }
 
-    public void onProductionDateSinceChanged(int year, int month, int day){
+    public void onProductionDateSinceChanged(int year, int month, int day) {
         month++;
         productionDateSince = year + "." + month + "." + day;
     }
 
-    public void onProductionDateForChanged(int year, int month, int day){
+    public void onProductionDateForChanged(int year, int month, int day) {
         month++;
         productionDateFor = year + "." + month + "." + day;
     }
 
-    private void clearFields(){
+    private void clearFields() {
         productName.set("");
         mainCategory.setValue("");
         detailCategory.setValue("");

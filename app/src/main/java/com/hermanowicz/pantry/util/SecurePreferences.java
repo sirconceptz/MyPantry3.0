@@ -53,7 +53,7 @@ import javax.crypto.spec.SecretKeySpec;
  * to attacks, especially on rooted or stolen devices!
  * <p>
  * This class requires API level 8 (Android 2.2, a.k.a. "Froyo") or greater.
- * 
+ *
  * @see <a href="http://www.codeproject.com/Articles/549119/Encryption-Wrapper-for-Android-SharedPreferences">CodeProject article</a>
  */
 
@@ -64,7 +64,7 @@ public class SecurePreferences implements SharedPreferences {
 
     /**
      * Constructor.
-     * 
+     *
      * @param context the caller's context
      */
     public SecurePreferences(Context context) {
@@ -86,13 +86,11 @@ public class SecurePreferences implements SharedPreferences {
         }
     }
 
-    private static String encode(byte[] input)
-    {
+    private static String encode(byte[] input) {
         return Base64.encodeToString(input, Base64.NO_PADDING | Base64.NO_WRAP);
     }
 
-    private static byte[] decode(String input)
-    {
+    private static byte[] decode(String input) {
         return Base64.decode(input, Base64.NO_PADDING | Base64.NO_WRAP);
     }
 

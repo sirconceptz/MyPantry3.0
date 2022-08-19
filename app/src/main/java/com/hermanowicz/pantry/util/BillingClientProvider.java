@@ -8,7 +8,7 @@ public class BillingClientProvider {
 
     private final Context context;
 
-    public BillingClientProvider(Context context){
+    public BillingClientProvider(Context context) {
         this.context = context;
 
         BillingClient billingClient = BillingClient

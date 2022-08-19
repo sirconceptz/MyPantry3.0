@@ -39,7 +39,7 @@ import java.util.List;
  * <h1>StorageLocationsAdapter</h1>
  * View's adapter for storage locations view
  *
- * @author  Mateusz Hermanowicz
+ * @author Mateusz Hermanowicz
  */
 
 public class StorageLocationsAdapter extends RecyclerView.Adapter<StorageLocationsAdapter.ViewHolder> {
@@ -48,7 +48,7 @@ public class StorageLocationsAdapter extends RecyclerView.Adapter<StorageLocatio
     private List<StorageLocation> storageLocationList = new ArrayList<>();
     private int itemAnimPosition;
 
-    public void setData(List<StorageLocation> storageLocations){
+    public void setData(List<StorageLocation> storageLocations) {
         this.storageLocationList = storageLocations;
         notifyDataSetChanged();
     }
@@ -73,7 +73,7 @@ public class StorageLocationsAdapter extends RecyclerView.Adapter<StorageLocatio
 
         Context context = name.getContext();
 
-        if(viewHolder.getAdapterPosition() > itemAnimPosition) {
+        if (viewHolder.getAdapterPosition() > itemAnimPosition) {
             Animation animation = AnimationUtils.loadAnimation(context, R.anim.slide_in);
             viewHolder.itemView.startAnimation(animation);
             itemAnimPosition = viewHolder.getAdapterPosition();

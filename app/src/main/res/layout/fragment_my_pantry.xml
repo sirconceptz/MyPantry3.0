@@ -3,9 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="viewModel"
-            type="com.hermanowicz.pantry.ui.my_pantry.MyPantryViewModel"/>
+            type="com.hermanowicz.pantry.ui.my_pantry.MyPantryViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
