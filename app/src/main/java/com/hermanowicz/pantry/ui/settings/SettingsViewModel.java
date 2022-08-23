@@ -61,4 +61,44 @@ public class SettingsViewModel extends ViewModel implements PricingListener {
     public String getActiveUserEmail() {
         return useCase.getActiveUserEmail();
     }
+
+    public void onClickBackupProductDatabase() {
+        useCase.backupProductDbToFile();
+    }
+
+    public void onClickRestoreProductDatabase() {
+        useCase.restoreProductDbFromFile();
+    }
+
+    public void onClickClearProductDatabase() {
+        useCase.clearProductDb();
+    }
+
+    public void onClickBackupCategoryDatabase() {
+        useCase.backupOwnCategoriesDbToFile();
+    }
+
+    public void onClickRestoreCategoryDatabase() {
+        useCase.restoreOwnCategoriesDbFromFile();
+    }
+
+    public void onClickClearCategoryDatabase() {
+        useCase.clearOwnCategoriesDb();
+    }
+
+    public void onClickBackupStorageLocationDatabase() {
+        useCase.backupStorageLocationsDbToFile();
+    }
+
+    public void onClickRestoreStorageLocationDatabase() {
+        useCase.restoreStorageLocationDbFromFile();
+    }
+
+    public void onClickClearStorageLocationDatabase() {
+        useCase.clearStorageLocationsDb();
+    }
+
+    public void onClickImportDb() {
+        useCase.importLocalDataToCloud();
+    }
 }

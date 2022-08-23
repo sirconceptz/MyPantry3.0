@@ -210,6 +210,7 @@
     <string name="settings_qr_code_size_big">Groß</string>
     <string name="settings_qr_code_size_small">Klein</string>
     <string name="settings_import_db">Datenbank vom Telefon in die Cloud importieren</string>
+    <string name="settings_choose_file_to_restore">Wählen Sie die wiederherzustellende Datenbankdatei aus</string>
     <string-array name="settings_camera_to_scan">
         <item>Rückkamera</item>
         <item>Front-Kamera</item>
@@ -223,6 +224,10 @@
         <item>Lokal (im Telefon)</item>
         <item>Online</item>
     </string-array>
+    <!--PrintQRCodesActivity-->
+    <string name="printqrcodes_print_qr_codes">QR-Codes drucken</string>
+    <string name="printqrcodes_skip">überspringen</string>
+    <string name="printqrcodes_send_pdf_via_email">Senden Sie eine PDF-Datei per E-Mail</string>
     <!--Notifications-->
     <string name="notification_title">[Meine Speisekammer] Das Produkt wird bald verfallen</string>
     <string name="notification_statement">%PRODUCT_NAME% läuft bald ab. Sie haben noch %DAYS% Tage bis zu diesem Datum.</string>

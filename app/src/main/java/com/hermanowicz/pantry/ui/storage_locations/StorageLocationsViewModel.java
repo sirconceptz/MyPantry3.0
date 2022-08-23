@@ -14,6 +14,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.protobuf.Value;
 import com.hermanowicz.pantry.dao.db.storagelocation.StorageLocation;
 import com.hermanowicz.pantry.interfaces.AvailableDataListener;
 import com.hermanowicz.pantry.model.Database;
@@ -26,6 +27,7 @@ import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Emitter;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.observers.DisposableObserver;
@@ -37,7 +39,7 @@ public class StorageLocationsViewModel extends ViewModel {
     @Inject
     StorageLocationsUseCaseImpl useCase;
     private final String TAG = "RxJava-Categories";
-    private LiveData<List<StorageLocation>> storageLocationListLiveData = new MutableLiveData<>();
+    private LiveData<List<StorageLocation>> storageLocationListLiveData;
     private final CompositeDisposable disposable = new CompositeDisposable();
     private AvailableDataListener availableDataListener;
 
@@ -78,31 +80,39 @@ public class StorageLocationsViewModel extends ViewModel {
         return Observable.create(emitter -> {
             String user = FirebaseAuth.getInstance().getUid();
             FirebaseDatabase database = FirebaseDatabase.getInstance();
-            assert user != null;
-            Query query = database.getReference().child("storage_locations").child(user);
-            query.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    List<StorageLocation> list = new ArrayList<>();
-                    Iterable<DataSnapshot> snapshotIterable = snapshot.getChildren();
-
-                    for (DataSnapshot dataSnapshot : snapshotIterable) {
-                        StorageLocation storageLocation = dataSnapshot.getValue(StorageLocation.class);
-                        list.add(storageLocation);
-                    }
-                    emitter.onNext(list);
-
-                    MutableLiveData<List<StorageLocation>> tempStorageLocationList = new MutableLiveData<>(list);
-                    useCase.setOnlineStorageLocationList(tempStorageLocationList);
-                    availableDataListener.observeAvailableData();
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    emitter.onError(new FirebaseException(error.getMessage()));
-                }
-            });
+            if(user != null && isInternetConnection()) {
+                Query query = database.getReference().child("storage_locations").child(user);
+                query.addValueEventListener(valueEventListener(emitter));
+            } else{
+                useCase.setOnlineStorageLocationList(new MutableLiveData<>());
+                availableDataListener.observeAvailableData();
+            }
         });
+    }
+
+    private ValueEventListener valueEventListener (Emitter<List<StorageLocation>> emitter){
+        return new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                List<StorageLocation> list = new ArrayList<>();
+                Iterable<DataSnapshot> snapshotIterable = snapshot.getChildren();
+
+                for (DataSnapshot dataSnapshot : snapshotIterable) {
+                    StorageLocation storageLocation = dataSnapshot.getValue(StorageLocation.class);
+                    list.add(storageLocation);
+                }
+                emitter.onNext(list);
+
+                MutableLiveData<List<StorageLocation>> tempStorageLocationList = new MutableLiveData<>(list);
+                useCase.setOnlineStorageLocationList(tempStorageLocationList);
+                availableDataListener.observeAvailableData();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                emitter.onError(new FirebaseException(error.getMessage()));
+            }
+        };
     }
 
     public void clearDisposable() {
@@ -123,5 +133,9 @@ public class StorageLocationsViewModel extends ViewModel {
 
     public boolean isAvailableData(){
         return storageLocationListLiveData != null;
+    }
+
+    private boolean isInternetConnection(){
+        return useCase.checkIsInternetConnection();
     }
 }

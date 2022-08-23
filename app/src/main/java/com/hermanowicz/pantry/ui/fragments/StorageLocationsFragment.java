@@ -43,7 +43,6 @@ public class StorageLocationsFragment extends Fragment implements AvailableDataL
         initView(inflater, container);
         setupFloatingActionButton();
         setupRecyclerView();
-        setDatabaseObserver();
         setListeners();
 
         return view;
@@ -69,9 +68,6 @@ public class StorageLocationsFragment extends Fragment implements AvailableDataL
         binding.recyclerviewStorageLocations.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.recyclerviewStorageLocations.setHasFixedSize(true);
         binding.recyclerviewStorageLocations.setItemAnimator(new DefaultItemAnimator());
-    }
-
-    private void setDatabaseObserver() {
     }
 
     private void setListeners() {
@@ -101,8 +97,9 @@ public class StorageLocationsFragment extends Fragment implements AvailableDataL
     }
 
     private void onClickNewStorageLocation() {
-        ArrayList<StorageLocation> storageLocationArrayList =
-                new ArrayList<>(Objects.requireNonNull(storageLocationsViewModel.getAllStorageLocationList().getValue()));
+        ArrayList<StorageLocation> storageLocationArrayList = new ArrayList<>();
+        if(storageLocationsViewModel.getAllStorageLocationList().getValue() != null)
+             storageLocationArrayList = new ArrayList<>(storageLocationsViewModel.getAllStorageLocationList().getValue());
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList("storageLocationArrayList", storageLocationArrayList);
         Navigation.findNavController(view)

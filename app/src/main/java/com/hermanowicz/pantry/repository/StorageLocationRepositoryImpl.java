@@ -138,8 +138,4 @@ public class StorageLocationRepositoryImpl implements StorageLocationRepository 
     public boolean checkIsInternetConnection() {
         return internetConnection.isNetworkConnected();
     }
-
-    public void setOnlineStorageLocationList(LiveData<List<StorageLocation>> storageLocationList) {
-        this.onlineStorageLocationList = storageLocationList;
-    }
 }

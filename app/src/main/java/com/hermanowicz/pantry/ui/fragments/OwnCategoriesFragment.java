@@ -95,8 +95,9 @@ public class OwnCategoriesFragment extends Fragment implements AvailableDataList
     }
 
     private void onClickNewCategory() {
-        ArrayList<Category> categoryArrayList =
-                new ArrayList<>(Objects.requireNonNull(categoryViewModel.getCategoryList().getValue()));
+        ArrayList<Category> categoryArrayList = new ArrayList<>();
+        if(categoryViewModel.getCategoryList().getValue() != null)
+                categoryArrayList = new ArrayList<>(categoryViewModel.getCategoryList().getValue());
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList("categoryArrayList", categoryArrayList);
         Navigation.findNavController(view)

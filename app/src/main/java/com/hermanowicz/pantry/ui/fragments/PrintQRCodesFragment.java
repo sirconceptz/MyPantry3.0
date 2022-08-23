@@ -3,6 +3,7 @@ package com.hermanowicz.pantry.ui.fragments;
 import static androidx.core.content.FileProvider.getUriForFile;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -12,15 +13,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.multidex.BuildConfig;
 import androidx.navigation.Navigation;
 
 import com.hermanowicz.pantry.R;
@@ -28,13 +26,14 @@ import com.hermanowicz.pantry.databinding.FragmentPrintQrCodesBinding;
 import com.hermanowicz.pantry.interfaces.PrintQRCodesViewActionsListener;
 import com.hermanowicz.pantry.ui.print_qr_codes.PrintQRCodesViewModel;
 import com.hermanowicz.pantry.util.PdfFile;
+import com.hermanowicz.pantry.util.SettingsIntent;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
 public class PrintQRCodesFragment extends Fragment implements PrintQRCodesViewActionsListener {
 
-    int PERMISSION_REQUEST_CODE = 42;
+    private final int PERMISSION_REQUEST_CODE = 42;
 
     private FragmentPrintQrCodesBinding binding;
     private PrintQRCodesViewModel viewModel;
@@ -57,14 +56,6 @@ public class PrintQRCodesFragment extends Fragment implements PrintQRCodesViewAc
         viewModel.setViewActionsListener(this);
     }
 
-    private final ActivityResultLauncher<String> requestPermissionLauncher =
-            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
-                if (isGranted) {
-                    viewModel.permissionGranted();
-                } else
-                    showDialogInfoPermissionIsNeeded();
-            });
-
     private void setListeners() {
         binding.buttonPrintQRCodes.setOnClickListener(this::onClickPrintQRCodes);
         binding.buttonSendEmailQRCodes.setOnClickListener(this::onClickSendEmailQRCodes);
@@ -73,7 +64,6 @@ public class PrintQRCodesFragment extends Fragment implements PrintQRCodesViewAc
 
     private void getArgumentsAndSetData() {
         viewModel.setArguments(getArguments());
-        viewModel.generateQRCodes();
     }
 
     private void onClickPrintQRCodes(View view) {
@@ -95,32 +85,41 @@ public class PrintQRCodesFragment extends Fragment implements PrintQRCodesViewAc
     }
 
     private void showDialogInfoPermissionIsNeeded() {
-        String permission = viewModel.getPermissionType();
-
         AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
         builder.setTitle(getString(R.string.general_permission_required_title))
                 .setMessage(getString(R.string.general_permission_required_message))
                 .setPositiveButton(getString(android.R.string.ok), (dialog, click) ->
-                        requestPermissionLauncher.launch(permission))
+                        openAppSettings())
                 .setNegativeButton(getString(R.string.general_no_thanks), (dialog, click) -> dialog.cancel())
                 .show();
     }
 
     private void requestPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q){
-            String[] permissions = new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.ACCESS_MEDIA_LOCATION};
-            if (ContextCompat.checkSelfPermission(requireActivity(), permissions[1]) == PackageManager.PERMISSION_GRANTED)
-                viewModel.permissionGranted();
-            else
-                ActivityCompat.requestPermissions(requireActivity(), permissions, PERMISSION_REQUEST_CODE);
-        }
-        else {
-            String[] permissions = new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE};
-            if (ContextCompat.checkSelfPermission(requireActivity(), permissions[0]) == PackageManager.PERMISSION_GRANTED)
-                viewModel.permissionGranted();
-            else
-                ActivityCompat.requestPermissions(requireActivity(), permissions, PERMISSION_REQUEST_CODE);
-        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
+            requestPermissionAboveApi28();
+        else
+            requestPermissionEqualAndBelowApi28();
+    }
+
+    private void requestPermissionEqualAndBelowApi28() {
+        String[] permissions = new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        if (ContextCompat.checkSelfPermission(requireActivity(), permissions[0]) == PackageManager.PERMISSION_GRANTED)
+            viewModel.permissionGranted();
+        else if(shouldShowRequestPermissionRationale(permissions[0]))
+            showDialogInfoPermissionIsNeeded();
+        else
+            ActivityCompat.requestPermissions(requireActivity(), permissions, PERMISSION_REQUEST_CODE);
+    }
+
+    private void requestPermissionAboveApi28() {
+        @SuppressLint("InlinedApi")
+        String[] permissions = new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.ACCESS_MEDIA_LOCATION};
+        if (ContextCompat.checkSelfPermission(requireActivity(), permissions[1]) == PackageManager.PERMISSION_GRANTED)
+            viewModel.permissionGranted();
+        else if(shouldShowRequestPermissionRationale(permissions[0]))
+            showDialogInfoPermissionIsNeeded();
+        else
+            ActivityCompat.requestPermissions(requireActivity(), permissions, PERMISSION_REQUEST_CODE);
     }
 
     @Override
@@ -135,8 +134,6 @@ public class PrintQRCodesFragment extends Fragment implements PrintQRCodesViewAc
         if (requestCode == PERMISSION_REQUEST_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
                 viewModel.permissionGranted();
-            else
-                showDialogInfoPermissionIsNeeded();
             return;
         }
         throw new IllegalStateException("Unexpected value: " + requestCode);
@@ -144,7 +141,7 @@ public class PrintQRCodesFragment extends Fragment implements PrintQRCodesViewAc
 
     @Override
     public void openPdfFile(String pdfFileName) {
-        Uri pdfUri = getUriForFile(requireActivity(), BuildConfig.APPLICATION_ID + ".provider", PdfFile.getPdfFile(pdfFileName));
+        Uri pdfUri = getUriForFile(requireActivity(), "com.hermanowicz.pantry.provider", PdfFile.getPdfFile(pdfFileName));
         Intent pdfDocumentIntent = new Intent(Intent.ACTION_VIEW);
         pdfDocumentIntent.setDataAndType(pdfUri, "application/pdf");
         pdfDocumentIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
@@ -154,12 +151,17 @@ public class PrintQRCodesFragment extends Fragment implements PrintQRCodesViewAc
 
     @Override
     public void sendPdfWithQRCodesByEmail(String pdfFileName) {
-        Uri pdfUri = getUriForFile(requireActivity(), BuildConfig.APPLICATION_ID + ".provider", PdfFile.getPdfFile(pdfFileName));
+        Uri pdfUri = getUriForFile(requireActivity(), "com.hermanowicz.pantry.provider", PdfFile.getPdfFile(pdfFileName));
         final Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
         emailIntent.setType("plain/text");
         if (pdfUri != null) {
             emailIntent.putExtra(Intent.EXTRA_STREAM, pdfUri);
         }
         startActivity(Intent.createChooser(emailIntent, ""));
+    }
+
+    private void openAppSettings() {
+        Intent settingsIntent = SettingsIntent.getSettingsIntent(requireActivity());
+        startActivity(settingsIntent);
     }
 }

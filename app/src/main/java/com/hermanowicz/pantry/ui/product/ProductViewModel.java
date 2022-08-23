@@ -38,7 +38,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class ProductViewModel extends ViewModel {
 
     @Inject
-    ProductUseCaseImpl productUseCase;
+    ProductUseCaseImpl useCase;
     private final String TAG = "RxJava-Products";
     private LiveData<List<Product>> productListLiveData;
     private final MutableLiveData<List<GroupProduct>> groupProductList = new MutableLiveData<>();
@@ -47,7 +47,7 @@ public class ProductViewModel extends ViewModel {
 
     @Inject
     public ProductViewModel(ProductUseCaseImpl productUseCase) {
-        this.productUseCase = productUseCase;
+        this.useCase = productUseCase;
         loadOnlineProducts();
     }
 
@@ -56,7 +56,7 @@ public class ProductViewModel extends ViewModel {
     }
 
     public void convertProductListToGroupProductList(List<Product> productList) {
-        List<GroupProduct> groupProducts = productUseCase.getAllGroupProductList(productList);
+        List<GroupProduct> groupProducts = useCase.getAllGroupProductList(productList);
         groupProductList.setValue(groupProducts);
     }
 
@@ -92,12 +92,11 @@ public class ProductViewModel extends ViewModel {
         return Observable.create(emitter -> {
             String user = FirebaseAuth.getInstance().getUid();
             FirebaseDatabase database = FirebaseDatabase.getInstance();
-            if(user != null && productUseCase.checkIsInternetConnection()) {
+            if(user != null && isInternetConnection()) {
                 Query query = database.getReference().child("products").child(user);
                 query.addValueEventListener(valueEventListener(emitter));
-            }
-            else{
-                productUseCase.setOnlineProductList(new MutableLiveData<>());
+            } else{
+                useCase.setOnlineProductList(new MutableLiveData<>());
                 availableDataListener.observeAvailableData();
             }
         });
@@ -117,7 +116,7 @@ public class ProductViewModel extends ViewModel {
                 emitter.onNext(list);
 
                 MutableLiveData<List<Product>> tempProductList = new MutableLiveData<>(list);
-                productUseCase.setOnlineProductList(tempProductList);
+                useCase.setOnlineProductList(tempProductList);
                 availableDataListener.observeAvailableData();
             }
 
@@ -129,7 +128,7 @@ public class ProductViewModel extends ViewModel {
     }
 
     public void updateDataForSelectedDatabase(@NonNull Database databaseMode) {
-        productListLiveData = productUseCase.getAllProducts(databaseMode);
+        productListLiveData = useCase.getAllProducts(databaseMode);
     }
 
     public void clearDisposable() {
@@ -156,7 +155,14 @@ public class ProductViewModel extends ViewModel {
         return productListLiveData != null;
     }
 
-    public boolean isInternetConnection() {
-        return productUseCase.checkIsInternetConnection();
+    private boolean isInternetConnection() {
+        return useCase.checkIsInternetConnection();
+    }
+
+    public void setDefaultDatabaseMode(Database databaseModeFromSettings) {
+        if(databaseModeFromSettings.getDatabaseMode() == Database.DatabaseMode.LOCAL){
+            updateDataForSelectedDatabase(databaseModeFromSettings);
+            availableDataListener.observeAvailableData();
+        }
     }
 }

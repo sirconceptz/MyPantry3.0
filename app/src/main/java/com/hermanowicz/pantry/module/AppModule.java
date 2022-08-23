@@ -3,8 +3,7 @@ package com.hermanowicz.pantry.module;
 import android.content.Context;
 import android.content.res.Resources;
 
-import androidx.preference.PreferenceManager;
-
+import com.hermanowicz.pantry.repository.DatabaseBackupRepositoryImpl;
 import com.hermanowicz.pantry.repository.OwnCategoryRepository;
 import com.hermanowicz.pantry.repository.OwnCategoryRepositoryImpl;
 import com.hermanowicz.pantry.repository.PdfDocumentsRepositoryImpl;
@@ -124,7 +123,12 @@ public final class AppModule {
     @Singleton
     public SettingsUseCaseImpl provideSettingsUseCase(@ApplicationContext Context context) {
         PremiumAccess premiumAccess = new PremiumAccess(context);
-        return new SettingsUseCaseImpl(premiumAccess);
+        ProductRepositoryImpl productRepository = new ProductRepositoryImpl(context);
+        OwnCategoryRepositoryImpl ownCategoryRepository = new OwnCategoryRepositoryImpl(context);
+        StorageLocationRepositoryImpl storageLocationRepository = new StorageLocationRepositoryImpl(context);
+        DatabaseBackupRepositoryImpl databaseBackupRepository = new DatabaseBackupRepositoryImpl(context);
+        SharedPreferencesRepositoryImpl sharedPreferencesRepository = new SharedPreferencesRepositoryImpl(context);
+        return new SettingsUseCaseImpl(premiumAccess, productRepository, ownCategoryRepository, storageLocationRepository, databaseBackupRepository, sharedPreferencesRepository);
     }
 
     @Provides

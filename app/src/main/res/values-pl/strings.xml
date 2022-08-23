@@ -210,6 +210,7 @@
     <string name="settings_qr_code_size_big">Duże</string>
     <string name="settings_qr_code_size_small">Małe</string>
     <string name="settings_import_db">Importuj bazę produktów do chmury</string>
+    <string name="settings_choose_file_to_restore">Wybierz plik bazy do przywrócenia</string>
     <string-array name="settings_camera_to_scan">
         <item>Tylni aparat</item>
         <item>Przedni aparat</item>
@@ -223,6 +224,10 @@
         <item>Lokalny (w telefonie)</item>
         <item>Online (w internecie)</item>
     </string-array>
+    <!--PrintQRCodesActivity-->
+    <string name="printqrcodes_print_qr_codes">Drukuj kody QR</string>
+    <string name="printqrcodes_skip">Pomiń</string>
+    <string name="printqrcodes_send_pdf_via_email">Wyślij plik PDF jako email</string>
     <!--Notifications-->
     <string name="notification_title">[Moja Spiżarnia] Produkt wkrótce się przeterminuje.</string>
     <string name="notification_statement">%PRODUCT_NAME% wkrótce się przeterminuje. Zostało Ci mniej niż %DAYS% dni, aby zdążyć przed tą datą.</string>

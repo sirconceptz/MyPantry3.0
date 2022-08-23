@@ -1,8 +1,11 @@
 package com.hermanowicz.pantry.ui.fragments;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,9 +14,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -29,6 +32,7 @@ import com.hermanowicz.pantry.ui.product.ProductViewModel;
 import com.hermanowicz.pantry.ui.scan_product.ScanProductViewModel;
 import com.hermanowicz.pantry.util.ScanContract;
 import com.hermanowicz.pantry.util.ScanOptions;
+import com.hermanowicz.pantry.util.SettingsIntent;
 
 import java.util.ArrayList;
 
@@ -36,6 +40,8 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
 public class ScanProductFragment extends Fragment implements AvailableDataListener, ScanDecodedResult {
+
+    private final int PERMISSION_REQUEST_CODE = 42;
 
     private FragmentScanProductBinding binding;
     private ScanProductViewModel scanProductViewModel;
@@ -61,14 +67,6 @@ public class ScanProductFragment extends Fragment implements AvailableDataListen
 
         view = binding.getRoot();
     }
-
-    private final ActivityResultLauncher<String> requestPermissionLauncher =
-            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
-                if (isGranted) {
-                    initScanner();
-                } else
-                    showDialogInfoPermissionIsNeeded();
-            });
 
     private void setListeners() {
         productViewModel.setAvailableDataListener(this);
@@ -118,15 +116,18 @@ public class ScanProductFragment extends Fragment implements AvailableDataListen
     }
 
     private void showDialogInfoPermissionIsNeeded() {
-        String permission = Manifest.permission.CAMERA;
-
         AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
         builder.setTitle(getString(R.string.general_permission_required_title))
                 .setMessage(getString(R.string.general_permission_required_message))
                 .setPositiveButton(getString(android.R.string.ok), (dialog, click) ->
-                        requestPermissionLauncher.launch(permission))
+                       openAppSettings())
                 .setNegativeButton(getString(R.string.general_no_thanks), (dialog, click) -> dialog.cancel())
                 .show();
+    }
+
+    private void openAppSettings() {
+        Intent settingsIntent = SettingsIntent.getSettingsIntent(requireActivity());
+        startActivity(settingsIntent);
     }
 
     @Override
@@ -158,11 +159,14 @@ public class ScanProductFragment extends Fragment implements AvailableDataListen
     }
 
     private void requestPermission() {
-        String permission = Manifest.permission.CAMERA;
-        if (ContextCompat.checkSelfPermission(requireActivity(), permission) == PackageManager.PERMISSION_GRANTED)
+        String[] permissions = new String[] {Manifest.permission.CAMERA};
+        int checkPermission = ContextCompat.checkSelfPermission(requireActivity(), permissions[0]);
+        if (checkPermission == PackageManager.PERMISSION_GRANTED)
             initScanner();
+        else if(shouldShowRequestPermissionRationale(permissions[0]))
+            showDialogInfoPermissionIsNeeded();
         else
-            requestPermissionLauncher.launch(permission);
+            ActivityCompat.requestPermissions(requireActivity(), permissions, PERMISSION_REQUEST_CODE);
     }
 
     private void navigateToProductDetails(int productId, int productHashCode, ArrayList<Product> productArrayList) {
@@ -204,13 +208,9 @@ public class ScanProductFragment extends Fragment implements AvailableDataListen
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
-        int PERMISSION_REQUEST_CODE = 42;
-
         if (requestCode == PERMISSION_REQUEST_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
                 initScanner();
-            else
-                showDialogInfoPermissionIsNeeded();
             return;
         }
         throw new IllegalStateException("Unexpected value: " + requestCode);

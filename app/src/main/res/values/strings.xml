@@ -211,6 +211,7 @@
     <string name="settings_qr_code_size_big">Big</string>
     <string name="settings_qr_code_size_small">Small</string>
     <string name="settings_import_db">Import database from phone to cloud</string>
+    <string name="settings_choose_file_to_restore">Choose database file to restore</string>
     <string-array name="settings_camera_to_scan">
         <item>Rear camera</item>
         <item>Front camera</item>
@@ -224,6 +225,10 @@
         <item>Local (in phone)</item>
         <item>Online</item>
     </string-array>
+    <!--PrintQRCodesActivity-->
+    <string name="printqrcodes_print_qr_codes">Print QR codes</string>
+    <string name="printqrcodes_skip">Skip</string>
+    <string name="printqrcodes_send_pdf_via_email">Send a PDF file by e-mail</string>
     <!--PreferencesKeys-->
     <string name="preferences_key_selected_application_theme" translatable="false">SELECTED_APPLICATION_THEME</string>
     <string name="preferences_key_scan_camera" translatable="false">SCAN_CAMERA</string>

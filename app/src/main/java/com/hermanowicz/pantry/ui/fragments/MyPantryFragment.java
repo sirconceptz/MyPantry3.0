@@ -56,6 +56,7 @@ public class MyPantryFragment extends Fragment implements AvailableDataListener 
         productViewModel = new ViewModelProvider(this).get(ProductViewModel.class);
         databaseModeViewModel = new ViewModelProvider(this).get(DatabaseModeViewModel.class);
         productViewModel.setAvailableDataListener(this);
+        productViewModel.setDefaultDatabaseMode(databaseModeViewModel.getDatabaseModeFromSettings());
 
         binding = FragmentMyPantryBinding.inflate(inflater, container, false);
         view = binding.getRoot();
@@ -101,7 +102,11 @@ public class MyPantryFragment extends Fragment implements AvailableDataListener 
     }
 
     private void navigateToProductDetails(View view, ArrayList<Product> productArrayList) {
+        int productId = productArrayList.get(0).getId();
+        String productHashCode = productArrayList.get(0).getHashCode();
         Bundle bundle = new Bundle();
+        bundle.putInt("productId", productId);
+        bundle.putString("productHashCode", productHashCode);
         bundle.putParcelableArrayList("productArrayList", productArrayList);
         Navigation.findNavController(view).navigate(R.id.action_nav_my_pantry_to_nav_product_details, bundle);
     }

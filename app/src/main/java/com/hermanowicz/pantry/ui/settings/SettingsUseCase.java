@@ -18,4 +18,24 @@ public interface SettingsUseCase {
     String getAppVersion();
 
     String getActiveUserEmail();
+
+    void importLocalDataToCloud();
+
+    void backupProductDbToFile();
+
+    void restoreProductDbFromFile();
+
+    void backupOwnCategoriesDbToFile();
+
+    void restoreOwnCategoriesDbFromFile();
+
+    void backupStorageLocationsDbToFile();
+
+    void restoreStorageLocationDbFromFile();
+
+    void clearProductDb();
+
+    void clearOwnCategoriesDb();
+
+    void clearStorageLocationsDb();
 }

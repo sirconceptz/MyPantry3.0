@@ -26,6 +26,7 @@ import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Emitter;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.observers.DisposableObserver;
@@ -37,7 +38,7 @@ public class CategoryViewModel extends ViewModel {
     @Inject
     CategoryUseCaseImpl useCase;
     private final String TAG = "RxJava-Categories";
-    private LiveData<List<Category>> categoryAllListLiveData = new MutableLiveData<>();
+    private LiveData<List<Category>> categoryAllListLiveData;
     private final CompositeDisposable disposable = new CompositeDisposable();
     private AvailableDataListener availableDataListener;
 
@@ -78,31 +79,39 @@ public class CategoryViewModel extends ViewModel {
         return Observable.create(emitter -> {
             String user = FirebaseAuth.getInstance().getUid();
             FirebaseDatabase database = FirebaseDatabase.getInstance();
-            assert user != null;
-            Query query = database.getReference().child("categories").child(user);
-            query.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    List<Category> list = new ArrayList<>();
-                    Iterable<DataSnapshot> snapshotIterable = snapshot.getChildren();
-
-                    for (DataSnapshot dataSnapshot : snapshotIterable) {
-                        Category category = dataSnapshot.getValue(Category.class);
-                        list.add(category);
-                    }
-                    emitter.onNext(list);
-
-                    MutableLiveData<List<Category>> tempCategoryList = new MutableLiveData<>(list);
-                    useCase.setOnlineCategoryList(tempCategoryList);
-                    availableDataListener.observeAvailableData();
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    emitter.onError(new FirebaseException(error.getMessage()));
-                }
-            });
+            if(user != null && isInternetConnection()) {
+                Query query = database.getReference().child("categories").child(user);
+                query.addValueEventListener(valueEventListener(emitter));}
+            else{
+                useCase.setOnlineCategoryList(new MutableLiveData<>());
+                availableDataListener.observeAvailableData();
+            }
         });
+    }
+
+    private ValueEventListener valueEventListener(Emitter<List<Category>> emitter) {
+        return new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                List<Category> list = new ArrayList<>();
+                Iterable<DataSnapshot> snapshotIterable = snapshot.getChildren();
+
+                for (DataSnapshot dataSnapshot : snapshotIterable) {
+                    Category category = dataSnapshot.getValue(Category.class);
+                    list.add(category);
+                }
+                emitter.onNext(list);
+
+                MutableLiveData<List<Category>> tempCategoryList = new MutableLiveData<>(list);
+                useCase.setOnlineCategoryList(tempCategoryList);
+                availableDataListener.observeAvailableData();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                emitter.onError(new FirebaseException(error.getMessage()));
+            }
+        };
     }
 
     public void clearDisposable() {
@@ -123,5 +132,9 @@ public class CategoryViewModel extends ViewModel {
 
     public boolean isAvailableData(){
         return categoryAllListLiveData != null;
+    }
+
+    private boolean isInternetConnection(){
+        return useCase.checkIsInternetConnection();
     }
 }

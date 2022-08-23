@@ -55,16 +55,6 @@
             android:title="@string/settings_import_db" />
 
         <ListPreference
-            android:dialogTitle="@string/settings_which_theme_user_prefer"
-            android:defaultValue="0"
-            android:entries="@array/settings_darkmode_selector"
-            app:useSimpleSummaryProvider="true"
-            android:entryValues="@array/settings_darkmode_selector_value"
-            android:icon="@drawable/ic_night"
-            android:key="@string/preferences_key_selected_application_theme"
-            android:title="@string/settings_which_theme_user_prefer" />
-
-        <ListPreference
             android:dialogTitle="@string/settings_which_camera_to_scan_products"
             android:defaultValue="0"
             android:entries="@array/settings_camera_to_scan"
@@ -95,14 +85,13 @@
 
     <PreferenceCategory android:title="@string/settings_notifications_settings">
 
-        <EditTextPreference
+        <SeekBarPreference
             android:defaultValue="3"
+            android:max="14"
+            app:showSeekBarValue="true"
             android:icon="@drawable/ic_days"
             android:key="@string/preferences_key_notification_days_before_expiration"
-            app:useSimpleSummaryProvider="true"
-            android:title="@string/settings_how_many_days_before_the_expiration_date_send_a_notification"
-            android:inputType="number"
-            android:maxLength="2" />
+            android:title="@string/settings_how_many_days_before_the_expiration_date_send_a_notification" />
 
         <EditTextPreference
             android:icon="@drawable/ic_email_address"

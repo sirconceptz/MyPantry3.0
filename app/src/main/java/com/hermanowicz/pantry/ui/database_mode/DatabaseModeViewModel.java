@@ -15,11 +15,11 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 public class DatabaseModeViewModel extends ViewModel {
 
     @Inject
-    DatabaseModeUseCaseImpl databaseModeUseCase;
+    DatabaseModeUseCaseImpl useCase;
 
     @Inject
     public DatabaseModeViewModel(DatabaseModeUseCaseImpl databaseModeUseCase) {
-        this.databaseModeUseCase = databaseModeUseCase;
+        this.useCase = databaseModeUseCase;
         setDatabaseFromSettings();
     }
 
@@ -30,16 +30,20 @@ public class DatabaseModeViewModel extends ViewModel {
     };
 
     private void setDatabaseFromSettings() {
-        Database databaseMode = databaseModeUseCase.getDatabaseModeFromSettings();
+        Database databaseMode = useCase.getDatabaseModeFromSettings();
         setDatabaseMode(databaseMode);
     }
 
     private void setDatabaseMode(Database databaseMode) {
-        if (databaseModeUseCase.isDatabaseChanged())
-            databaseModeUseCase.setDatabaseMode(databaseMode);
+        if (useCase.isDatabaseChanged())
+            useCase.setDatabaseMode(databaseMode);
     }
 
     public LiveData<Database> getDatabaseMode() {
-        return databaseModeUseCase.getDatabaseMode();
+        return useCase.getDatabaseMode();
+    }
+
+    public Database getDatabaseModeFromSettings() {
+        return useCase.getDatabaseModeFromSettings();
     }
 }

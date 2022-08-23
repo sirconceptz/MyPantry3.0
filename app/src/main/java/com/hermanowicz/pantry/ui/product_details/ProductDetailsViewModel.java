@@ -147,7 +147,7 @@ public class ProductDetailsViewModel extends ViewModel {
     public void showProductDataIfExists(){
         if(arguments != null){
             int productId = arguments.getInt("productId");
-            String productHashCode = String.valueOf(arguments.getInt("productHashCode"));
+            String productHashCode = arguments.getString("productHashCode");
             productArrayList = arguments.getParcelableArrayList("productArrayList");
             for(Product product : productArrayList){
                 if((product.getId() == productId) && productHashCode.equals(product.getHashCode()))

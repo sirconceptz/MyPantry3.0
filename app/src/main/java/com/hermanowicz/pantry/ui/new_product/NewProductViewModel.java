@@ -152,6 +152,7 @@ public class NewProductViewModel extends ViewModel {
         product.setIsVege(Boolean.TRUE.equals(isVege.get()));
         product.setHasSugar(Boolean.TRUE.equals(hasSugar.get()));
         product.setHasSalt(Boolean.TRUE.equals(hasSalt.get()));
+        product.setHashCode(String.valueOf(product.hashCode()));
         return product;
     }
 

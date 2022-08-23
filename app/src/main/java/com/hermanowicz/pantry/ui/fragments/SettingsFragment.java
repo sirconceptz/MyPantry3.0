@@ -35,9 +35,17 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Pricin
     private Preference goPremium;
     private Preference databaseMode;
     private Preference importDb;
-    private Preference selectedTheme;
     private Preference activeUser;
     private Preference appVersion;
+    private Preference backupProductDb;
+    private Preference restoreProductDb;
+    private Preference clearProductDb;
+    private Preference backupCategoryDb;
+    private Preference restoreCategoryDb;
+    private Preference clearCategoryDb;
+    private Preference backupStorageLocationDb;
+    private Preference restoreStorageLocationDb;
+    private Preference clearStorageLocationDb;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -58,15 +66,27 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Pricin
         goPremium = findPreference(getString(R.string.preferences_key_go_premium));
         databaseMode = findPreference(getString(R.string.preferences_key_database_mode));
         importDb = findPreference(getString(R.string.preferences_key_import_db));
-        selectedTheme = findPreference(getString(R.string.preferences_key_selected_application_theme));
         activeUser = findPreference(getString(R.string.preferences_key_active_user));
         appVersion = findPreference(getString(R.string.preferences_key_version));
+        restoreProductDb = findPreference(getString(R.string.preferences_key_restore_product_db));
+        backupProductDb = findPreference(getString(R.string.preferences_key_backup_product_db));
+        clearProductDb = findPreference(getString(R.string.preferences_key_clear_product_db));
+        restoreCategoryDb = findPreference(getString(R.string.preferences_key_restore_category_db));
+        backupCategoryDb = findPreference(getString(R.string.preferences_key_backup_category_db));
+        clearCategoryDb = findPreference(getString(R.string.preferences_key_clear_category_db));
+        restoreStorageLocationDb = findPreference(getString(R.string.preferences_key_restore_storage_location_db));
+        backupStorageLocationDb = findPreference(getString(R.string.preferences_key_backup_storage_location_db));
+        clearStorageLocationDb = findPreference(getString(R.string.preferences_key_clear_storage_location_db));
 
         settingsViewModel.setPremiumActivationListenerAndSetupBillingClient(requireActivity(), this);
         settingsViewModel.showPreferences(this);
     }
 
     private void setListeners() {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(requireActivity());
+        sharedPreferences.registerOnSharedPreferenceChangeListener(databaseModeViewModel.sharedPreferencesListener);
+        
         goPremium.setOnPreferenceClickListener(preference -> {
             initPremiumPurchase();
             return false;
@@ -77,9 +97,48 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Pricin
             return false;
         });
 
-        SharedPreferences sharedPreferences = PreferenceManager
-                .getDefaultSharedPreferences(requireActivity());
-        sharedPreferences.registerOnSharedPreferenceChangeListener(databaseModeViewModel.sharedPreferencesListener);
+        backupProductDb.setOnPreferenceClickListener(preference -> {
+            settingsViewModel.onClickBackupProductDatabase();
+            return false;
+        });
+        restoreProductDb.setOnPreferenceClickListener(preference -> {
+            settingsViewModel.onClickRestoreProductDatabase();
+            return false;
+        });
+        clearProductDb.setOnPreferenceClickListener(preference -> {
+            settingsViewModel.onClickClearProductDatabase();
+            return false;
+        });
+
+        backupCategoryDb.setOnPreferenceClickListener(preference -> {
+            settingsViewModel.onClickBackupCategoryDatabase();
+            return false;
+        });
+        restoreCategoryDb.setOnPreferenceClickListener(preference -> {
+            settingsViewModel.onClickRestoreCategoryDatabase();
+            return false;
+        });
+        clearCategoryDb.setOnPreferenceClickListener(preference -> {
+            settingsViewModel.onClickClearCategoryDatabase();
+            return false;
+        });
+
+        backupStorageLocationDb.setOnPreferenceClickListener(preference -> {
+            settingsViewModel.onClickBackupStorageLocationDatabase();
+            return false;
+        });
+        restoreStorageLocationDb.setOnPreferenceClickListener(preference -> {
+            settingsViewModel.onClickRestoreStorageLocationDatabase();
+            return false;
+        });
+        clearStorageLocationDb.setOnPreferenceClickListener(preference -> {
+            settingsViewModel.onClickClearStorageLocationDatabase();
+            return false;
+        });
+        importDb.setOnPreferenceClickListener(preference -> {
+            settingsViewModel.onClickImportDb();
+            return false;
+        });
     }
 
     private void showLoginAndRegisterForm() {
