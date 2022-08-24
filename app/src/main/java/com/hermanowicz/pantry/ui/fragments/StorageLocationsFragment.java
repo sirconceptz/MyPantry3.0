@@ -52,6 +52,7 @@ public class StorageLocationsFragment extends Fragment implements AvailableDataL
         databaseModeViewModel = new ViewModelProvider(this).get(DatabaseModeViewModel.class);
         storageLocationsViewModel = new ViewModelProvider(this).get(StorageLocationsViewModel.class);
         storageLocationsViewModel.setAvailableDataListener(this);
+        storageLocationsViewModel.setDefaultDatabaseMode(databaseModeViewModel.getDatabaseModeFromSettings());
 
         binding = FragmentStorageLocationsBinding.inflate(inflater, container, false);
         binding.setViewModel(storageLocationsViewModel);
@@ -90,16 +91,15 @@ public class StorageLocationsFragment extends Fragment implements AvailableDataL
     }
 
     private void navigateToStorageLocationDetails(View view, StorageLocation storageLocation) {
-        NavDirections action =
-                StorageLocationsFragmentDirections
+        NavDirections action = StorageLocationsFragmentDirections
                         .actionNavStorageLocationsToNavStorageLocationDetail(storageLocation);
         Navigation.findNavController(view).navigate(action);
     }
 
     private void onClickNewStorageLocation() {
         ArrayList<StorageLocation> storageLocationArrayList = new ArrayList<>();
-        if(storageLocationsViewModel.getAllStorageLocationList().getValue() != null)
-             storageLocationArrayList = new ArrayList<>(storageLocationsViewModel.getAllStorageLocationList().getValue());
+        if(storageLocationsViewModel.getAllStorageLocationList() != null)
+             storageLocationArrayList = new ArrayList<>(Objects.requireNonNull(storageLocationsViewModel.getAllStorageLocationList().getValue()));
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList("storageLocationArrayList", storageLocationArrayList);
         Navigation.findNavController(view)
@@ -115,7 +115,7 @@ public class StorageLocationsFragment extends Fragment implements AvailableDataL
     @Override
     public void observeAvailableData() {
         databaseModeViewModel.getDatabaseMode().observe(getViewLifecycleOwner(),
-                storageLocationsViewModel::showDataForSelectedDatabase);
+                storageLocationsViewModel::updateDataForSelectedDatabase);
         storageLocationsViewModel.getAllStorageLocationList().observe(getViewLifecycleOwner(),
                 this::setDataRecyclerViewAdapter);
     }

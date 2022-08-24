@@ -138,4 +138,9 @@ public class StorageLocationRepositoryImpl implements StorageLocationRepository 
     public boolean checkIsInternetConnection() {
         return internetConnection.isNetworkConnected();
     }
+
+    @Override
+    public List<StorageLocation> getAllLocalStorageLocationsAsList() {
+        return storageLocationDao.getAllStorageLocationsAsList();
+    }
 }

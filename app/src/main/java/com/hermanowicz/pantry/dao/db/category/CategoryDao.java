@@ -56,4 +56,6 @@ public interface CategoryDao {
     @Query("DELETE FROM categories")
     void deleteAll();
 
+    @Query("SELECT * FROM categories")
+    List<Category> getOwnCategoriesAsList();
 }

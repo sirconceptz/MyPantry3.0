@@ -162,6 +162,12 @@
             app:destination="@id/nav_my_pantry"
             app:enterAnim="@android:anim/slide_in_left"
             app:exitAnim="@android:anim/slide_out_right" />
+
+        <action
+            android:id="@+id/action_nav_product_details_to_nav_print_qr_codes"
+            app:destination="@id/nav_print_qr_codes"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
     </fragment>
 
     <fragment

@@ -116,7 +116,7 @@ public class PrintQRCodesFragment extends Fragment implements PrintQRCodesViewAc
         String[] permissions = new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.ACCESS_MEDIA_LOCATION};
         if (ContextCompat.checkSelfPermission(requireActivity(), permissions[1]) == PackageManager.PERMISSION_GRANTED)
             viewModel.permissionGranted();
-        else if(shouldShowRequestPermissionRationale(permissions[0]))
+        else if(ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), permissions[0]) || ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), permissions[1]))
             showDialogInfoPermissionIsNeeded();
         else
             ActivityCompat.requestPermissions(requireActivity(), permissions, PERMISSION_REQUEST_CODE);

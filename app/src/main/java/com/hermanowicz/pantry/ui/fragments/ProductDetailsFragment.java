@@ -58,10 +58,21 @@ public class ProductDetailsFragment extends Fragment {
         binding.buttonDeleteProduct.setOnClickListener(this::onClickDeleteProduct);
     }
 
-
     private void getArgumentsAndShowData() {
         productDetailsViewModel.setArguments(getArguments());
         productDetailsViewModel.showProductDataIfExists();
+    }
+
+    private void onClickPrintQRCodes(View view) {
+        navigateToPrintQRCodes(view);
+    }
+
+    private void onClickAddPhoto(View view) {
+        //navigateToAddPhoto(view); todo: add fragment with photo
+    }
+
+    private void onClickEditProduct(View view) {
+        navigateToEditProduct(view);
     }
 
     private void onClickDeleteProduct(View view) {
@@ -73,6 +84,13 @@ public class ProductDetailsFragment extends Fragment {
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList("productArrayList", productArrayList);
         Navigation.findNavController(view).navigate(R.id.action_nav_product_details_to_nav_edit_product, bundle);
+    }
+
+    private void navigateToPrintQRCodes(View view) {
+        ArrayList<Product> productArrayList = productDetailsViewModel.getProductArrayList();
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList("productArrayList", productArrayList);
+        Navigation.findNavController(view).navigate(R.id.action_nav_product_details_to_nav_print_qr_codes, bundle);
     }
 
     @Override

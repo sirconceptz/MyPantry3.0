@@ -52,6 +52,8 @@ public class OwnCategoriesFragment extends Fragment implements AvailableDataList
         databaseModeViewModel = new ViewModelProvider(this).get(DatabaseModeViewModel.class);
         categoryViewModel = new ViewModelProvider(this).get(CategoryViewModel.class);
         categoryViewModel.setAvailableDataListener(this);
+        categoryViewModel.setDefaultDatabaseMode(databaseModeViewModel.getDatabaseModeFromSettings());
+
         binding = FragmentOwnCategoriesBinding.inflate(inflater, container, false);
         binding.setViewModel(categoryViewModel);
         view = binding.getRoot();
@@ -96,8 +98,8 @@ public class OwnCategoriesFragment extends Fragment implements AvailableDataList
 
     private void onClickNewCategory() {
         ArrayList<Category> categoryArrayList = new ArrayList<>();
-        if(categoryViewModel.getCategoryList().getValue() != null)
-                categoryArrayList = new ArrayList<>(categoryViewModel.getCategoryList().getValue());
+        if(categoryViewModel.getCategoryList() != null)
+                categoryArrayList = new ArrayList<>(Objects.requireNonNull(categoryViewModel.getCategoryList().getValue()));
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList("categoryArrayList", categoryArrayList);
         Navigation.findNavController(view)
@@ -113,7 +115,7 @@ public class OwnCategoriesFragment extends Fragment implements AvailableDataList
     @Override
     public void observeAvailableData() {
         databaseModeViewModel.getDatabaseMode().observe(getViewLifecycleOwner(),
-                categoryViewModel::showDataForSelectedDatabase);
+                categoryViewModel::updateDataForSelectedDatabase);
         categoryViewModel.getCategoryList().observe(getViewLifecycleOwner(),
                 this::setDataRecyclerViewAdapter);
     }

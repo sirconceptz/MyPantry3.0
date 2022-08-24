@@ -52,9 +52,11 @@ public class PricingRepositoryImpl implements PricingRepository, PurchasesUpdate
                 params,
                 (billingResult, productDetailsList) -> {
                     this.productDetailsList = productDetailsList;
-                    pricingListener.isBillingClientReady();
-                    if (isAlreadyOwned(billingResult.getResponseCode())) {
-                        pricingListener.activatePremiumFeatures();
+                    if(productDetailsList.size() > 0) {
+                        pricingListener.isBillingClientReady();
+                        if (isAlreadyOwned(billingResult.getResponseCode())) {
+                            pricingListener.activatePremiumFeatures();
+                        }
                     }
                 });
     }

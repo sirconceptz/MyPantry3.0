@@ -49,6 +49,10 @@
     <string name="button_delete_category">Smazat kategorii</string>
     <string name="button_delete_storage_location">Smazat umístění úložiště</string>
     <string name="button_filter">Filtr</string>
+    <string name="button_print_qr_codes">Vytiskněte si QR kódy</string>
+    <string name="button_skip">Přeskočit</string>
+    <string name="button_send_pdf_via_email">Pošlete soubor PDF e-mailem</string>
+    <string name="button_add_photo">Přidat fotku</string>
     <!--Product features-->
     <string name="product_features_with_sugar">+Cukr</string>
     <string name="product_features_with_salt">+Sůl</string>
@@ -224,15 +228,19 @@
         <item>Místní (v telefonu)</item>
         <item>Online</item>
     </string-array>
-    <!--PrintQRCodesActivity-->
-    <string name="printqrcodes_print_qr_codes">Vytiskněte si QR kódy</string>
-    <string name="printqrcodes_skip">Přeskočit</string>
-    <string name="printqrcodes_send_pdf_via_email">Pošlete soubor PDF e-mailem</string>
     <!--Notifications-->
     <string name="notification_title">[Moje spíž] Datum expirace produktů se blíží</string>
     <string name="notification_statement">%PRODUCT_NAME% je po termínu. Máte méně než %DAYS% dní na to, abyste to do tohoto data stihli.</string>
     <!--Error-->
     <string name="error_error">Chyba</string>
+    <string name="error_wrong_data">Nesprávné údaje</string>
+    <string name="error_permission_is_needed_to_save_the_file">K vytvoření souboru je vyžadováno oprávnění</string>
+    <string name="error_category_not_selected">Kategorie nebyla vybrána</string>
+    <string name="error_product_name_is_required">Název produktu je povinný</string>
+    <string name="error_char_counter">Nesprávná hodnota</string>
+    <string name="error_for_premium_users_only">Funkce pouze pro prémiové uživatele</string>
+    <string name="error_billing_client_not_ready">Funkce platby momentálně není k dispozici</string>
+    <string name="error_incorrect_barcode_value">Neplatný čárový kód</string>
     <!--Author-->
     <string name="author_contact_with_author">Kontakt s autorem</string>
 </resources>

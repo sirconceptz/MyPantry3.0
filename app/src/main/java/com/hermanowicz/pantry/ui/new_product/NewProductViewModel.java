@@ -98,7 +98,7 @@ public class NewProductViewModel extends ViewModel {
         Product product = getProduct();
         int productQuantity = useCase.getIntValueFromObservableField(quantity);
         List<Product> productList = new ArrayList<>();
-        for (int counter = 0; counter <= productQuantity; counter++) {
+        for (int counter = 1; counter <= productQuantity; counter++) {
             productList.add(product);
         }
         return productList;

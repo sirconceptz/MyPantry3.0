@@ -532,6 +532,32 @@
         </ScrollView>
 
         <Button
+            android:id="@+id/button_printQRCodes"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_marginStart="@dimen/button_sides_margin"
+            android:layout_marginEnd="@dimen/button_sides_margin"
+            android:text="@string/button_print_qr_codes"
+            style="@style/CustomButton"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent=".45"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/button_editProduct" />
+
+        <Button
+            android:id="@+id/button_addPhoto"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_marginStart="@dimen/button_sides_margin"
+            android:layout_marginEnd="@dimen/button_sides_margin"
+            android:text="@string/button_add_photo"
+            style="@style/CustomButton"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent=".45"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/button_deleteProduct" />
+
+        <Button
             android:id="@+id/button_editProduct"
             android:layout_height="wrap_content"
             android:layout_width="0dp"

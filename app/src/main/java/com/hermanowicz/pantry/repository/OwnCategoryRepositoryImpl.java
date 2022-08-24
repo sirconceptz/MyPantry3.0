@@ -139,4 +139,9 @@ public class OwnCategoryRepositoryImpl implements OwnCategoryRepository {
     public boolean checkIsInternetConnection() {
         return internetConnection.isNetworkConnected();
     }
+
+    @Override
+    public List<Category> getAllLocalCategoriesAsList() {
+        return categoryDao.getOwnCategoriesAsList();
+    }
 }

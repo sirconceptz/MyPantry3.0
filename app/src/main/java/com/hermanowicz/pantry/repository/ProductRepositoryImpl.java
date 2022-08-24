@@ -73,6 +73,11 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
+    public List<Product> getAllLocalProductsAsList() {
+        return productDao.getAllProductsAsList();
+    }
+
+    @Override
     public void insert(List<Product> productList, Database databaseMode) {
         productListToInsert = new ArrayList<>(productList);
         Executor executor = Executors.newSingleThreadExecutor();

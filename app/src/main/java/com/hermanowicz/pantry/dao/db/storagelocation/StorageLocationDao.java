@@ -55,4 +55,7 @@ public interface StorageLocationDao {
 
     @Query("DELETE FROM storage_locations")
     void deleteAll();
+
+    @Query("SELECT * FROM storage_locations")
+    List<StorageLocation> getAllStorageLocationsAsList();
 }

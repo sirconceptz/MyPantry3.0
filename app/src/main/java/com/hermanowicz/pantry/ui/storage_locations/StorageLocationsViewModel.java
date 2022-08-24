@@ -83,7 +83,7 @@ public class StorageLocationsViewModel extends ViewModel {
             if(user != null && isInternetConnection()) {
                 Query query = database.getReference().child("storage_locations").child(user);
                 query.addValueEventListener(valueEventListener(emitter));
-            } else{
+            } else {
                 useCase.setOnlineStorageLocationList(new MutableLiveData<>());
                 availableDataListener.observeAvailableData();
             }
@@ -102,7 +102,6 @@ public class StorageLocationsViewModel extends ViewModel {
                     list.add(storageLocation);
                 }
                 emitter.onNext(list);
-
                 MutableLiveData<List<StorageLocation>> tempStorageLocationList = new MutableLiveData<>(list);
                 useCase.setOnlineStorageLocationList(tempStorageLocationList);
                 availableDataListener.observeAvailableData();
@@ -123,7 +122,7 @@ public class StorageLocationsViewModel extends ViewModel {
         availableDataListener = listener;
     }
 
-    public void showDataForSelectedDatabase(Database databaseMode) {
+    public void updateDataForSelectedDatabase(Database databaseMode) {
         storageLocationListLiveData = useCase.getAllStorageLocations(databaseMode);
     }
 
@@ -137,5 +136,12 @@ public class StorageLocationsViewModel extends ViewModel {
 
     private boolean isInternetConnection(){
         return useCase.checkIsInternetConnection();
+    }
+
+    public void setDefaultDatabaseMode(Database databaseModeFromSettings) {
+        if(databaseModeFromSettings.getDatabaseMode() == Database.DatabaseMode.LOCAL){
+            updateDataForSelectedDatabase(databaseModeFromSettings);
+            availableDataListener.observeAvailableData();
+        }
     }
 }

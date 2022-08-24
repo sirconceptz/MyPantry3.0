@@ -49,6 +49,10 @@
     <string name="button_delete_category">Usuń kategorię</string>
     <string name="button_delete_storage_location">Usuń miejsce przechowywania</string>
     <string name="button_filter">Filtruj</string>
+    <string name="button_print_qr_codes">Drukuj kody QR</string>
+    <string name="button_skip">Pomiń</string>
+    <string name="button_send_pdf_via_email">Wyślij plik PDF jako email</string>
+    <string name="button_add_photo">Dodaj zdjęcie</string>
     <!--Product features-->
     <string name="product_features_with_sugar">+Cukier</string>
     <string name="product_features_with_salt">+Sól</string>
@@ -224,15 +228,19 @@
         <item>Lokalny (w telefonie)</item>
         <item>Online (w internecie)</item>
     </string-array>
-    <!--PrintQRCodesActivity-->
-    <string name="printqrcodes_print_qr_codes">Drukuj kody QR</string>
-    <string name="printqrcodes_skip">Pomiń</string>
-    <string name="printqrcodes_send_pdf_via_email">Wyślij plik PDF jako email</string>
     <!--Notifications-->
     <string name="notification_title">[Moja Spiżarnia] Produkt wkrótce się przeterminuje.</string>
     <string name="notification_statement">%PRODUCT_NAME% wkrótce się przeterminuje. Zostało Ci mniej niż %DAYS% dni, aby zdążyć przed tą datą.</string>
     <!--Error-->
     <string name="error_error">Błąd</string>
+    <string name="error_wrong_data">Błędne dane</string>
+    <string name="error_permission_is_needed_to_save_the_file">Pozwolenie jest wymagane do utworzenia pliku</string>
+    <string name="error_category_not_selected">Brak wybranej kategorii produktu</string>
+    <string name="error_product_name_is_required">Nazwa produktu jest wymagana</string>
+    <string name="error_char_counter">Nieprawidłowa wartość</string>
+    <string name="error_for_premium_users_only">Funkcja tylko dla użytkowników premium</string>
+    <string name="error_billing_client_not_ready">Funkcja płatności aktualnie niedostępna</string>
+    <string name="error_incorrect_barcode_value">Nieprawidłowy kod kreskowy</string>
     <!--Author-->
     <string name="author_contact_with_author">Kontakt z autorem</string>
 </resources>

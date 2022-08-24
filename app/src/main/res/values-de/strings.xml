@@ -49,6 +49,10 @@
     <string name="button_delete_category">Kategorie Löschen</string>
     <string name="button_delete_storage_location">Lagerort Löschen</string>
     <string name="button_filter">Filtern</string>
+    <string name="button_print_qr_codes">QR-Codes drucken</string>
+    <string name="button_skip">überspringen</string>
+    <string name="button_send_pdf_via_email">Senden Sie eine PDF-Datei per E-Mail</string>
+    <string name="button_add_photo">Bild hinzufügen</string>
     <!--Product features-->
     <string name="product_features_with_sugar">+Zucker</string>
     <string name="product_features_with_salt">+Salz</string>
@@ -224,15 +228,19 @@
         <item>Lokal (im Telefon)</item>
         <item>Online</item>
     </string-array>
-    <!--PrintQRCodesActivity-->
-    <string name="printqrcodes_print_qr_codes">QR-Codes drucken</string>
-    <string name="printqrcodes_skip">überspringen</string>
-    <string name="printqrcodes_send_pdf_via_email">Senden Sie eine PDF-Datei per E-Mail</string>
     <!--Notifications-->
     <string name="notification_title">[Meine Speisekammer] Das Produkt wird bald verfallen</string>
     <string name="notification_statement">%PRODUCT_NAME% läuft bald ab. Sie haben noch %DAYS% Tage bis zu diesem Datum.</string>
     <!--Error-->
     <string name="error_error">Error</string>
+    <string name="error_wrong_data">Falschen Daten</string>
+    <string name="error_permission_is_needed_to_save_the_file">Zum Erstellen einer Datei ist eine Berechtigung erforderlich</string>
+    <string name="error_category_not_selected">Kategorie wurde nicht ausgewählt</string>
+    <string name="error_product_name_is_required">Der Produktname ist erforderlich</string>
+    <string name="error_char_counter">Falscher Wert</string>
+    <string name="error_for_premium_users_only">Funktion nur für Premium-Benutzer</string>
+    <string name="error_billing_client_not_ready">Zahlungsfunktion derzeit nicht verfügbar</string>
+    <string name="error_incorrect_barcode_value">Ungültiger Strichcode</string>
     <!--Author-->
     <string name="author_contact_with_author">Contact with author</string>
 </resources>

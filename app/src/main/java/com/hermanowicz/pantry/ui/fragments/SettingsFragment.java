@@ -5,6 +5,7 @@ import static android.app.Activity.RESULT_OK;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.lifecycle.ViewModelProvider;
@@ -17,7 +18,7 @@ import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract;
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult;
 import com.hermanowicz.pantry.R;
 import com.hermanowicz.pantry.interfaces.PricingListener;
-import com.hermanowicz.pantry.interfaces.ShowPreferencesListener;
+import com.hermanowicz.pantry.interfaces.PreferencesListener;
 import com.hermanowicz.pantry.ui.database_mode.DatabaseModeViewModel;
 import com.hermanowicz.pantry.ui.settings.SettingsViewModel;
 
@@ -27,7 +28,7 @@ import java.util.List;
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
-public class SettingsFragment extends PreferenceFragmentCompat implements PricingListener, ShowPreferencesListener {
+public class SettingsFragment extends PreferenceFragmentCompat implements PricingListener, PreferencesListener {
 
     private SettingsViewModel settingsViewModel;
     private DatabaseModeViewModel databaseModeViewModel;
@@ -79,7 +80,8 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Pricin
         clearStorageLocationDb = findPreference(getString(R.string.preferences_key_clear_storage_location_db));
 
         settingsViewModel.setPremiumActivationListenerAndSetupBillingClient(requireActivity(), this);
-        settingsViewModel.showPreferences(this);
+        settingsViewModel.setPreferenceListener(this);
+        settingsViewModel.showPreferences();
     }
 
     private void setListeners() {
@@ -91,12 +93,10 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Pricin
             initPremiumPurchase();
             return false;
         });
-
         activeUser.setOnPreferenceClickListener(preference -> {
             showLoginAndRegisterForm();
             return false;
         });
-
         backupProductDb.setOnPreferenceClickListener(preference -> {
             settingsViewModel.onClickBackupProductDatabase();
             return false;
@@ -109,7 +109,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Pricin
             settingsViewModel.onClickClearProductDatabase();
             return false;
         });
-
         backupCategoryDb.setOnPreferenceClickListener(preference -> {
             settingsViewModel.onClickBackupCategoryDatabase();
             return false;
@@ -122,7 +121,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Pricin
             settingsViewModel.onClickClearCategoryDatabase();
             return false;
         });
-
         backupStorageLocationDb.setOnPreferenceClickListener(preference -> {
             settingsViewModel.onClickBackupStorageLocationDatabase();
             return false;
@@ -157,9 +155,8 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Pricin
     );
 
     private void onSignInResult(FirebaseAuthUIAuthenticationResult result) {
-        if (result.getResultCode() == RESULT_OK) {
+        if (result.getResultCode() == RESULT_OK)
             activeUser.setSummary(settingsViewModel.getActiveUserEmail());
-        }
     }
 
     private void initPremiumPurchase() {
@@ -191,5 +188,10 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Pricin
     @Override
     public void showActiveUserEmail(String email) {
         activeUser.setSummary(email);
+    }
+
+    @Override
+    public void showInfoForPremiumUserOnly() {
+        Toast.makeText(getContext(), getString(R.string.error_for_premium_users_only), Toast.LENGTH_SHORT).show();
     }
 }

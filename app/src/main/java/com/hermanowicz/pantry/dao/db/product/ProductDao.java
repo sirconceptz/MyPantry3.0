@@ -52,4 +52,7 @@ public interface ProductDao {
 
     @Update
     void update(List<Product> productList);
+
+    @Query("SELECT * FROM products ORDER BY expirationDate ASC")
+    List<Product> getAllProductsAsList();
 }

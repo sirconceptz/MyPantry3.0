@@ -122,7 +122,7 @@ public class CategoryViewModel extends ViewModel {
         availableDataListener = listener;
     }
 
-    public void showDataForSelectedDatabase(Database databaseMode) {
+    public void updateDataForSelectedDatabase(Database databaseMode) {
         categoryAllListLiveData = useCase.getAllCategories(databaseMode);
     }
 
@@ -136,5 +136,12 @@ public class CategoryViewModel extends ViewModel {
 
     private boolean isInternetConnection(){
         return useCase.checkIsInternetConnection();
+    }
+
+    public void setDefaultDatabaseMode(Database databaseModeFromSettings) {
+        if(databaseModeFromSettings.getDatabaseMode() == Database.DatabaseMode.LOCAL){
+            updateDataForSelectedDatabase(databaseModeFromSettings);
+            availableDataListener.observeAvailableData();
+        }
     }
 }

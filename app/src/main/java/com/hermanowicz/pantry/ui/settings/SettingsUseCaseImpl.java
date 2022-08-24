@@ -3,10 +3,13 @@ package com.hermanowicz.pantry.ui.settings;
 import android.app.Activity;
 import android.content.Context;
 
-
-import androidx.multidex.BuildConfig;
-
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.hermanowicz.pantry.BuildConfig;
+import com.hermanowicz.pantry.dao.db.category.Category;
+import com.hermanowicz.pantry.dao.db.product.Product;
+import com.hermanowicz.pantry.dao.db.storagelocation.StorageLocation;
 import com.hermanowicz.pantry.interfaces.PricingListener;
 import com.hermanowicz.pantry.model.Database;
 import com.hermanowicz.pantry.repository.DatabaseBackupRepository;
@@ -17,6 +20,8 @@ import com.hermanowicz.pantry.repository.ProductRepository;
 import com.hermanowicz.pantry.repository.SharedPreferencesRepository;
 import com.hermanowicz.pantry.repository.StorageLocationRepository;
 import com.hermanowicz.pantry.util.PremiumAccess;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -75,7 +80,58 @@ public class SettingsUseCaseImpl implements SettingsUseCase {
 
     @Override
     public void importLocalDataToCloud() {
+        List<Product> productList = productRepository.getAllLocalProductsAsList();
+        List<Category> categoryList = ownCategoryRepository.getAllLocalCategoriesAsList();
+        List<StorageLocation> storageLocations = storageLocationRepository.getAllLocalStorageLocationsAsList();
+        cleanOnlineDb();
+        importDbOfflineToOnline(productList, categoryList, storageLocations);
+    }
 
+    private void cleanOnlineDb() {
+        if(FirebaseAuth.getInstance().getUid() != null) {
+            FirebaseDatabase.getInstance().getReference()
+                    .child("products").child(FirebaseAuth.getInstance().getUid()).removeValue();
+            FirebaseDatabase.getInstance().getReference()
+                    .child("categories").child(FirebaseAuth.getInstance().getUid()).removeValue();
+            FirebaseDatabase.getInstance().getReference()
+                    .child("storage_locations").child(FirebaseAuth.getInstance().getUid()).removeValue();
+        }
+    }
+
+    private void importDbOfflineToOnline(List<Product> productList, List<Category> categoryList, List<StorageLocation> storageLocationList) {
+        importProductDb(productList);
+        importCategoryDb(categoryList);
+        importStorageLocationDb(storageLocationList);
+    }
+
+    private void importProductDb(List<Product> productList) {
+        if(FirebaseAuth.getInstance().getUid() != null) {
+            DatabaseReference ref = FirebaseDatabase.getInstance().getReference()
+                    .child("products").child(FirebaseAuth.getInstance().getUid());
+            for(Product product : productList){
+                ref.child(String.valueOf(product.getId())).setValue(product);
+            }
+        }
+    }
+
+    private void importCategoryDb(List<Category> categoryList) {
+        if(FirebaseAuth.getInstance().getUid() != null) {
+            DatabaseReference ref = FirebaseDatabase.getInstance().getReference()
+                    .child("categories").child(FirebaseAuth.getInstance().getUid());
+            for (Category category : categoryList) {
+                ref.child(String.valueOf(category.getId())).setValue(category);
+            }
+        }
+    }
+
+    private void importStorageLocationDb(List<StorageLocation> storageLocationList) {
+        if(FirebaseAuth.getInstance().getUid() != null) {
+            DatabaseReference ref = FirebaseDatabase.getInstance().getReference()
+                    .child("storage_locations").child(FirebaseAuth.getInstance().getUid());
+            for (StorageLocation storageLocation : storageLocationList) {
+                ref.child(String.valueOf(storageLocation.getId())).setValue(storageLocation);
+            }
+        }
     }
 
     @Override

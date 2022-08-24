@@ -24,4 +24,6 @@ public interface StorageLocationRepository {
     void setOnlineStorageLocationList(MutableLiveData<List<StorageLocation>> onlineStorageLocationList);
 
     boolean checkIsInternetConnection();
+
+    List<StorageLocation> getAllLocalStorageLocationsAsList();
 }

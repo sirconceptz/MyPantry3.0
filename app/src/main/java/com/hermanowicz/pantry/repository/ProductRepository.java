@@ -28,4 +28,6 @@ public interface ProductRepository {
     int getIntValueFromObservableField(ObservableField<String> observableField);
 
     boolean checkIsInternetConnection();
+
+    List<Product> getAllLocalProductsAsList();
 }

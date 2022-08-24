@@ -49,6 +49,10 @@
     <string name="button_delete_category">Delete category</string>
     <string name="button_delete_storage_location">Delete storage location</string>
     <string name="button_filter">Filter</string>
+    <string name="button_print_qr_codes">Print QR codes</string>
+    <string name="button_skip">Skip</string>
+    <string name="button_send_pdf_via_email">Send a PDF file by e-mail</string>
+    <string name="button_add_photo">Add photo</string>
     <!--Product features-->
     <string name="product_features_with_sugar">+Sugar</string>
     <string name="product_features_with_salt">+Salt</string>
@@ -225,10 +229,6 @@
         <item>Local (in phone)</item>
         <item>Online</item>
     </string-array>
-    <!--PrintQRCodesActivity-->
-    <string name="printqrcodes_print_qr_codes">Print QR codes</string>
-    <string name="printqrcodes_skip">Skip</string>
-    <string name="printqrcodes_send_pdf_via_email">Send a PDF file by e-mail</string>
     <!--PreferencesKeys-->
     <string name="preferences_key_selected_application_theme" translatable="false">SELECTED_APPLICATION_THEME</string>
     <string name="preferences_key_scan_camera" translatable="false">SCAN_CAMERA</string>
@@ -257,6 +257,14 @@
     <string name="notification_statement">%PRODUCT_NAME% is overdue. You have less than %DAYS% days to make it before this date.</string>
     <!--Error-->
     <string name="error_error">Error</string>
+    <string name="error_wrong_data">Wrong data</string>
+    <string name="error_permission_is_needed_to_save_the_file">Permission is required to create a file</string>
+    <string name="error_category_not_selected">Category was not selected</string>
+    <string name="error_product_name_is_required">Name of product is required</string>
+    <string name="error_char_counter">Wrong value</string>
+    <string name="error_for_premium_users_only">Function for premium user only</string>
+    <string name="error_billing_client_not_ready">Payment feature currently unavailable</string>
+    <string name="error_incorrect_barcode_value">Invalid barcode</string>
     <!--Author-->
     <string name="author_contact_with_author">Contact with author</string>
     <string name="author_facebook_profile" translatable="false">https://www.facebook.com/sirconceptz/</string>

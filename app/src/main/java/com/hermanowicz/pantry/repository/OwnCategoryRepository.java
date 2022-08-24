@@ -24,4 +24,6 @@ public interface OwnCategoryRepository {
     void setOnlineCategoryList(MutableLiveData<List<Category>> onlineCategoryList);
 
     boolean checkIsInternetConnection();
+
+    List<Category> getAllLocalCategoriesAsList();
 }
