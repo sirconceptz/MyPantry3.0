@@ -16,7 +16,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.hermanowicz.pantry.dao.db.category.Category;
 import com.hermanowicz.pantry.interfaces.AvailableDataListener;
-import com.hermanowicz.pantry.model.Database;
+import com.hermanowicz.pantry.model.DatabaseMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -122,7 +122,7 @@ public class CategoryViewModel extends ViewModel {
         availableDataListener = listener;
     }
 
-    public void updateDataForSelectedDatabase(Database databaseMode) {
+    public void updateDataForSelectedDatabase(DatabaseMode databaseMode) {
         categoryAllListLiveData = useCase.getAllCategories(databaseMode);
     }
 
@@ -138,8 +138,8 @@ public class CategoryViewModel extends ViewModel {
         return useCase.checkIsInternetConnection();
     }
 
-    public void setDefaultDatabaseMode(Database databaseModeFromSettings) {
-        if(databaseModeFromSettings.getDatabaseMode() == Database.DatabaseMode.LOCAL){
+    public void setDefaultDatabaseMode(DatabaseMode databaseModeFromSettings) {
+        if(databaseModeFromSettings.getDatabaseMode() == DatabaseMode.Mode.LOCAL){
             updateDataForSelectedDatabase(databaseModeFromSettings);
             availableDataListener.observeAvailableData();
         }

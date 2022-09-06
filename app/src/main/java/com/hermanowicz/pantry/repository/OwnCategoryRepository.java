@@ -4,22 +4,22 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.hermanowicz.pantry.dao.db.category.Category;
-import com.hermanowicz.pantry.model.Database;
+import com.hermanowicz.pantry.model.DatabaseMode;
 
 import java.util.List;
 
 public interface OwnCategoryRepository {
-    LiveData<List<Category>> getAllCategories(Database databaseMode);
+    LiveData<List<Category>> getAllCategories(DatabaseMode databaseMode);
 
     LiveData<String[]> getOwnCategoriesNames();
 
-    void insert(Category category, Database databaseMode);
+    void insert(Category category, DatabaseMode databaseMode);
 
-    void update(Category category, Database databaseMode);
+    void update(Category category, DatabaseMode databaseMode);
 
-    void delete(Category category, Database databaseMode);
+    void delete(Category category, DatabaseMode databaseMode);
 
-    void deleteAll(Database databaseMode);
+    void deleteAll(DatabaseMode databaseMode);
 
     void setOnlineCategoryList(MutableLiveData<List<Category>> onlineCategoryList);
 

@@ -145,7 +145,13 @@
         android:id="@+id/nav_filter_product"
         android:name="com.hermanowicz.pantry.ui.fragments.FilterProductFragment"
         android:label="@string/button_filter"
-        tools:layout="@layout/fragment_filter_product" />
+        tools:layout="@layout/fragment_filter_product" >
+        <action
+            android:id="@+id/action_nav_filter_product_to_nav_my_pantry"
+            app:destination="@id/nav_my_pantry"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_product_details"
@@ -162,10 +168,19 @@
             app:destination="@id/nav_my_pantry"
             app:enterAnim="@android:anim/slide_in_left"
             app:exitAnim="@android:anim/slide_out_right" />
-
         <action
             android:id="@+id/action_nav_product_details_to_nav_print_qr_codes"
             app:destination="@id/nav_print_qr_codes"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
+        <action
+            android:id="@+id/action_nav_product_details_to_nav_scan_product"
+            app:destination="@id/nav_scan_product"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
+        <action
+            android:id="@+id/action_nav_product_details_to_nav_products_photo"
+            app:destination="@id/nav_products_photo"
             app:enterAnim="@android:anim/slide_in_left"
             app:exitAnim="@android:anim/slide_out_right" />
     </fragment>
@@ -204,5 +219,12 @@
             app:destination="@id/nav_my_pantry"
             app:enterAnim="@android:anim/slide_in_left"
             app:exitAnim="@android:anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_products_photo"
+        android:name="com.hermanowicz.pantry.ui.fragments.ProductsPhotoFragment"
+        android:label="@string/title_print_qrcodes"
+        tools:layout="@layout/fragment_products_photo">
     </fragment>
 </navigation>

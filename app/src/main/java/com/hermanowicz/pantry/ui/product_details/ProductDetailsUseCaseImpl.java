@@ -3,10 +3,13 @@ package com.hermanowicz.pantry.ui.product_details;
 import android.content.res.Resources;
 
 import com.hermanowicz.pantry.dao.db.product.Product;
-import com.hermanowicz.pantry.model.Database;
+import com.hermanowicz.pantry.model.DatabaseMode;
 import com.hermanowicz.pantry.repository.ProductRepository;
 
-import java.util.List;
+import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.inject.Inject;
 
@@ -14,7 +17,7 @@ public class ProductDetailsUseCaseImpl implements ProductDetailsUseCase {
 
     private final ProductRepository repository;
     private final Resources resources;
-    private Database databaseMode;
+    private DatabaseMode databaseMode;
 
     @Inject
     public ProductDetailsUseCaseImpl(ProductRepository productRepository, Resources resources) {
@@ -28,15 +31,26 @@ public class ProductDetailsUseCaseImpl implements ProductDetailsUseCase {
     }
 
     @Override
-    public void deleteSimilarProducts(Product product) {
-        List<Product> allProductList = repository.getAllProducts(databaseMode).getValue();
-        assert allProductList != null;
-        List<Product> productListToDelete = Product.getSimilarProductsList(product, allProductList);
-        repository.delete(productListToDelete, databaseMode);
+    public void setDatabaseMode(DatabaseMode databaseMode) {
+        this.databaseMode = databaseMode;
     }
 
     @Override
-    public void setDatabaseMode(Database databaseMode) {
-        this.databaseMode = databaseMode;
+    public void deleteProducts(ArrayList<Product> productArrayList) {
+        repository.delete(productArrayList, databaseMode);
+    }
+
+    @Override
+    public String getDateInFormatToShow(String dateString) {
+        String[] dateArrayString = dateString.split("\\.");
+        int year = Integer.parseInt(dateArrayString[0]);
+        int month = Integer.parseInt(dateArrayString[1]);
+        int day = Integer.parseInt(dateArrayString[2]);
+
+        DateFormat dateFormat = DateFormat.getDateInstance();
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month, day);
+        Date date = calendar.getTime();
+        return dateFormat.format(date);
     }
 }

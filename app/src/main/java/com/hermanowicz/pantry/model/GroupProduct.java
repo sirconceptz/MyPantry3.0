@@ -57,7 +57,6 @@ public final class GroupProduct {
         this.quantity = quantity;
     }
 
-    //TODO: do refakturyzacji
     public static List<GroupProduct> getGroupProducts(List<Product> productList) {
         List<GroupProduct> groupProductList = new ArrayList<>();
         if (productList != null) {
@@ -85,6 +84,15 @@ public final class GroupProduct {
             }
         }
         return groupProductList;
+    }
+
+    public static String[] getGroupProductNamesArray(List<Product> productList){
+        List<GroupProduct> groupProductList = getGroupProducts(productList);
+        String[] groupProductNamesArray = new String[groupProductList.size()];
+        for(int counter = 0; counter <= groupProductList.size(); counter++){
+            groupProductNamesArray[counter] = groupProductList.get(counter).getProduct().getName();
+        }
+        return groupProductNamesArray;
     }
 
     private static GroupProduct getGroupIfOnList(Product product, List<GroupProduct> groupProductList) {

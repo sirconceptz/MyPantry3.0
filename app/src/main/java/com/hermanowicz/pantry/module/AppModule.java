@@ -7,6 +7,7 @@ import com.hermanowicz.pantry.repository.DatabaseBackupRepositoryImpl;
 import com.hermanowicz.pantry.repository.OwnCategoryRepository;
 import com.hermanowicz.pantry.repository.OwnCategoryRepositoryImpl;
 import com.hermanowicz.pantry.repository.PdfDocumentsRepositoryImpl;
+import com.hermanowicz.pantry.repository.PhotoRepositoryImpl;
 import com.hermanowicz.pantry.repository.ProductRepositoryImpl;
 import com.hermanowicz.pantry.repository.SharedPreferencesRepository;
 import com.hermanowicz.pantry.repository.SharedPreferencesRepositoryImpl;
@@ -15,7 +16,6 @@ import com.hermanowicz.pantry.ui.category.CategoryUseCaseImpl;
 import com.hermanowicz.pantry.ui.database_mode.DatabaseModeUseCaseImpl;
 import com.hermanowicz.pantry.ui.edit_product.EditProductUseCaseImpl;
 import com.hermanowicz.pantry.ui.filter_product.FilterProductUseCaseImpl;
-import com.hermanowicz.pantry.ui.my_pantry.MyPantryUseCaseImpl;
 import com.hermanowicz.pantry.ui.new_category.NewCategoryUseCaseImpl;
 import com.hermanowicz.pantry.ui.new_product.NewProductUseCaseImpl;
 import com.hermanowicz.pantry.ui.new_storage_location.NewStorageLocationUseCaseImpl;
@@ -23,6 +23,7 @@ import com.hermanowicz.pantry.ui.own_category_detail.OwnCategoryDetailUseCaseImp
 import com.hermanowicz.pantry.ui.print_qr_codes.PrintQRCodesUseCaseImpl;
 import com.hermanowicz.pantry.ui.product.ProductUseCaseImpl;
 import com.hermanowicz.pantry.ui.product_details.ProductDetailsUseCaseImpl;
+import com.hermanowicz.pantry.ui.products_photo.ProductsPhotoUseCaseImpl;
 import com.hermanowicz.pantry.ui.scan_product.ScanProductUseCaseImpl;
 import com.hermanowicz.pantry.ui.settings.SettingsUseCaseImpl;
 import com.hermanowicz.pantry.ui.storage_location_detail.StorageLocationDetailUseCaseImpl;
@@ -40,13 +41,6 @@ import dagger.hilt.components.SingletonComponent;
 @Module
 @InstallIn(SingletonComponent.class)
 public final class AppModule {
-
-    @Provides
-    @Singleton
-    public MyPantryUseCaseImpl provideMyPantryUseCase(@ApplicationContext Context context) {
-        ProductRepositoryImpl productRepository = new ProductRepositoryImpl(context);
-        return new MyPantryUseCaseImpl(productRepository);
-    }
 
     @Provides
     @Singleton
@@ -165,5 +159,13 @@ public final class AppModule {
         PdfDocumentsRepositoryImpl pdfDocumentsRepository = new PdfDocumentsRepositoryImpl(context);
         SharedPreferencesRepository sharedPreferencesRepository = new SharedPreferencesRepositoryImpl(context);
         return new PrintQRCodesUseCaseImpl(pdfDocumentsRepository, sharedPreferencesRepository);
+    }
+
+    @Provides
+    @Singleton
+    public ProductsPhotoUseCaseImpl provideProductsPhotoUseCase(@ApplicationContext Context context) {
+        ProductRepositoryImpl productRepository = new ProductRepositoryImpl(context);
+        PhotoRepositoryImpl photoRepository = new PhotoRepositoryImpl(context);
+        return new ProductsPhotoUseCaseImpl(productRepository, photoRepository);
     }
 }

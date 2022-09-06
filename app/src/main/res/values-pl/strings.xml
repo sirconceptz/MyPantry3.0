@@ -25,6 +25,7 @@
     <string name="general_barcode">Kod kreskowy</string>
     <string name="general_permission_required_title">Wymagane uprawnienie!</string>
     <string name="general_permission_required_message">Uprawnienie jest wymagane do wykonania zadania. Bez niej nie jest możliwe skorzystanie z tej funkcji.</string>
+    <string name="general_choose">Wybierz</string>
     <!--Title-->
     <string name="title_print_qrcodes">Drukuj kody QR</string>
     <string name="title_product_details">Szczegóły produktu</string>
@@ -53,6 +54,10 @@
     <string name="button_skip">Pomiń</string>
     <string name="button_send_pdf_via_email">Wyślij plik PDF jako email</string>
     <string name="button_add_photo">Dodaj zdjęcie</string>
+    <string name="button_take_photo">Zrób zdjęcie</string>
+    <string name="button_save_photo">Zapisz zdjęcie</string>
+    <string name="button_delete_photo">Usuń zdjęcie</string>
+    <string name="button_add_barcode">Dodaj kod kreskowy</string>
     <!--Product features-->
     <string name="product_features_with_sugar">+Cukier</string>
     <string name="product_features_with_salt">+Sól</string>
@@ -64,6 +69,18 @@
     <!--Statements-->
     <string name="statement_no_storage_locations">Brak dodanych miejsc przechowywania. Dodaj nowe przyciskiem na górze ekranu.</string>
     <string name="statement_no_categories">Brak dodanych kategorii. Dodaj nową przyciskiem na górze ekranu.</string>
+    <string name="statement_clear_database_warning">Czy chcesz wyczyścić bazę danych? Wszystkie wpisy zostaną usunięte, a OPERACJA JEST NIEODWRACALNA.</string>
+    <string name="statement_restore_database">Czy chcesz zaimportować bazy danych z pliku zewnętrznego? Spowoduje to utratę obecnie dodanych do aplikacji produktów.</string>
+    <string name="statement_backup_database">Czy chcesz eksportować bazy danych do pliku zewnętrznego?</string>
+    <string name="statement_import_local_db_to_cloud_warning">Importuj bazę produktów z urządzenia do chmury (do konta internetowego). AKTUALNIE ZAPISANE DANE W CHMURZE ZOSTANĄ USUNIĘTE I ZASTĄPIONE PRODUKTAMI Z TELEFONU.</string>
+    <string name="statement_choose_product_to_copy">Kod kreskowy został dodanych do następujących produktów. Wybierz z listy produkt który chcesz dodać.</string>
+    <!--Products photo-->
+    <string name="products_photo_photo_description">Opis zdjęcia</string>
+    <string name="products_photo_take_photo_of_product">Zrób zdjęcie produktu</string>
+    <string name="products_photo_invalid_photo_description">Nieprawidłowy opis zdjęcia</string>
+    <string name="products_photo_add_photo_successful">Zdjęcie zostało dodane</string>
+    <string name="products_photo_add_photo_not_successful">Zdjęcie nie zostało dodane</string>
+    <string name="products_photo_delete_photo_successful">Zdjęcie zostało usunięte</string>
     <!--Product-->
     <string name="product_name">Nazwa produktu</string>
     <string name="product_quantity">Ilość</string>
@@ -197,14 +214,14 @@
     <string name="settings_notifications_email">Powiadomienia przez email</string>
     <string name="settings_give_email_adress">Adres email do powiadomień</string>
     <string name="settings_how_many_days_before_the_expiration_date_send_a_notification">Ile dni przed przeterminowaniem?</string>
-    <string name="settings_import_product_database">Importuj bazę produktów</string>
+    <string name="settings_restore_product_database">Importuj bazę produktów</string>
     <string name="settings_export_product_database">Eksportuj bazę produktów</string>
     <string name="settings_clear_product_database">Wyczyść bazę danych produktów</string>
-    <string name="settings_import_category_database">Importuj bazę kategorii</string>
-    <string name="settings_export_category_database">Eksportuj bazę kategorii</string>
+    <string name="settings_restore_category_database">Importuj bazę kategorii</string>
+    <string name="settings_backup_category_database">Eksportuj bazę kategorii</string>
     <string name="settings_clear_category_database">Wyczyść bazę danych kategorii</string>
-    <string name="settings_import_storage_location_database">Importuj bazę miejsc przechowywania</string>
-    <string name="settings_export_storage_location_database">Eksportuj bazę miejsc przechowywania</string>
+    <string name="settings_restore_storage_location_database">Importuj bazę miejsc przechowywania</string>
+    <string name="settings_backup_storage_location_database">Eksportuj bazę miejsc przechowywania</string>
     <string name="settings_clear_storage_location_database">Wyczyść bazę danych miejsc przechowywania</string>
     <string name="settings_database_backup">Kopia zapasowa bazy danych</string>
     <string name="settings_version">Wersja</string>
@@ -213,7 +230,7 @@
     <string name="settings_database_mode">Tryb bazy danych produktów</string>
     <string name="settings_qr_code_size_big">Duże</string>
     <string name="settings_qr_code_size_small">Małe</string>
-    <string name="settings_import_db">Importuj bazę produktów do chmury</string>
+    <string name="settings_import_local_db_to_cloud">Importuj bazę produktów do chmury</string>
     <string name="settings_choose_file_to_restore">Wybierz plik bazy do przywrócenia</string>
     <string-array name="settings_camera_to_scan">
         <item>Tylni aparat</item>
@@ -241,6 +258,7 @@
     <string name="error_for_premium_users_only">Funkcja tylko dla użytkowników premium</string>
     <string name="error_billing_client_not_ready">Funkcja płatności aktualnie niedostępna</string>
     <string name="error_incorrect_barcode_value">Nieprawidłowy kod kreskowy</string>
+    <string name="error_no_camera_access">Brak dostępu do aparatu</string>
     <!--Author-->
     <string name="author_contact_with_author">Kontakt z autorem</string>
 </resources>

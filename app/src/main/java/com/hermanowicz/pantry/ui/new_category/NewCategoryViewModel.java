@@ -5,7 +5,7 @@ import androidx.databinding.ObservableField;
 import androidx.lifecycle.ViewModel;
 
 import com.hermanowicz.pantry.dao.db.category.Category;
-import com.hermanowicz.pantry.model.Database;
+import com.hermanowicz.pantry.model.DatabaseMode;
 
 import java.util.ArrayList;
 
@@ -53,7 +53,7 @@ public class NewCategoryViewModel extends ViewModel {
         categoryDescription.set("");
     }
 
-    public void setDatabaseMode(Database databaseMode) {
+    public void setDatabaseMode(DatabaseMode databaseMode) {
         useCase.setDatabaseMode(databaseMode);
     }
 

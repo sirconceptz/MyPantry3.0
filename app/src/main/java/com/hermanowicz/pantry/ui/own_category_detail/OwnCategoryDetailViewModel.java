@@ -4,7 +4,7 @@ import androidx.databinding.ObservableField;
 import androidx.lifecycle.ViewModel;
 
 import com.hermanowicz.pantry.dao.db.category.Category;
-import com.hermanowicz.pantry.model.Database;
+import com.hermanowicz.pantry.model.DatabaseMode;
 
 import javax.inject.Inject;
 
@@ -45,7 +45,7 @@ public class OwnCategoryDetailViewModel extends ViewModel {
         useCase.deleteCategory(category);
     }
 
-    public void setDatabaseMode(Database databaseMode) {
+    public void setDatabaseMode(DatabaseMode databaseMode) {
         useCase.setDatabaseMode(databaseMode);
     }
 }

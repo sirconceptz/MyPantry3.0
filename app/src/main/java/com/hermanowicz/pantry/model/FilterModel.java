@@ -17,6 +17,11 @@
 
 package com.hermanowicz.pantry.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
 /**
  * <h1>FilterModel</h1>
  * The filter model is used to store the data needed to find products in the pantry.
@@ -24,7 +29,7 @@ package com.hermanowicz.pantry.model;
  * @author  Mateusz Hermanowicz
  */
 
-public class FilterModel {
+public class FilterModel implements Parcelable {
 
     private String name = null;
     private String typeOfProduct = null;
@@ -45,6 +50,40 @@ public class FilterModel {
     private Filter.Set isBio = Filter.Set.DISABLED;
     private Filter.Set isVege = Filter.Set.DISABLED;
     private String taste = null;
+
+    public FilterModel(Parcel in) {
+        name = in.readString();
+        typeOfProduct = in.readString();
+        productFeatures = in.readString();
+        expirationDateSince = in.readString();
+        expirationDateFor = in.readString();
+        productionDateSince = in.readString();
+        productionDateFor = in.readString();
+        composition = in.readString();
+        healingProperties = in.readString();
+        dosage = in.readString();
+        volumeSince = in.readInt();
+        volumeFor = in.readInt();
+        weightSince = in.readInt();
+        weightFor = in.readInt();
+        taste = in.readString();
+    }
+
+    public static final Creator<FilterModel> CREATOR = new Creator<FilterModel>() {
+        @Override
+        public FilterModel createFromParcel(Parcel in) {
+            return new FilterModel(in);
+        }
+
+        @Override
+        public FilterModel[] newArray(int size) {
+            return new FilterModel[size];
+        }
+    };
+
+    public FilterModel() {
+
+    }
 
     public String getName() {
         return name;
@@ -196,5 +235,29 @@ public class FilterModel {
 
     public void setTaste(String taste) {
         this.taste = taste;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel parcel, int i) {
+        parcel.writeString(name);
+        parcel.writeString(typeOfProduct);
+        parcel.writeString(productFeatures);
+        parcel.writeString(expirationDateSince);
+        parcel.writeString(expirationDateFor);
+        parcel.writeString(productionDateSince);
+        parcel.writeString(productionDateFor);
+        parcel.writeString(composition);
+        parcel.writeString(healingProperties);
+        parcel.writeString(dosage);
+        parcel.writeInt(volumeSince);
+        parcel.writeInt(volumeFor);
+        parcel.writeInt(weightSince);
+        parcel.writeInt(weightFor);
+        parcel.writeString(taste);
     }
 }

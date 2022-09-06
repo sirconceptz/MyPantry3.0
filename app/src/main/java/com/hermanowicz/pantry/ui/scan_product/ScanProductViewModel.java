@@ -8,6 +8,7 @@ import com.hermanowicz.pantry.interfaces.ScanDecodedResult;
 import com.hermanowicz.pantry.util.ScanIntentResult;
 import com.hermanowicz.pantry.util.ScanOptions;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -48,5 +49,10 @@ public class ScanProductViewModel extends ViewModel {
 
     public void setBarcode(String barcode) {
         useCase.setBarcode(barcode);
+    }
+
+    public void setProductListToAddBarcode(ArrayList<Product> productListToAddBarcode) {
+        useCase.setProductList(productListToAddBarcode);
+        useCase.setProductListToAddBarcode(productListToAddBarcode);
     }
 }

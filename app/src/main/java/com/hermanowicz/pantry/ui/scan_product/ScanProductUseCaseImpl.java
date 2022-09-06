@@ -111,10 +111,22 @@ public class ScanProductUseCaseImpl implements ScanProductUseCase {
     }
 
     private void processCorrectResultData(ScanIntentResult result) {
-        if(scanType.equals("QRCODE"))
-            onQrCodeScan(result.getContents());
-        else if(scanType.equals("BARCODE"))
-            onBarcodeScan(result.getContents());
+        switch (scanType) {
+            case "QRCODE":
+                onQrCodeScan(result.getContents());
+                break;
+            case "BARCODE":
+                onBarcodeScan(result.getContents());
+                break;
+            case "ADD_BARCODE":
+                onAddBarcodeScan(result.getContents());
+                break;
+        }
+    }
+
+    private void onAddBarcodeScan(String barcode) {
+        setBarcodeToProductList(barcode);
+        scanDecodedResultListener.onScanAddBarCodeSuccess();
     }
 
     private void onQrCodeScan(String qrcode) {
@@ -145,10 +157,14 @@ public class ScanProductUseCaseImpl implements ScanProductUseCase {
 
     private ArrayList<Product> getProductListWithBarcode(String barcode) {
         ArrayList<Product> productListWithBarcode = new ArrayList<>();
-        for(Product product : productList){
+        for(Product product : productList) {
             if(product.getBarcode().equals(barcode))
                 productListWithBarcode.add(product);
         }
         return productListWithBarcode;
+    }
+
+    public void setProductListToAddBarcode(List<Product> productListToAddBarcode) {
+        this.productListToAddBarcode = productListToAddBarcode;
     }
 }

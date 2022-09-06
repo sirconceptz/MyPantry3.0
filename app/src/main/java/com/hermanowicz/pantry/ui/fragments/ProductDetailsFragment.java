@@ -35,8 +35,6 @@ public class ProductDetailsFragment extends Fragment {
         setListeners();
         getArgumentsAndShowData();
 
-        view = binding.getRoot();
-
         return view;
     }
 
@@ -46,6 +44,8 @@ public class ProductDetailsFragment extends Fragment {
 
         binding = FragmentProductDetailsBinding.inflate(inflater, container, false);
         binding.setViewModel(productDetailsViewModel);
+
+        view = binding.getRoot();
     }
 
     private void setObservers() {
@@ -54,7 +54,10 @@ public class ProductDetailsFragment extends Fragment {
     }
 
     private void setListeners() {
-        binding.buttonEditProduct.setOnClickListener(this::navigateToEditProduct);
+        binding.buttonPrintQRCodes.setOnClickListener(this::onClickPrintQRCodes);
+        binding.buttonAddPhoto.setOnClickListener(this::onClickAddPhoto);
+        binding.buttonEditProduct.setOnClickListener(this::onClickEditProduct);
+        binding.buttonAddBarcode.setOnClickListener(this::onClickAddBarcode);
         binding.buttonDeleteProduct.setOnClickListener(this::onClickDeleteProduct);
     }
 
@@ -63,34 +66,57 @@ public class ProductDetailsFragment extends Fragment {
         productDetailsViewModel.showProductDataIfExists();
     }
 
+    private void onClickAddBarcode(View view) {
+        navigateToScanProduct();
+    }
+
     private void onClickPrintQRCodes(View view) {
-        navigateToPrintQRCodes(view);
+        navigateToPrintQRCodes();
     }
 
     private void onClickAddPhoto(View view) {
-        //navigateToAddPhoto(view); todo: add fragment with photo
+        navigateToAddPhoto(view);
     }
 
     private void onClickEditProduct(View view) {
-        navigateToEditProduct(view);
+        navigateToEditProduct();
     }
 
     private void onClickDeleteProduct(View view) {
         productDetailsViewModel.onClickDeleteProduct();
+        navigateToMyPantry();
     }
 
-    private void navigateToEditProduct(View view) {
+    private void navigateToAddPhoto(View view) {
+        ArrayList<Product> productArrayList = productDetailsViewModel.getProductArrayList();
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList("productArrayList", productArrayList);
+        Navigation.findNavController(view).navigate(R.id.action_nav_product_details_to_nav_products_photo, bundle);
+    }
+
+    private void navigateToEditProduct() {
         ArrayList<Product> productArrayList = productDetailsViewModel.getProductArrayList();
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList("productArrayList", productArrayList);
         Navigation.findNavController(view).navigate(R.id.action_nav_product_details_to_nav_edit_product, bundle);
     }
 
-    private void navigateToPrintQRCodes(View view) {
+    private void navigateToPrintQRCodes() {
         ArrayList<Product> productArrayList = productDetailsViewModel.getProductArrayList();
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList("productArrayList", productArrayList);
         Navigation.findNavController(view).navigate(R.id.action_nav_product_details_to_nav_print_qr_codes, bundle);
+    }
+
+    private void navigateToScanProduct() {
+        ArrayList<Product> productArrayList = productDetailsViewModel.getProductArrayList();
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList("productArrayListToAddBarcode", productArrayList);
+        Navigation.findNavController(view).navigate(R.id.action_nav_product_details_to_nav_scan_product, bundle);
+    }
+
+    private void navigateToMyPantry() {
+        Navigation.findNavController(view).navigate(R.id.action_nav_product_details_to_nav_my_pantry);
     }
 
     @Override

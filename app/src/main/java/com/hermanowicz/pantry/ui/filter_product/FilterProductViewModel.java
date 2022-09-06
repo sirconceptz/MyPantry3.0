@@ -8,9 +8,15 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.hermanowicz.pantry.dao.db.product.Product;
+import com.hermanowicz.pantry.model.Filter;
+import com.hermanowicz.pantry.model.FilterModel;
 import com.hermanowicz.pantry.util.CategorySpinnerListener;
 import com.hermanowicz.pantry.util.DatePickerUtil;
 import com.hermanowicz.pantry.util.StorageLocationListener;
+
+import java.util.List;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -31,10 +37,10 @@ public class FilterProductViewModel extends ViewModel {
     public ObservableField<String> composition = new ObservableField<>("");
     public ObservableField<String> healingProperties = new ObservableField<>("");
     public ObservableField<String> dosage = new ObservableField<>("");
-    public ObservableField<String> weightSince = new ObservableField<>();
-    public ObservableField<String> weightFor = new ObservableField<>();
-    public ObservableField<String> volumeSince = new ObservableField<>();
-    public ObservableField<String> volumeFor = new ObservableField<>();
+    public ObservableField<String> weightSince = new ObservableField<>("");
+    public ObservableField<String> weightFor = new ObservableField<>("");
+    public ObservableField<String> volumeSince = new ObservableField<>("");
+    public ObservableField<String> volumeFor = new ObservableField<>("");
     public ObservableField<Boolean> isSweet = new ObservableField<>();
     public ObservableField<Boolean> isSour = new ObservableField<>();
     public ObservableField<Boolean> isSweetAndSour = new ObservableField<>();
@@ -62,11 +68,6 @@ public class FilterProductViewModel extends ViewModel {
     public ObservableField<Integer> productionDateForMonth = new ObservableField<>();
     public ObservableField<Integer> productionDateForDay = new ObservableField<>();
 
-    private String expirationDateSince = "";
-    private String expirationDateFor = "";
-    private String productionDateSince = "";
-    private String productionDateFor = "";
-
     private final LiveData<String[]> ownCategoriesNamesLiveData;
     private String[] ownCategoriesNamesArray;
 
@@ -82,8 +83,38 @@ public class FilterProductViewModel extends ViewModel {
         ownCategoriesNamesLiveData = useCase.getAllOwnCategoriesNames();
     }
 
-    public void onClickFilterProducts() {
+    public void updateProductArrayList(List<Product> productArrayList){
+        //Filter filter = new Filter(productArrayList);
+        //useCase.setFilter(filter);
+        //LiveData<List<Product>> productListLiveData = new MutableLiveData<>(productArrayList);
+        //this.productListLiveData = useCase.getUpdatedProductList(productListLiveData);
+    }
 
+    public FilterModel getFilterModel() {
+        String expirationDateSince = useCase.getExpirationDateSince();
+        String expirationDateFor = useCase.getExpirationDateFor();
+        String productionDateSince = useCase.getProductionDateSince();
+        String productionDateFor = useCase.getProductionDateFor();
+
+        FilterModel filterModel = new FilterModel();
+        filterModel.setName(productName.get());
+        filterModel.setExpirationDateSince(expirationDateSince);
+        filterModel.setExpirationDateFor(expirationDateFor);
+        filterModel.setProductionDateSince(productionDateSince);
+        filterModel.setProductionDateFor(productionDateFor);
+        filterModel.setComposition(composition.get());
+        filterModel.setHealingProperties(healingProperties.get());
+        filterModel.setDosage(dosage.get());
+        if(!Objects.equals(weightSince.get(), ""))
+            filterModel.setWeightSince(Integer.parseInt(Objects.requireNonNull(weightSince.get())));
+        if(!Objects.equals(weightFor.get(), ""))
+        filterModel.setWeightFor(Integer.parseInt(Objects.requireNonNull(weightFor.get())));
+        if(!Objects.equals(volumeSince.get(), ""))
+        filterModel.setVolumeSince(Integer.parseInt(Objects.requireNonNull(volumeSince.get())));
+        if(!Objects.equals(volumeFor.get(), ""))
+        filterModel.setVolumeFor(Integer.parseInt(Objects.requireNonNull(volumeFor.get())));
+
+        return filterModel;
     }
 
     public void onClickClearFilter() {
@@ -112,22 +143,22 @@ public class FilterProductViewModel extends ViewModel {
 
     public void onExpirationDateSinceChanged(int year, int month, int day) {
         month++;
-        expirationDateSince = year + "." + month + "." + day;
+        useCase.setExpirationDateSince(year, month, day);
     }
 
     public void onExpirationDateForChanged(int year, int month, int day) {
         month++;
-        expirationDateFor = year + "." + month + "." + day;
+        useCase.setExpirationDateFor(year, month, day);
     }
 
     public void onProductionDateSinceChanged(int year, int month, int day) {
         month++;
-        productionDateSince = year + "." + month + "." + day;
+        useCase.setProductionDateSince(year, month, day);
     }
 
     public void onProductionDateForChanged(int year, int month, int day) {
         month++;
-        productionDateFor = year + "." + month + "." + day;
+        useCase.setProductionDateFor(year, month, day);
     }
 
     private void clearFields() {
@@ -138,10 +169,10 @@ public class FilterProductViewModel extends ViewModel {
         DatePickerUtil.resetDateInDatePicker(expirationDateForYear, expirationDateForMonth, expirationDateForDay);
         DatePickerUtil.resetDateInDatePicker(productionDateSinceYear, productionDateSinceMonth, productionDateSinceDay);
         DatePickerUtil.resetDateInDatePicker(productionDateForYear, productionDateForMonth, productionDateForDay);
-        expirationDateSince = "";
-        expirationDateFor = "";
-        productionDateSince = "";
-        productionDateFor = "";
+        useCase.clearExpirationDateSince();
+        useCase.clearExpirationDateFor();
+        useCase.clearProductionDateSince();
+        useCase.clearProductionDateFor();
         weightSince.set("");
         weightFor.set("");
         volumeSince.set("");

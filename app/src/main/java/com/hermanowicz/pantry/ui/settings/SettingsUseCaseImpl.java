@@ -11,7 +11,7 @@ import com.hermanowicz.pantry.dao.db.category.Category;
 import com.hermanowicz.pantry.dao.db.product.Product;
 import com.hermanowicz.pantry.dao.db.storagelocation.StorageLocation;
 import com.hermanowicz.pantry.interfaces.PricingListener;
-import com.hermanowicz.pantry.model.Database;
+import com.hermanowicz.pantry.model.DatabaseMode;
 import com.hermanowicz.pantry.repository.DatabaseBackupRepository;
 import com.hermanowicz.pantry.repository.OwnCategoryRepository;
 import com.hermanowicz.pantry.repository.PricingRepository;
@@ -166,19 +166,19 @@ public class SettingsUseCaseImpl implements SettingsUseCase {
 
     @Override
     public void clearProductDb() {
-        Database currentDatabaseMode = sharedPreferencesRepository.getDatabaseModeFromSettings();
+        DatabaseMode currentDatabaseMode = sharedPreferencesRepository.getDatabaseModeFromSettings();
         productRepository.deleteAll(currentDatabaseMode);
     }
 
     @Override
     public void clearOwnCategoriesDb() {
-        Database currentDatabaseMode = sharedPreferencesRepository.getDatabaseModeFromSettings();
+        DatabaseMode currentDatabaseMode = sharedPreferencesRepository.getDatabaseModeFromSettings();
         ownCategoryRepository.deleteAll(currentDatabaseMode);
     }
 
     @Override
     public void clearStorageLocationsDb() {
-        Database currentDatabaseMode = sharedPreferencesRepository.getDatabaseModeFromSettings();
+        DatabaseMode currentDatabaseMode = sharedPreferencesRepository.getDatabaseModeFromSettings();
         storageLocationRepository.deleteAll(currentDatabaseMode);
     }
 }

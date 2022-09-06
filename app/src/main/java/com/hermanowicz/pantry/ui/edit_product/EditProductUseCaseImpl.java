@@ -4,11 +4,14 @@ import androidx.databinding.ObservableField;
 import androidx.lifecycle.LiveData;
 
 import com.hermanowicz.pantry.dao.db.product.Product;
-import com.hermanowicz.pantry.model.Database;
+import com.hermanowicz.pantry.model.DatabaseMode;
 import com.hermanowicz.pantry.repository.OwnCategoryRepository;
 import com.hermanowicz.pantry.repository.ProductRepository;
 import com.hermanowicz.pantry.repository.StorageLocationRepository;
 
+import java.text.DateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -18,7 +21,7 @@ public class EditProductUseCaseImpl implements EditProductUseCase {
     private final ProductRepository productRepository;
     private final StorageLocationRepository storageLocationRepository;
     private final OwnCategoryRepository ownCategoryRepository;
-    private Database databaseMode;
+    private DatabaseMode databaseMode;
 
     @Inject
     public EditProductUseCaseImpl(ProductRepository productRepository,
@@ -45,12 +48,21 @@ public class EditProductUseCaseImpl implements EditProductUseCase {
     }
 
     @Override
-    public void setDatabaseMode(Database databaseMode) {
+    public void setDatabaseMode(DatabaseMode databaseMode) {
         this.databaseMode = databaseMode;
     }
 
     @Override
     public int getIntValueFromObservableField(ObservableField<String> observableField) {
         return productRepository.getIntValueFromObservableField(observableField);
+    }
+
+    @Override
+    public String getDateInFormatToShow(int day, int month, int year) {
+        DateFormat dateFormat = DateFormat.getDateInstance();
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month, day);
+        Date date = calendar.getTime();
+        return dateFormat.format(date);
     }
 }

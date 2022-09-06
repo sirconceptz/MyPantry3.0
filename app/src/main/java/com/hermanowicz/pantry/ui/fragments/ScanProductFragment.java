@@ -3,9 +3,7 @@ package com.hermanowicz.pantry.ui.fragments;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,8 +51,22 @@ public class ScanProductFragment extends Fragment implements AvailableDataListen
                              ViewGroup container, Bundle savedInstanceState) {
         initView(inflater, container);
         setListeners();
+        getProductListToAddBarcodeIfExist();
 
         return view;
+    }
+
+    private void getProductListToAddBarcodeIfExist() {
+        if(getArguments() != null) {
+            ArrayList<Product> productListToAddBarcode = getArguments().getParcelableArrayList("productArrayListToAddBarcode");
+            scanProductViewModel.setProductListToAddBarcode(productListToAddBarcode);
+            onScanProductAddBarcode();
+        }
+    }
+
+    private void onScanProductAddBarcode() {
+        scanProductViewModel.setScanType("ADD_BARCODE");
+        requestPermission();
     }
 
     private void initView(@NonNull LayoutInflater inflater, ViewGroup container) {
@@ -136,24 +148,10 @@ public class ScanProductFragment extends Fragment implements AvailableDataListen
         binding = null;
     }
 
-    private void navigateToNewProduct(String barcode, ArrayList<Product> productArrayList) {
-        Bundle bundle = new Bundle();
-        bundle.putString("barcode", barcode);
-        bundle.putParcelableArrayList("productArrayList", productArrayList);
-        Navigation.findNavController(view).navigate(R.id.action_nav_scan_product_to_nav_new_product, bundle);
-    }
-
-    private void navigateToProductDetails(String barcode, ArrayList<Product> productArrayList) {
-        Bundle bundle = new Bundle();
-        bundle.putString("barcode", barcode);
-        bundle.putParcelableArrayList("productArrayList", productArrayList);
-        Navigation.findNavController(view).navigate(R.id.action_nav_scan_product_to_nav_product_details, bundle);
-    }
-
     @Override
     public void observeAvailableData() {
         databaseModeViewModel.getDatabaseMode().observe(getViewLifecycleOwner(),
-                productViewModel::updateDataForSelectedDatabase);
+                databaseMode -> productViewModel.updateDataForSelectedDatabase(databaseMode));
         productViewModel.getAllProductList().observe(getViewLifecycleOwner(),
                 scanProductViewModel::setProductList);
     }
@@ -190,6 +188,17 @@ public class ScanProductFragment extends Fragment implements AvailableDataListen
         navigateToNewProduct(productsWithBarcode);
     }
 
+
+    @Override
+    public void onScanAddBarCodeSuccess() {
+        Toast.makeText(requireActivity(), getText(R.string.scan_barcode_is_updated), Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onScanQrCodeSuccess(int productId, int productHashCode, ArrayList<Product> productArrayList) {
+        navigateToProductDetails(productId, productHashCode, productArrayList);
+    }
+
     @Override
     public void onScanCanceled() {
         Toast.makeText(requireActivity(), "Scan canceled!", Toast.LENGTH_LONG).show();
@@ -198,11 +207,6 @@ public class ScanProductFragment extends Fragment implements AvailableDataListen
     @Override
     public void onNoCameraPermission() {
         Toast.makeText(requireActivity(), "No camera permission!", Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void onScanQrCodeSuccess(int productId, int productHashCode, ArrayList<Product> productArrayList) {
-        navigateToProductDetails(productId, productHashCode, productArrayList);
     }
 
     @Override

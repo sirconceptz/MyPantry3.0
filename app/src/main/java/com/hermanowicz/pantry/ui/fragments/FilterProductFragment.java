@@ -10,10 +10,16 @@ import android.widget.ArrayAdapter;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
+import com.hermanowicz.pantry.R;
+import com.hermanowicz.pantry.dao.db.product.Product;
 import com.hermanowicz.pantry.databinding.FragmentFilterProductBinding;
+import com.hermanowicz.pantry.model.FilterModel;
 import com.hermanowicz.pantry.ui.filter_product.FilterProductViewModel;
 import com.hermanowicz.pantry.util.DetailCategoryAdapter;
+
+import java.util.ArrayList;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -27,9 +33,39 @@ public class FilterProductFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         initView(inflater, container);
+        setListeners();
         setObservers();
 
         return view;
+    }
+
+    private void setListeners() {
+        binding.buttonFilterProduct.setOnClickListener(this::onClickFilterProduct);
+        filterProductViewModel.getFilterModel();
+    }
+
+    private void onClickFilterProduct(View view) {
+        FilterModel filterModel = filterProductViewModel.getFilterModel();
+        navigateToMyPantry(filterModel);
+    }
+
+    private void navigateToMyPantry(FilterModel filterModel) {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("filterModel", filterModel);
+        Navigation.findNavController(view).navigate(R.id.action_nav_filter_product_to_nav_my_pantry, bundle);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        setProductListFromArguments();
+    }
+
+    private void setProductListFromArguments() {
+        if(getArguments() != null) {
+            ArrayList<Product> productArrayList = getArguments().getParcelableArrayList("productArrayList");
+            filterProductViewModel.updateProductArrayList(productArrayList);
+        }
     }
 
     private void initView(@NonNull LayoutInflater inflater, ViewGroup container) {

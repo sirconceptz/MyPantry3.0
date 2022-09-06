@@ -15,7 +15,9 @@ import androidx.lifecycle.ViewModel;
 
 import com.hermanowicz.pantry.R;
 import com.hermanowicz.pantry.dao.db.product.Product;
-import com.hermanowicz.pantry.model.Database;
+import com.hermanowicz.pantry.interfaces.NewProductDialogListener;
+import com.hermanowicz.pantry.model.DatabaseMode;
+import com.hermanowicz.pantry.model.GroupProduct;
 import com.hermanowicz.pantry.util.CategorySpinnerListener;
 import com.hermanowicz.pantry.util.DatePickerUtil;
 import com.hermanowicz.pantry.util.StorageLocationListener;
@@ -37,8 +39,8 @@ public class NewProductViewModel extends ViewModel {
     public ObservableField<String> productName = new ObservableField<>("");
     public MutableLiveData<String> mainCategory = new MutableLiveData<>("");
     public MutableLiveData<String> detailCategory = new MutableLiveData<>("");
-    private String expirationDate = "";
-    private String productionDate = "";
+    private String expirationDateVisible = "";
+    private String productionDateVisible = "";
     private final String storageLocation = "";
     private final LiveData<String[]> storageLocations;
     public ObservableField<String> quantity = new ObservableField<>("1");
@@ -70,7 +72,7 @@ public class NewProductViewModel extends ViewModel {
     private final LiveData<String[]> ownCategoriesNamesLiveData;
     private String[] ownCategoriesNamesArray;
 
-    private Bundle arguments = new Bundle();
+    private NewProductDialogListener newProductDialogListener;
 
     //spinners listeners
     public AdapterView.OnItemSelectedListener categorySelectionListener =
@@ -122,18 +124,22 @@ public class NewProductViewModel extends ViewModel {
 
     public void onExpirationDateChanged(int year, int month, int day) {
         month++;
-        expirationDate = year + "." + month + "." + day;
+        useCase.setExpirationDate(year, month, day);
+        expirationDateVisible = useCase.getDateInFormatToShow(day, month, year);
     }
 
     public void onProductionDateChanged(int year, int month, int day) {
         month++;
-        productionDate = year + "." + month + "." + day;
+        useCase.setProductionDate(year, month, day);
+        productionDateVisible = useCase.getDateInFormatToShow(day, month, year);
     }
 
     @NonNull
     private Product getProduct() {
         int productWeight = useCase.getIntValueFromObservableField(weight);
         int productVolume = useCase.getIntValueFromObservableField(volume);
+        String expirationDate = useCase.getExpirationDate();
+        String productionDate = useCase.getProductionDate();
 
         Product product = new Product();
         product.setName(productName.get());
@@ -173,8 +179,8 @@ public class NewProductViewModel extends ViewModel {
         detailCategory.setValue("");
         DatePickerUtil.resetDateInDatePicker(expirationDateYear, expirationDateMonth, expirationDateDay);
         DatePickerUtil.resetDateInDatePicker(productionDateYear, productionDateMonth, productionDateDay);
-        expirationDate = "";
-        productionDate = "";
+        expirationDateVisible = "";
+        productionDateVisible = "";
         quantity.set("1");
         weight.set("");
         volume.set("");
@@ -191,7 +197,8 @@ public class NewProductViewModel extends ViewModel {
         if(checkBox.getId() == R.id.productExpirationDateCheckbox) {
             if (isChecked) {
                 expirationDatePickerVisibility.set(View.GONE);
-                expirationDate = "";
+                expirationDateVisible = "";
+                useCase.clearExpirationDate();
             }
             else
                 expirationDatePickerVisibility.set(View.VISIBLE);
@@ -199,42 +206,54 @@ public class NewProductViewModel extends ViewModel {
         if(checkBox.getId() == R.id.productProductionDateCheckbox) {
             if (isChecked) {
                 productionDatePickerVisibility.set(View.GONE);
-                productionDate = "";
+                productionDateVisible = "";
+                useCase.clearProductionDate();
             }
             else
                 productionDatePickerVisibility.set(View.VISIBLE);
         }
     }
 
-    public void setDatabaseMode(Database databaseMode) {
+    public void setDatabaseMode(DatabaseMode databaseMode) {
         useCase.setDatabaseMode(databaseMode);
     }
 
-    public void setArguments(Bundle arguments) {
-        this.arguments = arguments;
-    }
-
-    public void showProductDataIfExists() {
+    public void showProductDataIfExists(@Nullable Bundle arguments) {
         if(arguments != null){
             ArrayList<Product> productArrayList =
                     arguments.getParcelableArrayList("productArrayList");
-            if(productArrayList.size() == 1){
-                Product product = productArrayList.get(0);
-                showProductData(product);
+            List<GroupProduct> groupProductArrayList = useCase.setAndGetGroupProductListFromProductList(productArrayList);
+            if(groupProductArrayList.size() == 1) {
+                Product product = groupProductArrayList.get(0).getProduct();
+                int productQuantity = groupProductArrayList.get(0).getQuantity();
+                showProductData(product, productQuantity);
             }
-            else if (productArrayList.size() > 1) {
-                //todo: choose product to copy
+            else if(groupProductArrayList.size() > 1) {
+                String[] groupProductNames = useCase.getGroupProductNames(productArrayList);
+                newProductDialogListener.showDialogChooseProductToCopy(groupProductNames);
             }
         }
     }
 
-    private void showProductData(Product product) {
+    private void showProductData(Product product, int productQuantity) {
         productName.set(product.getName());
+        quantity.set(String.valueOf(productQuantity));
         weight.set(String.valueOf(product.getWeight()));
         volume.set(String.valueOf(product.getVolume()));
         isVege.set(product.getIsVege());
         isBio.set(product.getIsBio());
         hasSugar.set(product.getHasSugar());
         hasSalt.set(product.getHasSalt());
+    }
+
+    public void setNewProductDialogListener(NewProductDialogListener newProductDialogListener) {
+        this.newProductDialogListener = newProductDialogListener;
+    }
+
+    public void showSelectedProductData(int position) {
+        List<GroupProduct> groupProductList = useCase.getGroupProductList();
+        Product product = groupProductList.get(position).getProduct();
+        int productQuantity = groupProductList.get(position).getQuantity();
+        showProductData(product, productQuantity);
     }
 }

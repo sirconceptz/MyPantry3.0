@@ -9,7 +9,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.hermanowicz.pantry.dao.db.storagelocation.StorageLocation;
 import com.hermanowicz.pantry.dao.db.storagelocation.StorageLocationDao;
 import com.hermanowicz.pantry.dao.db.storagelocation.StorageLocationDb;
-import com.hermanowicz.pantry.model.Database;
+import com.hermanowicz.pantry.model.DatabaseMode;
 import com.hermanowicz.pantry.util.InternetConnection;
 
 import java.util.List;
@@ -33,10 +33,10 @@ public class StorageLocationRepositoryImpl implements StorageLocationRepository 
     }
 
     @Override
-    public LiveData<List<StorageLocation>> getAllStorageLocations(Database databaseMode) {
-        if (databaseMode.getDatabaseMode() == Database.DatabaseMode.ONLINE)
+    public LiveData<List<StorageLocation>> getAllStorageLocations(DatabaseMode databaseMode) {
+        if (databaseMode.getDatabaseMode() == DatabaseMode.Mode.ONLINE)
             return onlineStorageLocationList;
-        else if (databaseMode.getDatabaseMode() == Database.DatabaseMode.LOCAL)
+        else if (databaseMode.getDatabaseMode() == DatabaseMode.Mode.LOCAL)
             return localStorageLocationList;
         return new MutableLiveData<>();
     }
@@ -47,15 +47,15 @@ public class StorageLocationRepositoryImpl implements StorageLocationRepository 
     }
 
     @Override
-    public void insert(StorageLocation storageLocation, Database databaseMode) {
+    public void insert(StorageLocation storageLocation, DatabaseMode databaseMode) {
         Executor executor = Executors.newSingleThreadExecutor();
         executor.execute(() -> insertToSelectedDatabase(storageLocation, databaseMode));
     }
 
-    private void insertToSelectedDatabase(StorageLocation storageLocation, Database databaseMode) {
-        if (databaseMode.getDatabaseMode() == Database.DatabaseMode.LOCAL)
+    private void insertToSelectedDatabase(StorageLocation storageLocation, DatabaseMode databaseMode) {
+        if (databaseMode.getDatabaseMode() == DatabaseMode.Mode.LOCAL)
             insertLocalStorageLocation(storageLocation);
-        else if (databaseMode.getDatabaseMode() == Database.DatabaseMode.ONLINE)
+        else if (databaseMode.getDatabaseMode() == DatabaseMode.Mode.ONLINE)
             insertOnlineStorageLocation(storageLocation);
     }
 
@@ -64,20 +64,20 @@ public class StorageLocationRepositoryImpl implements StorageLocationRepository 
     }
 
     private void insertOnlineStorageLocation(StorageLocation storageLocation) {
-        DatabaseReference dbRef = Database.getOnlineDatabaseReference("storage_locations");
+        DatabaseReference dbRef = DatabaseMode.getOnlineDatabaseReference("storage_locations");
         dbRef.child(String.valueOf(storageLocation.getId())).setValue(storageLocation);
     }
 
     @Override
-    public void update(StorageLocation storageLocation, Database databaseMode) {
+    public void update(StorageLocation storageLocation, DatabaseMode databaseMode) {
         Executor executor = Executors.newSingleThreadExecutor();
         executor.execute(() -> updateToSelectedDatabase(storageLocation, databaseMode));
     }
 
-    private void updateToSelectedDatabase(StorageLocation storageLocation, Database databaseMode) {
-        if (databaseMode.getDatabaseMode() == Database.DatabaseMode.LOCAL)
+    private void updateToSelectedDatabase(StorageLocation storageLocation, DatabaseMode databaseMode) {
+        if (databaseMode.getDatabaseMode() == DatabaseMode.Mode.LOCAL)
             updateLocalStorageLocation(storageLocation);
-        else if (databaseMode.getDatabaseMode() == Database.DatabaseMode.ONLINE)
+        else if (databaseMode.getDatabaseMode() == DatabaseMode.Mode.ONLINE)
             insertOnlineStorageLocation(storageLocation);
     }
 
@@ -86,15 +86,15 @@ public class StorageLocationRepositoryImpl implements StorageLocationRepository 
     }
 
     @Override
-    public void delete(StorageLocation storageLocation, Database databaseMode) {
+    public void delete(StorageLocation storageLocation, DatabaseMode databaseMode) {
         Executor executor = Executors.newSingleThreadExecutor();
         executor.execute(() -> deleteToSelectedDatabase(storageLocation, databaseMode));
     }
 
-    private void deleteToSelectedDatabase(StorageLocation storageLocation, Database databaseMode) {
-        if (databaseMode.getDatabaseMode() == Database.DatabaseMode.LOCAL)
+    private void deleteToSelectedDatabase(StorageLocation storageLocation, DatabaseMode databaseMode) {
+        if (databaseMode.getDatabaseMode() == DatabaseMode.Mode.LOCAL)
             deleteLocalStorageLocation(storageLocation);
-        else if (databaseMode.getDatabaseMode() == Database.DatabaseMode.ONLINE)
+        else if (databaseMode.getDatabaseMode() == DatabaseMode.Mode.ONLINE)
             deleteOnlineStorageLocation(storageLocation);
     }
 
@@ -103,20 +103,20 @@ public class StorageLocationRepositoryImpl implements StorageLocationRepository 
     }
 
     private void deleteOnlineStorageLocation(StorageLocation storageLocation) {
-        DatabaseReference dbRef = Database.getOnlineDatabaseReference("storage_locations");
+        DatabaseReference dbRef = DatabaseMode.getOnlineDatabaseReference("storage_locations");
         dbRef.child(String.valueOf(storageLocation.getId())).removeValue();
     }
 
     @Override
-    public void deleteAll(Database databaseMode) {
+    public void deleteAll(DatabaseMode databaseMode) {
         Executor executor = Executors.newSingleThreadExecutor();
         executor.execute(() -> deleteAllToSelectedDatabase(databaseMode));
     }
 
-    private void deleteAllToSelectedDatabase(Database databaseMode) {
-        if (databaseMode.getDatabaseMode() == Database.DatabaseMode.LOCAL)
+    private void deleteAllToSelectedDatabase(DatabaseMode databaseMode) {
+        if (databaseMode.getDatabaseMode() == DatabaseMode.Mode.LOCAL)
             deleteAllLocalStorageLocations();
-        else if (databaseMode.getDatabaseMode() == Database.DatabaseMode.ONLINE)
+        else if (databaseMode.getDatabaseMode() == DatabaseMode.Mode.ONLINE)
             deleteAllOnlineStorageLocations();
     }
 
@@ -125,7 +125,7 @@ public class StorageLocationRepositoryImpl implements StorageLocationRepository 
     }
 
     private void deleteAllOnlineStorageLocations() {
-        DatabaseReference dbRef = Database.getOnlineDatabaseReference("storage_locations");
+        DatabaseReference dbRef = DatabaseMode.getOnlineDatabaseReference("storage_locations");
         dbRef.removeValue();
     }
 

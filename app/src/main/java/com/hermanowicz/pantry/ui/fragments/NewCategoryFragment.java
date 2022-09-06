@@ -78,7 +78,6 @@ public class NewCategoryFragment extends Fragment {
     }
 
     private void navigateToOwnCategories() {
-        Navigation.findNavController(view)
-                .navigate(R.id.nav_own_categories);
+        Navigation.findNavController(view).navigate(R.id.nav_own_categories);
     }
 }

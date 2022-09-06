@@ -25,6 +25,7 @@
     <string name="general_barcode">Barcode</string>
     <string name="general_permission_required_title">Permission required!</string>
     <string name="general_permission_required_message">Permission is required to complete the task. Without it, it is not possible to use this function.</string>
+    <string name="general_choose">Choose</string>
     <!--Title-->
     <string name="title_main_pantry">My pantry</string>
     <string name="title_scan_product">Scan the product\'s code</string>
@@ -53,6 +54,10 @@
     <string name="button_skip">Skip</string>
     <string name="button_send_pdf_via_email">Send a PDF file by e-mail</string>
     <string name="button_add_photo">Add photo</string>
+    <string name="button_take_photo">Take photo</string>
+    <string name="button_save_photo">Save photo</string>
+    <string name="button_delete_photo">Delete photo</string>
+    <string name="button_add_barcode">Add barcode</string>
     <!--Product features-->
     <string name="product_features_with_sugar">+Sugar</string>
     <string name="product_features_with_salt">+Salt</string>
@@ -64,7 +69,18 @@
     <!--Statements-->
     <string name="statement_no_storage_locations">No storage locations added. Add a new button at the top of the screen.</string>
     <string name="statement_no_categories">No categories added. Add a new button at the top of the screen.</string>
-    \
+    <string name="statement_clear_database_warning">Do you want to clear database? All entries will be removed and the operation is irreversible.</string>
+    <string name="statement_restore_database">Do you want to import databases from an external file? This will result in the loss of the products currently added to the application.</string>
+    <string name="statement_backup_database">Do you want to export databases from to an external file?</string>
+    <string name="statement_import_local_db_to_cloud_warning">Import the product database from the device to the cloud (to an internet account). CURRENTLY SAVED DATA IN THE CLOUD WILL BE DELETED AND REPLACED BY PHONE PRODUCTS.</string>
+    <string name="statement_choose_product_to_copy">The barcode has been added to the following products. Select the product you want to add from the list.</string>
+    <!--Products photo-->
+    <string name="products_photo_photo_description">Photo description</string>
+    <string name="products_photo_take_photo_of_product">Take photo of the product</string>
+    <string name="products_photo_invalid_photo_description">Invalid photo description</string>
+    <string name="products_photo_add_photo_successful">The photo has been added</string>
+    <string name="products_photo_add_photo_not_successful">The photo was not added</string>
+    <string name="products_photo_delete_photo_successful">The photo has been deleted</string>
     <!--Product-->
     <string name="product_name">Name</string>
     <string name="product_quantity">Quantity</string>
@@ -198,14 +214,14 @@
     <string name="settings_notifications_email">Notifications via email</string>
     <string name="settings_give_email_adress">Email address for notifications</string>
     <string name="settings_how_many_days_before_the_expiration_date_send_a_notification">How many days before expiration?</string>
-    <string name="settings_import_product_database">Import product database</string>
+    <string name="settings_restore_product_database">Import product database</string>
     <string name="settings_export_product_database">Export product database</string>
     <string name="settings_clear_product_database">Clear product database</string>
-    <string name="settings_import_category_database">Import category database</string>
-    <string name="settings_export_category_database">Export category database</string>
+    <string name="settings_restore_category_database">Import category database</string>
+    <string name="settings_backup_category_database">Export category database</string>
     <string name="settings_clear_category_database">Clear category database</string>
-    <string name="settings_import_storage_location_database">Import storage location database</string>
-    <string name="settings_export_storage_location_database">Export storage location database</string>
+    <string name="settings_restore_storage_location_database">Import storage location database</string>
+    <string name="settings_backup_storage_location_database">Export storage location database</string>
     <string name="settings_clear_storage_location_database">Clear storage location database</string>
     <string name="settings_database_backup">Database backup</string>
     <string name="settings_version">Version</string>
@@ -214,7 +230,7 @@
     <string name="settings_database_mode">Product database mode</string>
     <string name="settings_qr_code_size_big">Big</string>
     <string name="settings_qr_code_size_small">Small</string>
-    <string name="settings_import_db">Import database from phone to cloud</string>
+    <string name="settings_import_local_db_to_cloud">Import database from phone to cloud</string>
     <string name="settings_choose_file_to_restore">Choose database file to restore</string>
     <string-array name="settings_camera_to_scan">
         <item>Rear camera</item>
@@ -265,6 +281,7 @@
     <string name="error_for_premium_users_only">Function for premium user only</string>
     <string name="error_billing_client_not_ready">Payment feature currently unavailable</string>
     <string name="error_incorrect_barcode_value">Invalid barcode</string>
+    <string name="error_no_camera_access">No camera access</string>
     <!--Author-->
     <string name="author_contact_with_author">Contact with author</string>
     <string name="author_facebook_profile" translatable="false">https://www.facebook.com/sirconceptz/</string>

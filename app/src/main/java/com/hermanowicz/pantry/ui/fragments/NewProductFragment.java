@@ -15,16 +15,21 @@ import androidx.navigation.Navigation;
 import com.hermanowicz.pantry.R;
 import com.hermanowicz.pantry.dao.db.product.Product;
 import com.hermanowicz.pantry.databinding.FragmentNewProductBinding;
+import com.hermanowicz.pantry.interfaces.NewProductDialogListener;
+import com.hermanowicz.pantry.interfaces.ProductToCopyView;
+import com.hermanowicz.pantry.model.GroupProduct;
 import com.hermanowicz.pantry.ui.database_mode.DatabaseModeViewModel;
+import com.hermanowicz.pantry.ui.dialogs.ChooseProductToCopyDialog;
 import com.hermanowicz.pantry.ui.new_product.NewProductViewModel;
 import com.hermanowicz.pantry.util.DetailCategoryAdapter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
-public class NewProductFragment extends Fragment {
+public class NewProductFragment extends Fragment implements NewProductDialogListener, ProductToCopyView {
 
     private FragmentNewProductBinding binding;
     private DatabaseModeViewModel databaseModeViewModel;
@@ -53,6 +58,8 @@ public class NewProductFragment extends Fragment {
     private void setListeners() {
         binding.buttonAddNewProduct.setOnClickListener(this::onClickAddNewProduct);
         binding.buttonClearFields.setOnClickListener(this::onClickClearFields);
+
+        newProductViewModel.setNewProductDialogListener(this);
     }
 
     private void setObservers() {
@@ -64,8 +71,7 @@ public class NewProductFragment extends Fragment {
     }
 
     private void getArgumentsAndShowData() {
-        newProductViewModel.setArguments(getArguments());
-        newProductViewModel.showProductDataIfExists();
+        newProductViewModel.showProductDataIfExists(getArguments());
     }
 
     private void updateDetailCategoryAdapter(String selectedMainCategory) {
@@ -102,5 +108,16 @@ public class NewProductFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    @Override
+    public void showDialogChooseProductToCopy(String[] groupProductNames) {
+        ChooseProductToCopyDialog dialog = new ChooseProductToCopyDialog(groupProductNames);
+        dialog.show(requireActivity().getSupportFragmentManager(), "");
+    }
+
+    @Override
+    public void setSelectedProductToCopy(int position) {
+        newProductViewModel.showSelectedProductData(position);
     }
 }

@@ -5,6 +5,8 @@ import com.hermanowicz.pantry.dao.db.product.Product;
 import java.util.ArrayList;
 
 public interface ScanDecodedResult {
+    void onScanAddBarCodeSuccess();
+
     void onScanBarCodeSuccess(ArrayList<Product> productsWithBarcode);
 
     void onScanCanceled();

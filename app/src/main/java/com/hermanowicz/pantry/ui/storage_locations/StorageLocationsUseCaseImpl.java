@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.hermanowicz.pantry.dao.db.storagelocation.StorageLocation;
-import com.hermanowicz.pantry.model.Database;
+import com.hermanowicz.pantry.model.DatabaseMode;
 import com.hermanowicz.pantry.repository.StorageLocationRepository;
 
 import java.util.List;
@@ -21,7 +21,7 @@ public class StorageLocationsUseCaseImpl implements StorageLocationsUseCase {
     }
 
     @Override
-    public LiveData<List<StorageLocation>> getAllStorageLocations(Database databaseMode) {
+    public LiveData<List<StorageLocation>> getAllStorageLocations(DatabaseMode databaseMode) {
         return repository.getAllStorageLocations(databaseMode);
     }
 

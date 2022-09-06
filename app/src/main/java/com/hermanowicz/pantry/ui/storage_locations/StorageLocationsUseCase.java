@@ -4,12 +4,12 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.hermanowicz.pantry.dao.db.storagelocation.StorageLocation;
-import com.hermanowicz.pantry.model.Database;
+import com.hermanowicz.pantry.model.DatabaseMode;
 
 import java.util.List;
 
 public interface StorageLocationsUseCase {
-    LiveData<List<StorageLocation>> getAllStorageLocations(Database databaseMode);
+    LiveData<List<StorageLocation>> getAllStorageLocations(DatabaseMode databaseMode);
 
     void setOnlineStorageLocationList(MutableLiveData<List<StorageLocation>> onlineStorageLocationList);
 

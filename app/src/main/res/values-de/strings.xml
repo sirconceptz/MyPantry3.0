@@ -25,6 +25,7 @@
     <string name="general_barcode">Strichcode</string>
     <string name="general_permission_required_title">Erlaubnis benötigt!</string>
     <string name="general_permission_required_message">Permission is required to complete the task. Without it, it is not possible to use this function.</string>
+    <string name="general_choose">Wählen</string>
     <!--Title-->
     <string name="title_main_pantry">Meine speisekammer</string>
     <string name="title_scan_product">Scannen Sie den Code des Produkts</string>
@@ -53,6 +54,10 @@
     <string name="button_skip">überspringen</string>
     <string name="button_send_pdf_via_email">Senden Sie eine PDF-Datei per E-Mail</string>
     <string name="button_add_photo">Bild hinzufügen</string>
+    <string name="button_take_photo">Foto machen</string>
+    <string name="button_save_photo">Foto speichern</string>
+    <string name="button_delete_photo">Foto löschen</string>
+    <string name="button_add_barcode">Strichcode hinzufügen</string>
     <!--Product features-->
     <string name="product_features_with_sugar">+Zucker</string>
     <string name="product_features_with_salt">+Salz</string>
@@ -64,6 +69,18 @@
     <!--Statements-->
     <string name="statement_no_storage_locations">Keine Lagerort hinzugefügt. Fügen Sie oben auf dem Bildschirm eine neue Schaltfläche hinzu.</string>
     <string name="statement_no_categories">Keine Kategorien hinzugefügt. Fügen Sie oben auf dem Bildschirm eine neue Schaltfläche hinzu.</string>
+    <string name="statement_clear_database_warning">Möchten Sie die Datenbank löschen? Alle Einträge werden entfernt und der Vorgang ist irreversibel.</string>
+    <string name="statement_restore_database">Möchten Sie Datenbanken aus einer externen Datei importieren? Dies führt zum Verlust der Produkte, die derzeit zur Anwendung hinzugefügt werden.</string>
+    <string name="statement_backup_database">Möchten Sie Datenbanken in eine externe Datei exportieren?</string>
+    <string name="statement_import_local_db_to_cloud_warning">Importieren Sie die Produktdatenbank vom Gerät in die Cloud (in ein Internetkonto). AKTUELL GESPEICHERTE DATEN IN DER CLOUD WERDEN GELÖSCHT UND DURCH TELEFONPRODUKTE ERSETZT.</string>
+    <string name="statement_choose_product_to_copy">Der Barcode wurde den folgenden Produkten hinzugefügt. Wählen Sie das Produkt aus der Liste aus, das Sie hinzufügen möchten.</string>
+    <!--Products photo-->
+    <string name="products_photo_photo_description">Fotobeschreibung</string>
+    <string name="products_photo_take_photo_of_product">Machen Sie ein Foto des Produkts</string>
+    <string name="products_photo_invalid_photo_description">Ungültige Fotobeschreibung</string>
+    <string name="products_photo_add_photo_successful">Das Foto wurde hinzugefügt</string>
+    <string name="products_photo_add_photo_not_successful">Das Foto wurde nicht hinzugefügt</string>
+    <string name="products_photo_delete_photo_successful">Das Foto wurde gelöscht</string>
     <!--Product-->
     <string name="product_name">Produktname</string>
     <string name="product_quantity">Anzahl</string>
@@ -197,14 +214,14 @@
     <string name="settings_notifications_email">Benachrichtigungen per E-Mail</string>
     <string name="settings_give_email_adress">Zeitpunkt der Benachrichtigungen</string>
     <string name="settings_how_many_days_before_the_expiration_date_send_a_notification">Wie viele Tage vor Ablauf?</string>
-    <string name="settings_import_product_database">Produktdatenbank importieren</string>
+    <string name="settings_restore_product_database">Produktdatenbank importieren</string>
     <string name="settings_export_product_database">Produktdatenbank exportieren</string>
     <string name="settings_clear_product_database">Produktdatenbank löschen</string>
-    <string name="settings_import_category_database">Kategoriedatenbank importieren</string>
-    <string name="settings_export_category_database">Kategoriedatenbank exportieren</string>
+    <string name="settings_restore_category_database">Kategoriedatenbank importieren</string>
+    <string name="settings_backup_category_database">Kategoriedatenbank exportieren</string>
     <string name="settings_clear_category_database">Kategoriedatenbank löschen</string>
-    <string name="settings_import_storage_location_database">Speicherortdatenbank importieren</string>
-    <string name="settings_export_storage_location_database">Speicherortdatenbank exportieren</string>
+    <string name="settings_restore_storage_location_database">Speicherortdatenbank importieren</string>
+    <string name="settings_backup_storage_location_database">Speicherortdatenbank exportieren</string>
     <string name="settings_clear_storage_location_database">Löschen Sie die Speicherortdatenbank</string>
     <string name="settings_database_backup">Datenbanksicherung</string>
     <string name="settings_version">Version</string>
@@ -213,7 +230,7 @@
     <string name="settings_database_mode">Produktdatenbankmodus</string>
     <string name="settings_qr_code_size_big">Groß</string>
     <string name="settings_qr_code_size_small">Klein</string>
-    <string name="settings_import_db">Datenbank vom Telefon in die Cloud importieren</string>
+    <string name="settings_import_local_db_to_cloud">Datenbank vom Telefon in die Cloud importieren</string>
     <string name="settings_choose_file_to_restore">Wählen Sie die wiederherzustellende Datenbankdatei aus</string>
     <string-array name="settings_camera_to_scan">
         <item>Rückkamera</item>
@@ -241,6 +258,7 @@
     <string name="error_for_premium_users_only">Funktion nur für Premium-Benutzer</string>
     <string name="error_billing_client_not_ready">Zahlungsfunktion derzeit nicht verfügbar</string>
     <string name="error_incorrect_barcode_value">Ungültiger Strichcode</string>
+    <string name="error_no_camera_access">Kein Kamera Zugang</string>
     <!--Author-->
     <string name="author_contact_with_author">Contact with author</string>
 </resources>

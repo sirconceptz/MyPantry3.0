@@ -14,7 +14,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.hermanowicz.pantry.R;
 import com.hermanowicz.pantry.dao.db.product.Product;
-import com.hermanowicz.pantry.model.Database;
+import com.hermanowicz.pantry.model.DatabaseMode;
 import com.hermanowicz.pantry.util.CategorySpinnerListener;
 import com.hermanowicz.pantry.util.DatePickerUtil;
 import com.hermanowicz.pantry.util.StorageLocationListener;
@@ -167,7 +167,7 @@ public class EditProductViewModel extends ViewModel {
             int day
     ) {
         month++;
-        expirationDate = year + "." + month + "." + day;
+        expirationDate = useCase.getDateInFormatToShow(day, month, year);
     }
 
     public void onProductionDateChanged(
@@ -176,7 +176,7 @@ public class EditProductViewModel extends ViewModel {
             int day
     ) {
         month++;
-        productionDate = year + "." + month + "." + day;
+        productionDate = useCase.getDateInFormatToShow(day, month, year);
     }
 
     private void clearFields() {
@@ -248,7 +248,7 @@ public class EditProductViewModel extends ViewModel {
         this.productArrayList = productArrayList;
     }
 
-    public void setDatabaseMode(Database databaseMode) {
+    public void setDatabaseMode(DatabaseMode databaseMode) {
         useCase.setDatabaseMode(databaseMode);
     }
 }

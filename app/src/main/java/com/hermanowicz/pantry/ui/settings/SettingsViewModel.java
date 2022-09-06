@@ -121,7 +121,7 @@ public class SettingsViewModel extends ViewModel implements PricingListener {
         useCase.clearStorageLocationsDb();
     }
 
-    public void onClickImportDb() {
+    public void onClickImportLocalDatabaseToCloud() {
         useCase.importLocalDataToCloud();
     }
 }

@@ -2,7 +2,6 @@ package com.hermanowicz.pantry.ui.print_qr_codes;
 
 import android.os.Bundle;
 
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.hermanowicz.pantry.dao.db.product.Product;
@@ -32,26 +31,22 @@ public class PrintQRCodesViewModel extends ViewModel {
         this.arguments = arguments;
     }
 
-    public void generateQRCodes() {
+    public void getProductsArrayListFromArguments() {
         if(arguments != null){
             ArrayList<Product> productArrayList =
                     arguments.getParcelableArrayList("productArrayList");
             useCase.setProductArrayList(productArrayList);
-            useCase.printQRCodes();
         }
     }
 
     public void permissionGranted() {
-        generateQRCodes();
+        getProductsArrayListFromArguments();
+        useCase.createPdfWithQRCodes();
         String pdfFileName = useCase.getPdfFileName();
         if(useCase.getRequestedActionType().equals("PRINT_QR_CODES"))
             viewActionsListener.openPdfFile(pdfFileName);
         else if(useCase.getRequestedActionType().equals("SEND_EMAIL_QR_CODES"))
             viewActionsListener.sendPdfWithQRCodesByEmail(pdfFileName);
-    }
-
-    public String getPermissionType() {
-        return useCase.getPermissionType();
     }
 
     public void setRequestedPrintQRCodesAction() {

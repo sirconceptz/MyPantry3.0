@@ -6,7 +6,7 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="author_social_media">75dp</dimen>
     <dimen name="button_sides_margin">8dp</dimen>
-    <dimen name="button_filter_bottom_padding">100dp</dimen>
+    <dimen name="button_bottom_padding">150dp</dimen>
     <dimen name="divider_margin">5dp</dimen>
     <dimen name="divider_sides_margin">4dp</dimen>
     <dimen name="edittext_sides_margin">8dp</dimen>

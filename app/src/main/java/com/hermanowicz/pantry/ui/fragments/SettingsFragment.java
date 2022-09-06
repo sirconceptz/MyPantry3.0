@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
@@ -134,12 +135,12 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Pricin
             return false;
         });
         importDb.setOnPreferenceClickListener(preference -> {
-            settingsViewModel.onClickImportDb();
+            settingsViewModel.onClickImportLocalDatabaseToCloud();
             return false;
         });
     }
 
-    private void showLoginAndRegisterForm() {
+    public void showLoginAndRegisterForm() {
         List<AuthUI.IdpConfig> providers = Collections.singletonList(
                 new AuthUI.IdpConfig.EmailBuilder().build());
         Intent signInIntent = AuthUI.getInstance()
@@ -147,6 +148,21 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Pricin
                 .setAvailableProviders(providers)
                 .build();
         signInLauncher.launch(signInIntent);
+    }
+
+    @Override
+    public void showDialogClearProductDb() {
+
+    }
+
+    @Override
+    public void showDialogClearOwnCategoryDb() {
+
+    }
+
+    @Override
+    public void showDialogClearStorageLocationDb() {
+
     }
 
     private final ActivityResultLauncher<Intent> signInLauncher = registerForActivityResult(
@@ -159,7 +175,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Pricin
             activeUser.setSummary(settingsViewModel.getActiveUserEmail());
     }
 
-    private void initPremiumPurchase() {
+    public void initPremiumPurchase() {
         settingsViewModel.initPremiumPurchase(requireActivity());
         activeUser.setEnabled(true);
     }
@@ -193,5 +209,82 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Pricin
     @Override
     public void showInfoForPremiumUserOnly() {
         Toast.makeText(getContext(), getString(R.string.error_for_premium_users_only), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showDialogBackupProductDb() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
+        builder.setTitle(getString(R.string.general_permission_required_title))
+                .setMessage(getString(R.string.general_permission_required_message))
+                .setPositiveButton(getString(android.R.string.ok), (dialog, click) ->
+                        settingsViewModel.onClickBackupProductDatabase())
+                .setNegativeButton(getString(R.string.general_no_thanks), (dialog, click) -> dialog.cancel())
+                .show();
+    }
+
+    @Override
+    public void showDialogRestoreProductDb() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
+        builder.setTitle(getString(R.string.settings_restore_product_database))
+                .setMessage(getString(R.string.statement_restore_database))
+                .setPositiveButton(getString(android.R.string.ok), (dialog, click) ->
+                        settingsViewModel.onClickRestoreProductDatabase())
+                .setNegativeButton(getString(R.string.general_no_thanks), (dialog, click) -> dialog.cancel())
+                .show();
+    }
+
+    @Override
+    public void showDialogBackupOwnCategoriesDb() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
+        builder.setTitle(getString(R.string.settings_backup_category_database))
+                .setMessage(getString(R.string.statement_backup_database))
+                .setPositiveButton(getString(android.R.string.ok), (dialog, click) ->
+                        settingsViewModel.onClickBackupCategoryDatabase())
+                .setNegativeButton(getString(R.string.general_no_thanks), (dialog, click) -> dialog.cancel())
+                .show();
+    }
+
+    @Override
+    public void showDialogRestoreOwnCategoriesDb() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
+        builder.setTitle(getString(R.string.settings_restore_category_database))
+                .setMessage(getString(R.string.statement_restore_database))
+                .setPositiveButton(getString(android.R.string.ok), (dialog, click) ->
+                        settingsViewModel.onClickRestoreCategoryDatabase())
+                .setNegativeButton(getString(R.string.general_no_thanks), (dialog, click) -> dialog.cancel())
+                .show();
+    }
+
+    @Override
+    public void showDialogBackupStorageLocationDb() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
+        builder.setTitle(getString(R.string.settings_backup_storage_location_database))
+                .setMessage(getString(R.string.statement_backup_database))
+                .setPositiveButton(getString(android.R.string.ok), (dialog, click) ->
+                        settingsViewModel.onClickBackupStorageLocationDatabase())
+                .setNegativeButton(getString(R.string.general_no_thanks), (dialog, click) -> dialog.cancel())
+                .show();
+    }
+
+    @Override
+    public void showDialogRestoreStorageLocationDb() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
+        builder.setTitle(getString(R.string.settings_restore_storage_location_database))
+                .setMessage(getString(R.string.statement_restore_database))
+                .setPositiveButton(getString(android.R.string.ok), (dialog, click) ->
+                        settingsViewModel.onClickRestoreStorageLocationDatabase())
+                .setNegativeButton(getString(R.string.general_no_thanks), (dialog, click) -> dialog.cancel())
+                .show();
+    }
+
+    @Override
+    public void showDialogImportLocalDatabaseToCloud() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
+        builder.setTitle(getString(R.string.settings_import_local_db_to_cloud))
+                .setMessage(getString(R.string.statement_import_local_db_to_cloud_warning))
+                .setPositiveButton(getString(android.R.string.ok), (dialog, click) ->
+                        settingsViewModel.onClickImportLocalDatabaseToCloud())
+                .setNegativeButton(getString(R.string.general_no_thanks), (dialog, click) -> dialog.cancel())
+                .show();
     }
 }

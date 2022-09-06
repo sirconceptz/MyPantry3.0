@@ -6,17 +6,17 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Objects;
 
-public class Database {
+public class DatabaseMode {
 
-    private DatabaseMode databaseMode = DatabaseMode.LOCAL;
+    private Mode databaseMode = Mode.LOCAL;
 
-    public enum DatabaseMode {LOCAL, ONLINE}
+    public enum Mode {LOCAL, ONLINE}
 
-    public DatabaseMode getDatabaseMode() {
+    public Mode getDatabaseMode() {
         return databaseMode;
     }
 
-    public void setDatabaseMode(DatabaseMode databaseMode) {
+    public void setDatabaseMode(Mode databaseMode) {
         this.databaseMode = databaseMode;
     }
 

@@ -1,6 +1,7 @@
 package com.hermanowicz.pantry.repository;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.util.Log;
 
 import androidx.databinding.ObservableField;
@@ -11,7 +12,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.hermanowicz.pantry.dao.db.product.Product;
 import com.hermanowicz.pantry.dao.db.product.ProductDao;
 import com.hermanowicz.pantry.dao.db.product.ProductDb;
-import com.hermanowicz.pantry.model.Database;
+import com.hermanowicz.pantry.model.DatabaseMode;
+import com.hermanowicz.pantry.model.GroupProduct;
 import com.hermanowicz.pantry.util.InternetConnection;
 
 import java.util.ArrayList;
@@ -27,6 +29,7 @@ public class ProductRepositoryImpl implements ProductRepository {
     private LiveData<List<Product>> onlineProductList;
     private ArrayList<Product> productListToInsert = new ArrayList<>();
     private final InternetConnection internetConnection;
+    private List<GroupProduct> groupProductList = new ArrayList<>();
 
     public ProductRepositoryImpl(Context context) {
         ProductDb productDb = ProductDb.getInstance(context);
@@ -36,10 +39,10 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
-    public LiveData<List<Product>> getAllProducts(Database databaseMode) {
-        if (databaseMode.getDatabaseMode() == Database.DatabaseMode.ONLINE)
+    public LiveData<List<Product>> getAllProducts(DatabaseMode databaseMode) {
+        if (databaseMode.getDatabaseMode() == DatabaseMode.Mode.ONLINE)
             return onlineProductList;
-        else if (databaseMode.getDatabaseMode() == Database.DatabaseMode.LOCAL)
+        else if (databaseMode.getDatabaseMode() == DatabaseMode.Mode.LOCAL)
             return localProductsList;
         else
             return new MutableLiveData<>();
@@ -78,48 +81,93 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
-    public void insert(List<Product> productList, Database databaseMode) {
+    public void addOfflinePhoto(String photoDescription, ArrayList<Product> productArrayList, String fileName) {
+        for(Product product : productArrayList) {
+            product.setPhotoName(fileName);
+            product.setPhotoDescription(photoDescription);
+        }
+        productDao.update(productArrayList);
+    }
+
+    @Override
+    public void addOnlinePhoto(Bitmap bitmap, String photoDescription, ArrayList<Product> productArrayList, String fileName) {
+        //todo: implement
+    }
+
+    @Override
+    public void deleteOfflinePhoto(ArrayList<Product> productArrayList) {
+        //todo: implement
+    }
+
+    @Override
+    public void deleteOnlinePhoto(ArrayList<Product> productArrayList) {
+        //todo: implement
+    }
+
+    @Override
+    public LiveData<List<Product>> getAllLocalProducts() {
+        return productDao.getAllProducts();
+    }
+
+    @Override
+    public String[] getGroupProductNames(ArrayList<Product> productArrayList) {
+        return GroupProduct.getGroupProductNamesArray(productArrayList);
+    }
+
+    @Override
+    public List<GroupProduct> getGroupProductListFromProductList(ArrayList<Product> productArrayList) {
+        groupProductList = GroupProduct.getGroupProducts(productArrayList);
+        return groupProductList;
+    }
+
+    @Override
+    public List<GroupProduct> getGroupProductList() {
+        return groupProductList;
+    }
+
+    @Override
+    public void insert(List<Product> productList, DatabaseMode databaseMode) {
         productListToInsert = new ArrayList<>(productList);
         Executor executor = Executors.newSingleThreadExecutor();
         executor.execute(() -> insertToSelectedDatabase(productList, databaseMode));
     }
 
     @Override
-    public void update(List<Product> productList, Database databaseMode) {
+    public void update(List<Product> productList, DatabaseMode databaseMode) {
         Executor executor = Executors.newSingleThreadExecutor();
         executor.execute(() -> updateToSelectedDatabase(productList, databaseMode));
     }
 
     @Override
-    public void delete(List<Product> productList, Database databaseMode) {
+    public void delete(List<Product> productList, DatabaseMode databaseMode) {
         Executor executor = Executors.newSingleThreadExecutor();
         executor.execute(() -> deleteToSelectedDatabase(productList, databaseMode));
     }
 
     @Override
-    public void deleteAll(Database databaseMode) {
+    public void deleteAll(DatabaseMode databaseMode) {
         Executor executor = Executors.newSingleThreadExecutor();
         executor.execute(() -> deleteAllToSelectedDatabase(databaseMode));
     }
 
-    private void deleteAllToSelectedDatabase(Database databaseMode) {
-        if (databaseMode.getDatabaseMode() == Database.DatabaseMode.LOCAL)
+    private void deleteAllToSelectedDatabase(DatabaseMode databaseMode) {
+        if (databaseMode.getDatabaseMode() == DatabaseMode.Mode.LOCAL)
             productDao.deleteAll();
-        else if (databaseMode.getDatabaseMode() == Database.DatabaseMode.ONLINE)
+        else if (databaseMode.getDatabaseMode() == DatabaseMode.Mode.ONLINE)
             deleteAllOnlineProducts();
     }
 
-    private void insertToSelectedDatabase(List<Product> productList, Database databaseMode) {
-        if (databaseMode.getDatabaseMode() == Database.DatabaseMode.LOCAL)
+    private void insertToSelectedDatabase(List<Product> productList, DatabaseMode databaseMode) {
+        if (databaseMode.getDatabaseMode() == DatabaseMode.Mode.LOCAL)
             insertLocalProducts(productList);
-        else if (databaseMode.getDatabaseMode() == Database.DatabaseMode.ONLINE)
+        else if (databaseMode.getDatabaseMode() == DatabaseMode.Mode.ONLINE)
             insertOnlineProductList(productList);
     }
 
-    private void updateToSelectedDatabase(List<Product> productList, Database databaseMode) {
-        if (databaseMode.getDatabaseMode() == Database.DatabaseMode.LOCAL)
+    private void updateToSelectedDatabase(List<Product> productList, DatabaseMode databaseMode) {
+        if (databaseMode.getDatabaseMode() == DatabaseMode.Mode.LOCAL)
             updateLocalProducts(productList);
-        else if (databaseMode.getDatabaseMode() == Database.DatabaseMode.ONLINE)
+        else if (databaseMode.getDatabaseMode() == DatabaseMode.Mode.ONLINE)
             updateOnlineProducts(productList);
     }
 
@@ -127,10 +175,10 @@ public class ProductRepositoryImpl implements ProductRepository {
         productDao.update(productList);
     }
 
-    private void deleteToSelectedDatabase(List<Product> productList, Database databaseMode) {
-        if (databaseMode.getDatabaseMode() == Database.DatabaseMode.LOCAL)
+    private void deleteToSelectedDatabase(List<Product> productList, DatabaseMode databaseMode) {
+        if (databaseMode.getDatabaseMode() == DatabaseMode.Mode.LOCAL)
             deleteLocalProducts(productList);
-        else if (databaseMode.getDatabaseMode() == Database.DatabaseMode.ONLINE)
+        else if (databaseMode.getDatabaseMode() == DatabaseMode.Mode.ONLINE)
             deleteOnlineProducts(productList);
     }
 
@@ -143,7 +191,7 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     private void insertOnlineProductList(List<Product> productList) {
-        DatabaseReference ref = Database.getOnlineDatabaseReference("products");
+        DatabaseReference ref = DatabaseMode.getOnlineDatabaseReference("products");
         insertOnlineProductList(productList, ref);
     }
 
@@ -160,21 +208,21 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     private void updateOnlineProducts(List<Product> productList) {
-        DatabaseReference ref = Database.getOnlineDatabaseReference("products");
+        DatabaseReference ref = DatabaseMode.getOnlineDatabaseReference("products");
         for(Product product : productList) {
             ref.child(String.valueOf(product.getId())).setValue(product);
         }
     }
 
     private void deleteOnlineProducts(List<Product> productList) {
-        DatabaseReference ref = Database.getOnlineDatabaseReference("products");
+        DatabaseReference ref = DatabaseMode.getOnlineDatabaseReference("products");
         for(Product product : productList) {
             ref.child(String.valueOf(product.getId())).removeValue();
         }
     }
 
     private void deleteAllOnlineProducts() {
-        DatabaseReference ref = Database.getOnlineDatabaseReference("products");
+        DatabaseReference ref = DatabaseMode.getOnlineDatabaseReference("products");
         ref.removeValue();
     }
 

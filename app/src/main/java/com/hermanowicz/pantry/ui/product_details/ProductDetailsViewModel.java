@@ -10,9 +10,10 @@ import androidx.lifecycle.ViewModel;
 
 import com.hermanowicz.pantry.R;
 import com.hermanowicz.pantry.dao.db.product.Product;
-import com.hermanowicz.pantry.model.Database;
+import com.hermanowicz.pantry.model.DatabaseMode;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -67,12 +68,18 @@ public class ProductDetailsViewModel extends ViewModel {
         Resources resources = useCase.getResources();
         String yes = resources.getString(R.string.general_yes);
         String no = resources.getString(R.string.general_no);
+        String expirationDateInShowFormat = "", productionDateInShowFormat = "";
+
+        if(!Objects.equals(product.getExpirationDate(), ""))
+            expirationDateInShowFormat = useCase.getDateInFormatToShow(product.getExpirationDate());
+        if(!Objects.equals(product.getProductionDate(), ""))
+            productionDateInShowFormat = useCase.getDateInFormatToShow(product.getProductionDate());
 
         productName.setValue(product.getName());
         mainCategory.setValue(product.getMainCategory());
         detailCategory.setValue(product.getDetailCategory());
-        expirationDate.setValue(product.getExpirationDate());
-        productionDate.setValue(product.getProductionDate());
+        expirationDate.setValue(expirationDateInShowFormat);
+        productionDate.setValue(productionDateInShowFormat);
         storageLocation.setValue(product.getStorageLocation());
         quantity.setValue(String.valueOf(productListSize));
         composition.setValue(product.getComposition());
@@ -133,10 +140,10 @@ public class ProductDetailsViewModel extends ViewModel {
     }
 
     public void onClickDeleteProduct() {
-
+        useCase.deleteProducts(productArrayList);
     }
 
-    public void setDatabaseMode(Database databaseMode) {
+    public void setDatabaseMode(DatabaseMode databaseMode) {
         useCase.setDatabaseMode(databaseMode);
     }
 

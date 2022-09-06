@@ -16,7 +16,7 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingBottom="@dimen/button_filter_bottom_padding">
+            android:paddingBottom="@dimen/button_bottom_padding">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -532,17 +532,17 @@
         </ScrollView>
 
         <Button
-            android:id="@+id/button_printQRCodes"
+            android:id="@+id/button_editProduct"
             android:layout_height="wrap_content"
             android:layout_width="0dp"
             android:layout_marginStart="@dimen/button_sides_margin"
             android:layout_marginEnd="@dimen/button_sides_margin"
-            android:text="@string/button_print_qr_codes"
+            android:text="@string/button_edit_product"
             style="@style/CustomButton"
             app:layout_constraintWidth_default="percent"
             app:layout_constraintWidth_percent=".45"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/button_editProduct" />
+            app:layout_constraintBottom_toTopOf="@id/button_printQRCodes" />
 
         <Button
             android:id="@+id/button_addPhoto"
@@ -555,31 +555,42 @@
             app:layout_constraintWidth_default="percent"
             app:layout_constraintWidth_percent=".45"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/button_deleteProduct" />
+            app:layout_constraintBottom_toTopOf="@id/button_addBarcode" />
 
         <Button
-            android:id="@+id/button_editProduct"
+            android:id="@+id/button_printQRCodes"
             android:layout_height="wrap_content"
             android:layout_width="0dp"
             android:layout_marginStart="@dimen/button_sides_margin"
             android:layout_marginEnd="@dimen/button_sides_margin"
-            android:text="@string/button_edit_product"
+            android:text="@string/button_print_qr_codes"
             style="@style/CustomButton"
             app:layout_constraintWidth_default="percent"
             app:layout_constraintWidth_percent=".45"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintBottom_toTopOf="@id/button_deleteProduct" />
 
         <Button
-            android:id="@+id/button_deleteProduct"
+            android:id="@+id/button_addBarcode"
             android:layout_height="wrap_content"
             android:layout_width="0dp"
             android:layout_marginStart="@dimen/button_sides_margin"
             android:layout_marginEnd="@dimen/button_sides_margin"
-            android:text="@string/button_delete_product"
+            android:text="@string/button_add_barcode"
             style="@style/CustomButton"
             app:layout_constraintWidth_default="percent"
             app:layout_constraintWidth_percent=".45"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/button_deleteProduct" />
+
+        <Button
+            android:id="@+id/button_deleteProduct"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_marginStart="@dimen/button_sides_margin"
+            android:layout_marginEnd="@dimen/button_sides_margin"
+            android:text="@string/button_delete_product"
+            style="@style/CustomButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" />
 

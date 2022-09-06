@@ -5,15 +5,11 @@ import com.hermanowicz.pantry.dao.db.product.Product;
 import java.util.ArrayList;
 
 public interface PrintQRCodesUseCase {
-    void printQRCodes();
-
-    void sendPdfWithQRCodesByEmail();
+    void createPdfWithQRCodes();
 
     String getPdfFileName();
 
     void setProductArrayList(ArrayList<Product> productArrayList);
-
-    String getPermissionType();
 
     void setRequestedActionType(String requestedActionType);
 

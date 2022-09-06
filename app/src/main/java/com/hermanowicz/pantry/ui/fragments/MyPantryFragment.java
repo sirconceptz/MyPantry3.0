@@ -19,9 +19,10 @@ import com.hermanowicz.pantry.R;
 import com.hermanowicz.pantry.dao.db.product.Product;
 import com.hermanowicz.pantry.databinding.FragmentMyPantryBinding;
 import com.hermanowicz.pantry.interfaces.AvailableDataListener;
+import com.hermanowicz.pantry.interfaces.FilteredDataListener;
 import com.hermanowicz.pantry.model.GroupProduct;
 import com.hermanowicz.pantry.ui.database_mode.DatabaseModeViewModel;
-import com.hermanowicz.pantry.ui.my_pantry.MyPantryViewModel;
+import com.hermanowicz.pantry.ui.filter_product.FilterProductViewModel;
 import com.hermanowicz.pantry.ui.product.ProductViewModel;
 import com.hermanowicz.pantry.util.ProductsAdapter;
 import com.hermanowicz.pantry.util.RecyclerClickListener;
@@ -32,10 +33,10 @@ import java.util.List;
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
-public class MyPantryFragment extends Fragment implements AvailableDataListener {
+public class MyPantryFragment extends Fragment implements AvailableDataListener, FilteredDataListener {
 
     private FragmentMyPantryBinding binding;
-    private MyPantryViewModel myPantryViewModel;
+    private FilterProductViewModel filterProductViewModel;
     private ProductViewModel productViewModel;
     private DatabaseModeViewModel databaseModeViewModel;
     private View view;
@@ -51,16 +52,22 @@ public class MyPantryFragment extends Fragment implements AvailableDataListener 
         return view;
     }
 
+    private void getArgumentsAndShowData() {
+    }
+
     private void initView(@NonNull LayoutInflater inflater, ViewGroup container) {
-        myPantryViewModel = new ViewModelProvider(this).get(MyPantryViewModel.class);
+        filterProductViewModel = new ViewModelProvider(this).get(FilterProductViewModel.class);
         productViewModel = new ViewModelProvider(this).get(ProductViewModel.class);
         databaseModeViewModel = new ViewModelProvider(this).get(DatabaseModeViewModel.class);
+
+        productViewModel.setFilterModelFromArguments(getArguments());
+        productViewModel.setFilteredDataListener(this);
         productViewModel.setAvailableDataListener(this);
         productViewModel.setDefaultDatabaseMode(databaseModeViewModel.getDatabaseModeFromSettings());
 
         binding = FragmentMyPantryBinding.inflate(inflater, container, false);
+
         view = binding.getRoot();
-        binding.setViewModel(myPantryViewModel);
     }
 
     private void setupFloatingActionButtons() {
@@ -116,7 +123,12 @@ public class MyPantryFragment extends Fragment implements AvailableDataListener 
     }
 
     public void onClickFilterProduct() {
-        Navigation.findNavController(view).navigate(R.id.action_nav_my_pantry_to_nav_filter_product);
+        List<Product> productList = productViewModel.getAllProductList().getValue();
+        assert productList != null;
+        ArrayList<Product> productArrayList = new ArrayList<>(productList);
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList("productArrayList", productArrayList);
+        Navigation.findNavController(view).navigate(R.id.action_nav_my_pantry_to_nav_filter_product, bundle);
     }
 
     @Override
@@ -124,6 +136,12 @@ public class MyPantryFragment extends Fragment implements AvailableDataListener 
         databaseModeViewModel.getDatabaseMode().observe(getViewLifecycleOwner(),
                 productViewModel::updateDataForSelectedDatabase);
         productViewModel.getAllProductList().observe(getViewLifecycleOwner(),
+            productViewModel::setFilteredProductList);
+    }
+
+    @Override
+    public void observeFilteredData() {
+        productViewModel.getFilteredProductsLiveData().observe(getViewLifecycleOwner(),
                 productViewModel::convertProductListToGroupProductList);
         productViewModel.getAllGroupProductList().observe(getViewLifecycleOwner(),
                 this::setDataRecyclerViewAdapter);

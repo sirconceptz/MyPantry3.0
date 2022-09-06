@@ -25,6 +25,7 @@
     <string name="general_barcode">čárový kód</string>
     <string name="general_permission_required_title">Je vyžadováno povolení!</string>
     <string name="general_permission_required_message">K dokončení úkolu je vyžadováno povolení. Bez něj není možné tuto funkci použít.</string>
+    <string name="general_choose">Vybrat</string>
     <!--Title-->
     <string name="title_main_pantry">Moje spíž</string>
     <string name="title_scan_product">Naskenujte kód produktu</string>
@@ -53,6 +54,10 @@
     <string name="button_skip">Přeskočit</string>
     <string name="button_send_pdf_via_email">Pošlete soubor PDF e-mailem</string>
     <string name="button_add_photo">Přidat fotku</string>
+    <string name="button_take_photo">Vyfotit</string>
+    <string name="button_save_photo">Uložit fotku</string>
+    <string name="button_delete_photo">Smazat fotku</string>
+    <string name="button_add_barcode">Přidejte čárový kód</string>
     <!--Product features-->
     <string name="product_features_with_sugar">+Cukr</string>
     <string name="product_features_with_salt">+Sůl</string>
@@ -64,6 +69,18 @@
     <!--Statements-->
     <string name="statement_no_storage_locations">Nebyla přidána žádná místa úložiště. Přidejte nové tlačítko v horní části obrazovky.</string>
     <string name="statement_no_categories">Nebyly přidány žádné kategorie. Přidejte nové tlačítko v horní části obrazovky.</string>
+    <string name="statement_clear_database_warning">Chcete vymazat databázi? Všechny záznamy budou odstraněny a operace je nevratná.</string>
+    <string name="statement_restore_database">Chcete importovat databáze z externího souboru? To bude mít za následek ztrátu produktů aktuálně přidaných do aplikace.</string>
+    <string name="statement_backup_database">Chcete exportovat databáze do externího souboru?</string>
+    <string name="statement_import_local_db_to_cloud_warning">Importujte databázi produktů ze zařízení do cloudu (na internetový účet). AKTUÁLNĚ ULOŽENÁ DATA V CLOUDU BUDOU SMAŽENA A NAHRAZENA TELEFONNÍMI PRODUKTY.</string>
+    <string name="statement_choose_product_to_copy">Čárový kód byl přidán k následujícím produktům. Ze seznamu vyberte produkt, který chcete přidat.</string>
+    <!--AddPhotoActivity-->
+    <string name="products_photo_photo_description">Popis fotografie</string>
+    <string name="products_photo_take_photo_of_product">Vyfoťte produkt</string>
+    <string name="products_photo_invalid_photo_description">Neplatný popis fotografie</string>
+    <string name="products_photo_add_photo_successful">Fotografie byla přidána</string>
+    <string name="products_photo_add_photo_not_successful">Fotografie nebyla přidána</string>
+    <string name="products_photo_delete_photo_successful">Fotografie byla smazána</string>
     <!--Product-->
     <string name="product_name">Název</string>
     <string name="product_quantity">Množství</string>
@@ -197,14 +214,14 @@
     <string name="settings_notifications_email">Oznámení prostřednictvím e-mailu</string>
     <string name="settings_give_email_adress">E-mailová adresa pro zasílání upozornění</string>
     <string name="settings_how_many_days_before_the_expiration_date_send_a_notification">Kolik dní před expirací?</string>
-    <string name="settings_import_product_database">Importujte databázi produktů</string>
+    <string name="settings_restore_product_database">Importujte databázi produktů</string>
     <string name="settings_export_product_database">Exportujte databázi produktů</string>
     <string name="settings_clear_product_database">Vymazat databázi produktů</string>
-    <string name="settings_import_category_database">Importujte databázi kategorií</string>
-    <string name="settings_export_category_database">Exportujte databázi kategorií</string>
+    <string name="settings_restore_category_database">Importujte databázi kategorií</string>
+    <string name="settings_backup_category_database">Exportujte databázi kategorií</string>
     <string name="settings_clear_category_database">Vymazat databázi kategorií</string>
-    <string name="settings_import_storage_location_database">Importujte databázi umístění úložiště</string>
-    <string name="settings_export_storage_location_database">Exportujte databázi umístění úložiště</string>
+    <string name="settings_restore_storage_location_database">Importujte databázi umístění úložiště</string>
+    <string name="settings_backup_storage_location_database">Exportujte databázi umístění úložiště</string>
     <string name="settings_clear_storage_location_database">Vymazat databázi umístění úložiště</string>
     <string name="settings_database_backup">Zálohování databáze</string>
     <string name="settings_version">Verze</string>
@@ -213,7 +230,7 @@
     <string name="settings_database_mode">Režim databáze produktů</string>
     <string name="settings_qr_code_size_big">Velký</string>
     <string name="settings_qr_code_size_small">Malý</string>
-    <string name="settings_import_db">Import databáze z telefonu do cloudu</string>
+    <string name="settings_import_local_db_to_cloud">Import databáze z telefonu do cloudu</string>
     <string name="settings_choose_file_to_restore">Vyberte databázový soubor, který chcete obnovit</string>
     <string-array name="settings_camera_to_scan">
         <item>Zadní kamera</item>
@@ -241,6 +258,7 @@
     <string name="error_for_premium_users_only">Funkce pouze pro prémiové uživatele</string>
     <string name="error_billing_client_not_ready">Funkce platby momentálně není k dispozici</string>
     <string name="error_incorrect_barcode_value">Neplatný čárový kód</string>
+    <string name="error_no_camera_access">Žádný přístup k fotoaparátu</string>
     <!--Author-->
     <string name="author_contact_with_author">Kontakt s autorem</string>
 </resources>

@@ -1,5 +1,6 @@
 package com.hermanowicz.pantry.ui.product;
 
+import android.os.Bundle;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -16,7 +17,9 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.hermanowicz.pantry.dao.db.product.Product;
 import com.hermanowicz.pantry.interfaces.AvailableDataListener;
-import com.hermanowicz.pantry.model.Database;
+import com.hermanowicz.pantry.interfaces.FilteredDataListener;
+import com.hermanowicz.pantry.model.DatabaseMode;
+import com.hermanowicz.pantry.model.FilterModel;
 import com.hermanowicz.pantry.model.GroupProduct;
 
 import java.util.ArrayList;
@@ -44,6 +47,8 @@ public class ProductViewModel extends ViewModel {
     private final MutableLiveData<List<GroupProduct>> groupProductList = new MutableLiveData<>();
     private final CompositeDisposable disposable = new CompositeDisposable();
     private AvailableDataListener availableDataListener;
+    private FilteredDataListener filteredDataListener;
+    private LiveData<List<Product>> filteredProductsLiveData;
 
     @Inject
     public ProductViewModel(ProductUseCaseImpl productUseCase) {
@@ -53,6 +58,11 @@ public class ProductViewModel extends ViewModel {
 
     public GroupProduct getGroupProduct(int position) {
         return Objects.requireNonNull(groupProductList.getValue()).get(position);
+    }
+
+    public void setFilteredProductList(List<Product> productList) {
+        filteredProductsLiveData = useCase.getFilteredProductList(productList);
+        filteredDataListener.observeFilteredData();
     }
 
     public void convertProductListToGroupProductList(List<Product> productList) {
@@ -127,8 +137,9 @@ public class ProductViewModel extends ViewModel {
         };
     }
 
-    public void updateDataForSelectedDatabase(@NonNull Database databaseMode) {
-        productListLiveData = useCase.getAllProducts(databaseMode);
+    public void updateDataForSelectedDatabase(@NonNull DatabaseMode databaseMode) {
+        useCase.setDatabaseMode(databaseMode);
+        productListLiveData = useCase.getAllProducts();
     }
 
     public void clearDisposable() {
@@ -159,10 +170,30 @@ public class ProductViewModel extends ViewModel {
         return useCase.checkIsInternetConnection();
     }
 
-    public void setDefaultDatabaseMode(Database databaseModeFromSettings) {
-        if(databaseModeFromSettings.getDatabaseMode() == Database.DatabaseMode.LOCAL){
+    public void setDefaultDatabaseMode(DatabaseMode databaseModeFromSettings) {
+        if(databaseModeFromSettings.getDatabaseMode() == DatabaseMode.Mode.LOCAL){
             updateDataForSelectedDatabase(databaseModeFromSettings);
             availableDataListener.observeAvailableData();
         }
+    }
+
+    public void setFilterModel(FilterModel filterModel) {
+        useCase.setFilterModel(filterModel);
+    }
+
+    public void setFilterModelFromArguments(Bundle arguments) {
+        if(arguments != null) {
+            FilterModel filterModel = arguments.getParcelable("filterModel");
+            if(filterModel != null)
+                setFilterModel(filterModel);
+        }
+    }
+
+    public LiveData<List<Product>> getFilteredProductsLiveData() {
+        return filteredProductsLiveData;
+    }
+
+    public void setFilteredDataListener(FilteredDataListener filteredDataListener) {
+        this.filteredDataListener = filteredDataListener;
     }
 }

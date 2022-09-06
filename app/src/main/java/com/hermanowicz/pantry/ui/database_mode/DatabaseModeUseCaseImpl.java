@@ -2,7 +2,7 @@ package com.hermanowicz.pantry.ui.database_mode;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.hermanowicz.pantry.model.Database;
+import com.hermanowicz.pantry.model.DatabaseMode;
 import com.hermanowicz.pantry.repository.SharedPreferencesRepository;
 
 import javax.inject.Inject;
@@ -18,24 +18,24 @@ public class DatabaseModeUseCaseImpl implements DatabaseModeUseCase {
     }
 
     @Override
-    public MutableLiveData<Database> getDatabaseMode() {
+    public MutableLiveData<DatabaseMode> getDatabaseMode() {
         return repository.getDatabaseMode();
     }
 
     @Override
-    public void setDatabaseMode(Database databaseMode) {
+    public void setDatabaseMode(DatabaseMode databaseMode) {
         repository.setDatabaseMode(databaseMode);
     }
 
     @Override
-    public Database getDatabaseModeFromSettings() {
+    public DatabaseMode getDatabaseModeFromSettings() {
         return repository.getDatabaseModeFromSettings();
     }
 
     @Override
     public boolean isDatabaseChanged() {
-        Database oldDatabaseMode = getDatabaseMode().getValue();
-        Database newDatabaseMode = getDatabaseModeFromSettings();
+        DatabaseMode oldDatabaseMode = getDatabaseMode().getValue();
+        DatabaseMode newDatabaseMode = getDatabaseModeFromSettings();
         return oldDatabaseMode != newDatabaseMode;
     }
 }

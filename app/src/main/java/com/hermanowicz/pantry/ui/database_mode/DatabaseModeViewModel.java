@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.hermanowicz.pantry.model.Database;
+import com.hermanowicz.pantry.model.DatabaseMode;
 
 import javax.inject.Inject;
 
@@ -30,20 +30,20 @@ public class DatabaseModeViewModel extends ViewModel {
     };
 
     private void setDatabaseFromSettings() {
-        Database databaseMode = useCase.getDatabaseModeFromSettings();
+        DatabaseMode databaseMode = useCase.getDatabaseModeFromSettings();
         setDatabaseMode(databaseMode);
     }
 
-    private void setDatabaseMode(Database databaseMode) {
+    private void setDatabaseMode(DatabaseMode databaseMode) {
         if (useCase.isDatabaseChanged())
             useCase.setDatabaseMode(databaseMode);
     }
 
-    public LiveData<Database> getDatabaseMode() {
+    public LiveData<DatabaseMode> getDatabaseMode() {
         return useCase.getDatabaseMode();
     }
 
-    public Database getDatabaseModeFromSettings() {
+    public DatabaseMode getDatabaseModeFromSettings() {
         return useCase.getDatabaseModeFromSettings();
     }
 }

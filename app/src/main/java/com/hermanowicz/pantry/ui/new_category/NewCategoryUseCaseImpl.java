@@ -1,7 +1,7 @@
 package com.hermanowicz.pantry.ui.new_category;
 
 import com.hermanowicz.pantry.dao.db.category.Category;
-import com.hermanowicz.pantry.model.Database;
+import com.hermanowicz.pantry.model.DatabaseMode;
 import com.hermanowicz.pantry.repository.OwnCategoryRepository;
 
 import javax.inject.Inject;
@@ -9,7 +9,7 @@ import javax.inject.Inject;
 public class NewCategoryUseCaseImpl implements NewCategoryUseCase {
 
     private final OwnCategoryRepository repository;
-    private Database databaseMode;
+    private DatabaseMode databaseMode;
 
     @Inject
     public NewCategoryUseCaseImpl(OwnCategoryRepository ownCategoryRepository) {
@@ -22,7 +22,7 @@ public class NewCategoryUseCaseImpl implements NewCategoryUseCase {
     }
 
     @Override
-    public void setDatabaseMode(Database databaseMode) {
+    public void setDatabaseMode(DatabaseMode databaseMode) {
         this.databaseMode = databaseMode;
     }
 }

@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.hermanowicz.pantry.dao.db.category.Category;
-import com.hermanowicz.pantry.model.Database;
+import com.hermanowicz.pantry.model.DatabaseMode;
 import com.hermanowicz.pantry.repository.OwnCategoryRepository;
 
 import java.util.List;
@@ -21,7 +21,7 @@ public class CategoryUseCaseImpl implements CategoryUseCase {
     }
 
     @Override
-    public LiveData<List<Category>> getAllCategories(Database databaseMode) {
+    public LiveData<List<Category>> getAllCategories(DatabaseMode databaseMode) {
         return repository.getAllCategories(databaseMode);
     }
 

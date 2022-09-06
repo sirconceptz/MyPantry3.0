@@ -64,9 +64,7 @@ public class NewStorageLocationFragment extends Fragment {
     }
 
     private void navigateToStorageLocations() {
-        Bundle bundle = new Bundle();
-        Navigation.findNavController(view)
-                .navigate(R.id.nav_storage_locations);
+        Navigation.findNavController(view).navigate(R.id.nav_storage_locations);
     }
 
     @Override

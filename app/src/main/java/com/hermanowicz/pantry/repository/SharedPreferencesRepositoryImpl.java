@@ -6,14 +6,14 @@ import android.content.SharedPreferences;
 import androidx.lifecycle.MutableLiveData;
 import androidx.preference.PreferenceManager;
 
-import com.hermanowicz.pantry.model.Database;
+import com.hermanowicz.pantry.model.DatabaseMode;
 
 import java.util.Objects;
 
 public class SharedPreferencesRepositoryImpl implements SharedPreferencesRepository {
 
     private final SharedPreferences sharedPreferences;
-    private final MutableLiveData<Database> databaseModeMutableLiveData = new MutableLiveData<>();
+    private final MutableLiveData<DatabaseMode> databaseModeMutableLiveData = new MutableLiveData<>();
 
     public SharedPreferencesRepositoryImpl(Context context) {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
@@ -21,13 +21,13 @@ public class SharedPreferencesRepositoryImpl implements SharedPreferencesReposit
     }
 
     @Override
-    public Database getDatabaseModeFromSettings() {
+    public DatabaseMode getDatabaseModeFromSettings() {
         String databaseModeString = sharedPreferences.getString("DATABASE_MODE", "local");
-        Database databaseMode = new Database();
+        DatabaseMode databaseMode = new DatabaseMode();
         if (Objects.equals(databaseModeString, "online"))
-            databaseMode.setDatabaseMode(Database.DatabaseMode.ONLINE);
+            databaseMode.setDatabaseMode(DatabaseMode.Mode.ONLINE);
         else
-            databaseMode.setDatabaseMode(Database.DatabaseMode.LOCAL);
+            databaseMode.setDatabaseMode(DatabaseMode.Mode.LOCAL);
         return databaseMode;
     }
 
@@ -48,12 +48,12 @@ public class SharedPreferencesRepositoryImpl implements SharedPreferencesReposit
     }
 
     @Override
-    public MutableLiveData<Database> getDatabaseMode() {
+    public MutableLiveData<DatabaseMode> getDatabaseMode() {
         return databaseModeMutableLiveData;
     }
 
     @Override
-    public void setDatabaseMode(Database databaseMode) {
+    public void setDatabaseMode(DatabaseMode databaseMode) {
         databaseModeMutableLiveData.setValue(databaseMode);
     }
 }

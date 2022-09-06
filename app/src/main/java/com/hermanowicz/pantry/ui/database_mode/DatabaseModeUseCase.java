@@ -2,14 +2,14 @@ package com.hermanowicz.pantry.ui.database_mode;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.hermanowicz.pantry.model.Database;
+import com.hermanowicz.pantry.model.DatabaseMode;
 
 public interface DatabaseModeUseCase {
-    MutableLiveData<Database> getDatabaseMode();
+    MutableLiveData<DatabaseMode> getDatabaseMode();
 
-    void setDatabaseMode(Database databaseMode);
+    void setDatabaseMode(DatabaseMode databaseMode);
 
-    Database getDatabaseModeFromSettings();
+    DatabaseMode getDatabaseModeFromSettings();
 
     boolean isDatabaseChanged();
 }

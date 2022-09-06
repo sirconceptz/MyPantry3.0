@@ -1,7 +1,7 @@
 package com.hermanowicz.pantry.ui.new_storage_location;
 
 import com.hermanowicz.pantry.dao.db.storagelocation.StorageLocation;
-import com.hermanowicz.pantry.model.Database;
+import com.hermanowicz.pantry.model.DatabaseMode;
 import com.hermanowicz.pantry.repository.StorageLocationRepository;
 
 import javax.inject.Inject;
@@ -9,7 +9,7 @@ import javax.inject.Inject;
 public class NewStorageLocationUseCaseImpl implements NewStorageLocationUseCase {
 
     private final StorageLocationRepository repository;
-    private Database databaseMode;
+    private DatabaseMode databaseMode;
 
     @Inject
     public NewStorageLocationUseCaseImpl(StorageLocationRepository storageLocationRepository) {
@@ -22,7 +22,7 @@ public class NewStorageLocationUseCaseImpl implements NewStorageLocationUseCase 
     }
 
     @Override
-    public void setDatabase(Database databaseMode) {
+    public void setDatabase(DatabaseMode databaseMode) {
         this.databaseMode = databaseMode;
     }
 }

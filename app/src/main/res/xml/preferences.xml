@@ -52,7 +52,7 @@
             android:selectable="true"
             android:enabled="true"
             android:key="@string/preferences_key_import_db"
-            android:title="@string/settings_import_db" />
+            android:title="@string/settings_import_local_db_to_cloud" />
 
         <ListPreference
             android:dialogTitle="@string/settings_which_camera_to_scan_products"
@@ -127,7 +127,7 @@
             android:selectable="true"
             android:enabled="true"
             android:key="@string/preferences_key_restore_product_db"
-            android:title="@string/settings_import_product_database" />
+            android:title="@string/settings_restore_product_database" />
 
         <Preference
             android:icon="@drawable/ic_backup"
@@ -148,14 +148,14 @@
             android:selectable="true"
             android:enabled="true"
             android:key="@string/preferences_key_restore_category_db"
-            android:title="@string/settings_import_category_database" />
+            android:title="@string/settings_restore_category_database" />
 
         <Preference
             android:icon="@drawable/ic_backup"
             android:selectable="true"
             android:enabled="true"
             android:key="@string/preferences_key_backup_category_db"
-            android:title="@string/settings_export_category_database" />
+            android:title="@string/settings_backup_category_database" />
 
         <Preference
             android:icon="@drawable/ic_clear_db"
@@ -169,14 +169,14 @@
             android:selectable="true"
             android:enabled="true"
             android:key="@string/preferences_key_restore_storage_location_db"
-            android:title="@string/settings_import_storage_location_database" />
+            android:title="@string/settings_restore_storage_location_database" />
 
         <Preference
             android:icon="@drawable/ic_backup"
             android:selectable="true"
             android:enabled="true"
             android:key="@string/preferences_key_backup_storage_location_db"
-            android:title="@string/settings_export_storage_location_database" />
+            android:title="@string/settings_backup_storage_location_database" />
 
         <Preference
             android:icon="@drawable/ic_clear_db"

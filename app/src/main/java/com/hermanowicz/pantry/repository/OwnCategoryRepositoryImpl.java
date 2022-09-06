@@ -9,7 +9,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.hermanowicz.pantry.dao.db.category.Category;
 import com.hermanowicz.pantry.dao.db.category.CategoryDao;
 import com.hermanowicz.pantry.dao.db.category.CategoryDb;
-import com.hermanowicz.pantry.model.Database;
+import com.hermanowicz.pantry.model.DatabaseMode;
 import com.hermanowicz.pantry.util.InternetConnection;
 
 import java.util.List;
@@ -33,10 +33,10 @@ public class OwnCategoryRepositoryImpl implements OwnCategoryRepository {
     }
 
     @Override
-    public LiveData<List<Category>> getAllCategories(Database databaseMode) {
-        if (databaseMode.getDatabaseMode() == Database.DatabaseMode.ONLINE)
+    public LiveData<List<Category>> getAllCategories(DatabaseMode databaseMode) {
+        if (databaseMode.getDatabaseMode() == DatabaseMode.Mode.ONLINE)
             return onlineCategoryList;
-        else if (databaseMode.getDatabaseMode() == Database.DatabaseMode.LOCAL)
+        else if (databaseMode.getDatabaseMode() == DatabaseMode.Mode.LOCAL)
             return localCategoryList;
         else
             return new MutableLiveData<>();
@@ -48,15 +48,15 @@ public class OwnCategoryRepositoryImpl implements OwnCategoryRepository {
     }
 
     @Override
-    public void insert(Category category, Database databaseMode) {
+    public void insert(Category category, DatabaseMode databaseMode) {
         Executor executor = Executors.newSingleThreadExecutor();
         executor.execute(() -> insertToSelectedDatabase(category, databaseMode));
     }
 
-    private void insertToSelectedDatabase(Category category, Database databaseMode) {
-        if (databaseMode.getDatabaseMode() == Database.DatabaseMode.LOCAL)
+    private void insertToSelectedDatabase(Category category, DatabaseMode databaseMode) {
+        if (databaseMode.getDatabaseMode() == DatabaseMode.Mode.LOCAL)
             insertLocalCategory(category);
-        else if (databaseMode.getDatabaseMode() == Database.DatabaseMode.ONLINE)
+        else if (databaseMode.getDatabaseMode() == DatabaseMode.Mode.ONLINE)
             insertOnlineCategory(category);
     }
 
@@ -65,20 +65,20 @@ public class OwnCategoryRepositoryImpl implements OwnCategoryRepository {
     }
 
     private void insertOnlineCategory(Category category) {
-        DatabaseReference dbRef = Database.getOnlineDatabaseReference("categories");
+        DatabaseReference dbRef = DatabaseMode.getOnlineDatabaseReference("categories");
         dbRef.child(String.valueOf(category.getId())).setValue(category);
     }
 
     @Override
-    public void update(Category category, Database databaseMode) {
+    public void update(Category category, DatabaseMode databaseMode) {
         Executor executor = Executors.newSingleThreadExecutor();
         executor.execute(() -> updateToSelectedDatabase(category, databaseMode));
     }
 
-    private void updateToSelectedDatabase(Category category, Database databaseMode) {
-        if (databaseMode.getDatabaseMode() == Database.DatabaseMode.LOCAL)
+    private void updateToSelectedDatabase(Category category, DatabaseMode databaseMode) {
+        if (databaseMode.getDatabaseMode() == DatabaseMode.Mode.LOCAL)
             updateLocalCategory(category);
-        else if (databaseMode.getDatabaseMode() == Database.DatabaseMode.ONLINE)
+        else if (databaseMode.getDatabaseMode() == DatabaseMode.Mode.ONLINE)
             insertOnlineCategory(category);
     }
 
@@ -87,15 +87,15 @@ public class OwnCategoryRepositoryImpl implements OwnCategoryRepository {
     }
 
     @Override
-    public void delete(Category category, Database databaseMode) {
+    public void delete(Category category, DatabaseMode databaseMode) {
         Executor executor = Executors.newSingleThreadExecutor();
         executor.execute(() -> deleteToSelectedDatabase(category, databaseMode));
     }
 
-    private void deleteToSelectedDatabase(Category category, Database databaseMode) {
-        if (databaseMode.getDatabaseMode() == Database.DatabaseMode.LOCAL)
+    private void deleteToSelectedDatabase(Category category, DatabaseMode databaseMode) {
+        if (databaseMode.getDatabaseMode() == DatabaseMode.Mode.LOCAL)
             deleteLocalCategory(category);
-        else if (databaseMode.getDatabaseMode() == Database.DatabaseMode.ONLINE)
+        else if (databaseMode.getDatabaseMode() == DatabaseMode.Mode.ONLINE)
             deleteOnlineCategory(category);
     }
 
@@ -104,20 +104,20 @@ public class OwnCategoryRepositoryImpl implements OwnCategoryRepository {
     }
 
     private void deleteOnlineCategory(Category category) {
-        DatabaseReference dbRef = Database.getOnlineDatabaseReference("categories");
+        DatabaseReference dbRef = DatabaseMode.getOnlineDatabaseReference("categories");
         dbRef.child(String.valueOf(category.getId())).removeValue();
     }
 
     @Override
-    public void deleteAll(Database databaseMode) {
+    public void deleteAll(DatabaseMode databaseMode) {
         Executor executor = Executors.newSingleThreadExecutor();
         executor.execute(() -> deleteAllToSelectedDatabase(databaseMode));
     }
 
-    private void deleteAllToSelectedDatabase(Database databaseMode) {
-        if (databaseMode.getDatabaseMode() == Database.DatabaseMode.LOCAL)
+    private void deleteAllToSelectedDatabase(DatabaseMode databaseMode) {
+        if (databaseMode.getDatabaseMode() == DatabaseMode.Mode.LOCAL)
             deleteAllLocalCategories();
-        else if (databaseMode.getDatabaseMode() == Database.DatabaseMode.ONLINE)
+        else if (databaseMode.getDatabaseMode() == DatabaseMode.Mode.ONLINE)
             deleteAllOnlineCategories();
     }
 
@@ -126,7 +126,7 @@ public class OwnCategoryRepositoryImpl implements OwnCategoryRepository {
     }
 
     private void deleteAllOnlineCategories() {
-        DatabaseReference dbRef = Database.getOnlineDatabaseReference("categories");
+        DatabaseReference dbRef = DatabaseMode.getOnlineDatabaseReference("categories");
         dbRef.removeValue();
     }
 
