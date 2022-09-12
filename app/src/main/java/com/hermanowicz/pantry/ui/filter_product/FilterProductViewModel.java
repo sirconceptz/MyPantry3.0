@@ -8,14 +8,11 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.hermanowicz.pantry.dao.db.product.Product;
-import com.hermanowicz.pantry.model.Filter;
 import com.hermanowicz.pantry.model.FilterModel;
 import com.hermanowicz.pantry.util.CategorySpinnerListener;
-import com.hermanowicz.pantry.util.DatePickerUtil;
+import com.hermanowicz.pantry.util.DateHelper;
 import com.hermanowicz.pantry.util.StorageLocationListener;
 
-import java.util.List;
 import java.util.Objects;
 
 import javax.inject.Inject;
@@ -81,13 +78,6 @@ public class FilterProductViewModel extends ViewModel {
         useCase = filterProductUseCase;
         storageLocations = useCase.getAllStorageLocationsNames();
         ownCategoriesNamesLiveData = useCase.getAllOwnCategoriesNames();
-    }
-
-    public void updateProductArrayList(List<Product> productArrayList){
-        //Filter filter = new Filter(productArrayList);
-        //useCase.setFilter(filter);
-        //LiveData<List<Product>> productListLiveData = new MutableLiveData<>(productArrayList);
-        //this.productListLiveData = useCase.getUpdatedProductList(productListLiveData);
     }
 
     public FilterModel getFilterModel() {
@@ -165,10 +155,10 @@ public class FilterProductViewModel extends ViewModel {
         productName.set("");
         mainCategory.setValue("");
         detailCategory.setValue("");
-        DatePickerUtil.resetDateInDatePicker(expirationDateSinceYear, expirationDateSinceMonth, expirationDateSinceDay);
-        DatePickerUtil.resetDateInDatePicker(expirationDateForYear, expirationDateForMonth, expirationDateForDay);
-        DatePickerUtil.resetDateInDatePicker(productionDateSinceYear, productionDateSinceMonth, productionDateSinceDay);
-        DatePickerUtil.resetDateInDatePicker(productionDateForYear, productionDateForMonth, productionDateForDay);
+        DateHelper.resetDateInDatePicker(expirationDateSinceYear, expirationDateSinceMonth, expirationDateSinceDay);
+        DateHelper.resetDateInDatePicker(expirationDateForYear, expirationDateForMonth, expirationDateForDay);
+        DateHelper.resetDateInDatePicker(productionDateSinceYear, productionDateSinceMonth, productionDateSinceDay);
+        DateHelper.resetDateInDatePicker(productionDateForYear, productionDateForMonth, productionDateForDay);
         useCase.clearExpirationDateSince();
         useCase.clearExpirationDateFor();
         useCase.clearProductionDateSince();

@@ -19,5 +19,23 @@ public interface EditProductUseCase {
 
     int getIntValueFromObservableField(ObservableField<String> observableField);
 
-    String getDateInFormatToShow(int day, int month, int year);
+    void setExpirationDate(int year, int month, int day);
+
+    void setExpirationDate(String expirationDate);
+
+    void setProductionDate(int year, int month, int day);
+
+    void setProductionDate(String productionDate);
+
+    void clearExpirationDate();
+
+    void clearProductionDate();
+
+    String getExpirationDate();
+
+    String getProductionDate();
+
+    int[] getExpirationDateArray();
+
+    int[] getProductionDateArray();
 }

@@ -16,7 +16,7 @@ import com.hermanowicz.pantry.R;
 import com.hermanowicz.pantry.dao.db.product.Product;
 import com.hermanowicz.pantry.model.DatabaseMode;
 import com.hermanowicz.pantry.util.CategorySpinnerListener;
-import com.hermanowicz.pantry.util.DatePickerUtil;
+import com.hermanowicz.pantry.util.DateHelper;
 import com.hermanowicz.pantry.util.StorageLocationListener;
 
 import java.util.ArrayList;
@@ -41,8 +41,8 @@ public class EditProductViewModel extends ViewModel {
     public ObservableField<String> composition = new ObservableField<>("");
     public ObservableField<String> healingProperties = new ObservableField<>("");
     public ObservableField<String> dosage = new ObservableField<>("");
-    public ObservableField<String> weight = new ObservableField<>();
-    public ObservableField<String> volume = new ObservableField<>();
+    public ObservableField<String> weight = new ObservableField<>("");
+    public ObservableField<String> volume = new ObservableField<>("");
     private String taste = "";
     public ObservableField<Boolean> isSweet = new ObservableField<>();
     public ObservableField<Boolean> isSour = new ObservableField<>();
@@ -69,9 +69,6 @@ public class EditProductViewModel extends ViewModel {
     public ObservableField<Boolean> productionCheckBoxChecked = new ObservableField<>(false);
     public ObservableField<Integer> expirationDatePickerVisibility = new ObservableField<>(View.VISIBLE);
     public ObservableField<Integer> productionDatePickerVisibility = new ObservableField<>(View.VISIBLE);
-
-    private String expirationDate = "";
-    private String productionDate = "";
 
     private final LiveData<String[]> ownCategoriesNamesLiveData;
     private String[] ownCategoriesNamesArray;
@@ -113,6 +110,8 @@ public class EditProductViewModel extends ViewModel {
     private Product getUpdatedProduct(Product product) {
         int productWeight = useCase.getIntValueFromObservableField(weight);
         int productVolume = useCase.getIntValueFromObservableField(volume);
+        String expirationDate = useCase.getExpirationDate();
+        String productionDate = useCase.getProductionDate();
 
         product.setName(productName.get());
         product.setMainCategory(mainCategory.getValue());
@@ -167,7 +166,7 @@ public class EditProductViewModel extends ViewModel {
             int day
     ) {
         month++;
-        expirationDate = useCase.getDateInFormatToShow(day, month, year);
+        useCase.setExpirationDate(year, month, day);
     }
 
     public void onProductionDateChanged(
@@ -176,18 +175,18 @@ public class EditProductViewModel extends ViewModel {
             int day
     ) {
         month++;
-        productionDate = useCase.getDateInFormatToShow(day, month, year);
+        useCase.setProductionDate(year, month, day);
     }
 
     private void clearFields() {
         productName.set("");
         mainCategory.setValue("");
         detailCategory.setValue("");
-        DatePickerUtil.resetDateInDatePicker(expirationDateYear, expirationDateMonth, expirationDateDay);
-        DatePickerUtil.resetDateInDatePicker(productionDateYear, productionDateMonth, productionDateDay);
+        DateHelper.resetDateInDatePicker(expirationDateYear, expirationDateMonth, expirationDateDay);
+        DateHelper.resetDateInDatePicker(productionDateYear, productionDateMonth, productionDateDay);
         storageLocation = "";
-        expirationDate = "";
-        productionDate = "";
+        useCase.clearExpirationDate();
+        useCase.clearProductionDate();
         quantity.set("1");
         weight.set("");
         volume.set("");
@@ -205,6 +204,7 @@ public class EditProductViewModel extends ViewModel {
     public void showDataForSelectedDatabase() {
         Product product = getProductArrayList().get(0);
         int productListSize = getProductArrayList().size();
+        setupDatepickersAndSetDates(product);
 
         productName.set(product.getName());
         storageLocation = product.getStorageLocation();
@@ -214,6 +214,21 @@ public class EditProductViewModel extends ViewModel {
         dosage.set(product.getDosage());
         weight.set(String.valueOf(product.getWeight()));
         volume.set(String.valueOf(product.getVolume()));
+    }
+
+    private void setupDatepickersAndSetDates(Product product) {
+        useCase.setExpirationDate(product.getExpirationDate());
+        useCase.setProductionDate(product.getProductionDate());
+
+        int[] expirationDate = useCase.getExpirationDateArray();
+        expirationDateYear.set(expirationDate[0]);
+        expirationDateMonth.set(expirationDate[1]);
+        expirationDateDay.set(expirationDate[2]);
+
+        int[] productionDate = useCase.getProductionDateArray();
+        productionDateYear.set(productionDate[0]);
+        productionDateMonth.set(productionDate[1]);
+        productionDateDay.set(productionDate[2]);
 
         if(product.getExpirationDate().equals("")) {
             expirationCheckBoxChecked.set(true);
@@ -229,7 +244,7 @@ public class EditProductViewModel extends ViewModel {
         if(checkBox.getId() == R.id.productExpirationDateCheckbox) {
             if (isChecked) {
                 expirationDatePickerVisibility.set(View.GONE);
-                expirationDate = "";
+                useCase.clearExpirationDate();
             }
             else
                 expirationDatePickerVisibility.set(View.VISIBLE);
@@ -237,7 +252,7 @@ public class EditProductViewModel extends ViewModel {
         if(checkBox.getId() == R.id.productProductionDateCheckbox) {
             if (isChecked) {
                 productionDatePickerVisibility.set(View.GONE);
-                productionDate = "";
+                useCase.clearProductionDate();
             }
             else
                 productionDatePickerVisibility.set(View.VISIBLE);

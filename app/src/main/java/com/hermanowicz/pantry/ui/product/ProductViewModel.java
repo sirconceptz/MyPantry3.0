@@ -60,7 +60,7 @@ public class ProductViewModel extends ViewModel {
         return Objects.requireNonNull(groupProductList.getValue()).get(position);
     }
 
-    public void setFilteredProductList(List<Product> productList) {
+    public void filterProductList(List<Product> productList) {
         filteredProductsLiveData = useCase.getFilteredProductList(productList);
         filteredDataListener.observeFilteredData();
     }

@@ -52,9 +52,6 @@ public class MyPantryFragment extends Fragment implements AvailableDataListener,
         return view;
     }
 
-    private void getArgumentsAndShowData() {
-    }
-
     private void initView(@NonNull LayoutInflater inflater, ViewGroup container) {
         filterProductViewModel = new ViewModelProvider(this).get(FilterProductViewModel.class);
         productViewModel = new ViewModelProvider(this).get(ProductViewModel.class);
@@ -136,7 +133,7 @@ public class MyPantryFragment extends Fragment implements AvailableDataListener,
         databaseModeViewModel.getDatabaseMode().observe(getViewLifecycleOwner(),
                 productViewModel::updateDataForSelectedDatabase);
         productViewModel.getAllProductList().observe(getViewLifecycleOwner(),
-            productViewModel::setFilteredProductList);
+            productViewModel::filterProductList);
     }
 
     @Override

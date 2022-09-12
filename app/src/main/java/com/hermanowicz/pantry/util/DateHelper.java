@@ -18,6 +18,7 @@
 package com.hermanowicz.pantry.util;
 
 import androidx.annotation.NonNull;
+import androidx.databinding.ObservableField;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -36,25 +37,12 @@ public class DateHelper {
 
     private final Calendar calendar = Calendar.getInstance();
     private final DateFormat localDateFormat = DateFormat.getDateInstance();
-    private final SimpleDateFormat sqlDateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private String[] dateArray;
 
     public DateHelper(@NonNull String date) {
         dateArray = date.split("\\.");
         if (dateArray.length < 2)
             dateArray = date.split("-");
-    }
-
-    public int getDayFromDate() {
-        return Integer.parseInt(dateArray[2]);
-    }
-
-    public int getMonthFromDate() {
-        return Integer.parseInt(dateArray[1]);
-    }
-
-    public int getYearFromDate() {
-        return Integer.parseInt(dateArray[0]);
     }
 
     public String getDateInLocalFormat() {
@@ -66,45 +54,18 @@ public class DateHelper {
             return "-";
     }
 
-    public String getDateInSqlFormat() {
-        if (dateArray.length >= 2) {
-            calendar.set(Integer.parseInt(dateArray[0]), Integer.parseInt(dateArray[1]) - 1, Integer.parseInt(dateArray[2]));
-            Date date = calendar.getTime();
-            return sqlDateFormat.format(date);
-        } else
-            return "-";
-    }
-
-    public static int getActualDay(int addDayToDate) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DAY_OF_MONTH, addDayToDate);
-        return calendar.get(Calendar.DAY_OF_MONTH);
-    }
-
-    public static int getActualMonth() {
-        Calendar calendar = Calendar.getInstance();
-        return calendar.get(Calendar.MONTH);
-    }
-
-    public static int getActualYear() {
-        Calendar calendar = Calendar.getInstance();
-        return calendar.get(Calendar.YEAR);
-    }
-
     public static String getTimeStamp() {
         return new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
     }
 
-    public static String getFullTimestampInLocalFormat(String timestamp) {
-        String fullTimestamp = "";
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-        DateFormat localDateFormat = DateFormat.getDateTimeInstance();
-        try {
-            Date date = format.parse(timestamp);
-            fullTimestamp = localDateFormat.format(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return fullTimestamp;
+    public static void resetDateInDatePicker(
+            ObservableField<Integer> year,
+            ObservableField<Integer> month,
+            ObservableField<Integer> day
+    ) {
+        Calendar now = Calendar.getInstance();
+        year.set(now.get(Calendar.YEAR));
+        month.set(now.get(Calendar.MONTH));
+        day.set(now.get(Calendar.DAY_OF_MONTH));
     }
 }

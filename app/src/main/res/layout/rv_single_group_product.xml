@@ -23,7 +23,7 @@
     tools:context=".ui.activity.MainActivity">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/storageLocation_cardView"
+        android:id="@+id/product_cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
@@ -44,10 +44,9 @@
             android:layout_alignParentTop="true"
             android:layout_marginStart="8dp"
             android:layout_marginTop="4dp"
-            android:text=""
             android:textSize="24sp"
-            app:layout_constraintStart_toStartOf="@id/storageLocation_cardView"
-            app:layout_constraintTop_toTopOf="@id/storageLocation_cardView" />
+            app:layout_constraintStart_toStartOf="@id/product_cardView"
+            app:layout_constraintTop_toTopOf="@id/product_cardView" />
 
         <TextView
             android:id="@+id/text_productQuantity"
@@ -142,7 +141,6 @@
             android:layout_marginTop="26dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="4dp"
-            android:text=""
             android:textSize="18sp" />
 
     </androidx.cardview.widget.CardView>

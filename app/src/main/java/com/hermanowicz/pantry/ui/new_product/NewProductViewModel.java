@@ -19,7 +19,7 @@ import com.hermanowicz.pantry.interfaces.NewProductDialogListener;
 import com.hermanowicz.pantry.model.DatabaseMode;
 import com.hermanowicz.pantry.model.GroupProduct;
 import com.hermanowicz.pantry.util.CategorySpinnerListener;
-import com.hermanowicz.pantry.util.DatePickerUtil;
+import com.hermanowicz.pantry.util.DateHelper;
 import com.hermanowicz.pantry.util.StorageLocationListener;
 
 import java.util.ArrayList;
@@ -177,8 +177,8 @@ public class NewProductViewModel extends ViewModel {
         productName.set("");
         mainCategory.setValue("");
         detailCategory.setValue("");
-        DatePickerUtil.resetDateInDatePicker(expirationDateYear, expirationDateMonth, expirationDateDay);
-        DatePickerUtil.resetDateInDatePicker(productionDateYear, productionDateMonth, productionDateDay);
+        DateHelper.resetDateInDatePicker(expirationDateYear, expirationDateMonth, expirationDateDay);
+        DateHelper.resetDateInDatePicker(productionDateYear, productionDateMonth, productionDateDay);
         expirationDateVisible = "";
         productionDateVisible = "";
         quantity.set("1");

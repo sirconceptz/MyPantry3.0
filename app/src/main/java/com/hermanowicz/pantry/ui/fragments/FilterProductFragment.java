@@ -58,14 +58,6 @@ public class FilterProductFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        setProductListFromArguments();
-    }
-
-    private void setProductListFromArguments() {
-        if(getArguments() != null) {
-            ArrayList<Product> productArrayList = getArguments().getParcelableArrayList("productArrayList");
-            filterProductViewModel.updateProductArrayList(productArrayList);
-        }
     }
 
     private void initView(@NonNull LayoutInflater inflater, ViewGroup container) {

@@ -54,8 +54,6 @@ public class ProductsAdapter extends
     private static final String PREFERENCES_DAYS_TO_NOTIFICATIONS = "HOW_MANY_DAYS_BEFORE_EXPIRATION_DATE_SEND_A_NOTIFICATION?";
 
     private List<GroupProduct> productList = new ArrayList<>();
-    private List<Product> multiSelectList = new ArrayList<>();
-    private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private final SharedPreferences preferences;
     int itemAnimPosition = -1;
 
@@ -65,11 +63,6 @@ public class ProductsAdapter extends
 
     public void setData(@NonNull List<GroupProduct> newData) {
         this.productList = newData;
-        notifyDataSetChanged();
-    }
-
-    public void setMultiSelectList(@NonNull List<Product> multiSelectList) {
-        this.multiSelectList = multiSelectList;
         notifyDataSetChanged();
     }
 
