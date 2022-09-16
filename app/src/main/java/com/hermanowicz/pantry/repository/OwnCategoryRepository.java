@@ -26,4 +26,6 @@ public interface OwnCategoryRepository {
     boolean checkIsInternetConnection();
 
     List<Category> getAllLocalCategoriesAsList();
+
+    String[] getAllCategoriesNameAsList(DatabaseMode databaseMode);
 }

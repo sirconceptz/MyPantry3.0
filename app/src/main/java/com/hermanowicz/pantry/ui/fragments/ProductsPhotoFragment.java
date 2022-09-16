@@ -242,6 +242,7 @@ public class ProductsPhotoFragment extends Fragment implements ProductPhotoViewA
 
     @Override
     public void observeAvailableData() {
-
+        productsPhotoViewModel.getPhotoList().observe(getViewLifecycleOwner(),
+                productsPhotoViewModel::setCurrentPhotoList);
     }
 }

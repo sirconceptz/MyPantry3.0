@@ -28,6 +28,7 @@ import com.hermanowicz.pantry.ui.scan_product.ScanProductUseCaseImpl;
 import com.hermanowicz.pantry.ui.settings.SettingsUseCaseImpl;
 import com.hermanowicz.pantry.ui.storage_location_detail.StorageLocationDetailUseCaseImpl;
 import com.hermanowicz.pantry.ui.storage_locations.StorageLocationsUseCaseImpl;
+import com.hermanowicz.pantry.util.Notifications;
 import com.hermanowicz.pantry.util.PremiumAccess;
 
 import javax.inject.Singleton;
@@ -49,7 +50,8 @@ public final class AppModule {
         StorageLocationRepositoryImpl storageLocationRepository = new StorageLocationRepositoryImpl(context);
         OwnCategoryRepositoryImpl ownCategoryRepository = new OwnCategoryRepositoryImpl(context);
         Resources resources = context.getResources();
-        return new NewProductUseCaseImpl(productRepository, storageLocationRepository, ownCategoryRepository, resources);
+        Notifications notifications = new Notifications(context);
+        return new NewProductUseCaseImpl(productRepository, storageLocationRepository, ownCategoryRepository, resources, notifications);
     }
 
     @Provides
@@ -58,7 +60,8 @@ public final class AppModule {
         ProductRepositoryImpl productRepository = new ProductRepositoryImpl(context);
         StorageLocationRepositoryImpl storageLocationRepository = new StorageLocationRepositoryImpl(context);
         OwnCategoryRepositoryImpl ownCategoryRepository = new OwnCategoryRepositoryImpl(context);
-        return new EditProductUseCaseImpl(productRepository, storageLocationRepository, ownCategoryRepository);
+        Resources resources = context.getResources();
+        return new EditProductUseCaseImpl(productRepository, storageLocationRepository, ownCategoryRepository, resources);
     }
 
     @Provides
@@ -102,7 +105,8 @@ public final class AppModule {
     public ProductDetailsUseCaseImpl provideProductDetailsUseCase(@ApplicationContext Context context) {
         ProductRepositoryImpl productRepository = new ProductRepositoryImpl(context);
         Resources resources = context.getResources();
-        return new ProductDetailsUseCaseImpl(productRepository, resources);
+        Notifications notifications = new Notifications(context);
+        return new ProductDetailsUseCaseImpl(productRepository, resources, notifications);
     }
 
     @Provides
@@ -122,7 +126,8 @@ public final class AppModule {
         StorageLocationRepositoryImpl storageLocationRepository = new StorageLocationRepositoryImpl(context);
         DatabaseBackupRepositoryImpl databaseBackupRepository = new DatabaseBackupRepositoryImpl(context);
         SharedPreferencesRepositoryImpl sharedPreferencesRepository = new SharedPreferencesRepositoryImpl(context);
-        return new SettingsUseCaseImpl(premiumAccess, productRepository, ownCategoryRepository, storageLocationRepository, databaseBackupRepository, sharedPreferencesRepository);
+        Notifications notifications = new Notifications(context);
+        return new SettingsUseCaseImpl(premiumAccess, productRepository, ownCategoryRepository, storageLocationRepository, databaseBackupRepository, sharedPreferencesRepository, notifications);
     }
 
     @Provides

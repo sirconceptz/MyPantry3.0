@@ -19,6 +19,7 @@ package com.hermanowicz.pantry.ui.products_photo;
 
 import android.graphics.Bitmap;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.hermanowicz.pantry.dao.db.photo.Photo;
@@ -47,4 +48,8 @@ public interface ProductsPhotoUseCase {
     boolean checkIsInternetConnection();
 
     void setOnlinePhotoList(MutableLiveData<List<Photo>> photoList);
+
+    LiveData<List<Photo>> getPhotoList(DatabaseMode databaseMode);
+
+    void setCurrentPhotoList(List<Photo> photos);
 }

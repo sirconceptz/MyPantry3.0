@@ -20,7 +20,7 @@ public class DetailCategoryAdapter {
         if (productTypeSpinnerValue.equals(productTypes[1]))
             detailCategoryAdapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_dropdown_item, ownCategories);
         else if (productTypeSpinnerValue.equals(productTypes[2]))
-            detailCategoryAdapter = ArrayAdapter.createFromResource(context, R.array.ProductDetailsActivity_store_products_array, android.R.layout.simple_spinner_dropdown_item);
+            detailCategoryAdapter = ArrayAdapter.createFromResource(context, R.array.product_store_products_array, android.R.layout.simple_spinner_dropdown_item);
         else if (productTypeSpinnerValue.equals(productTypes[3]))
             detailCategoryAdapter = ArrayAdapter.createFromResource(context, R.array.product_ready_meals_array, android.R.layout.simple_spinner_dropdown_item);
         else if (productTypeSpinnerValue.equals(productTypes[4]))

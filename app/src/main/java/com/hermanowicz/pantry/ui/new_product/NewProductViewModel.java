@@ -15,7 +15,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.hermanowicz.pantry.R;
 import com.hermanowicz.pantry.dao.db.product.Product;
-import com.hermanowicz.pantry.interfaces.NewProductDialogListener;
+import com.hermanowicz.pantry.interfaces.NewProductViewActions;
 import com.hermanowicz.pantry.model.DatabaseMode;
 import com.hermanowicz.pantry.model.GroupProduct;
 import com.hermanowicz.pantry.util.CategorySpinnerListener;
@@ -24,6 +24,7 @@ import com.hermanowicz.pantry.util.StorageLocationListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -39,8 +40,6 @@ public class NewProductViewModel extends ViewModel {
     public ObservableField<String> productName = new ObservableField<>("");
     public MutableLiveData<String> mainCategory = new MutableLiveData<>("");
     public MutableLiveData<String> detailCategory = new MutableLiveData<>("");
-    private String expirationDateVisible = "";
-    private String productionDateVisible = "";
     private final String storageLocation = "";
     private final LiveData<String[]> storageLocations;
     public ObservableField<String> quantity = new ObservableField<>("1");
@@ -72,7 +71,7 @@ public class NewProductViewModel extends ViewModel {
     private final LiveData<String[]> ownCategoriesNamesLiveData;
     private String[] ownCategoriesNamesArray;
 
-    private NewProductDialogListener newProductDialogListener;
+    private NewProductViewActions newProductViewActions;
 
     //spinners listeners
     public AdapterView.OnItemSelectedListener categorySelectionListener =
@@ -85,6 +84,15 @@ public class NewProductViewModel extends ViewModel {
         useCase = newProductUseCase;
         storageLocations = useCase.getAllStorageLocations();
         ownCategoriesNamesLiveData = useCase.getAllOwnCategories();
+
+        resetDateData();
+    }
+
+    private void resetDateData() {
+        DateHelper.resetDateInDatePicker(expirationDateYear, expirationDateMonth, expirationDateDay);
+        DateHelper.resetDateInDatePicker(productionDateYear, productionDateMonth, productionDateDay);
+        useCase.clearExpirationDate();
+        useCase.clearProductionDate();
     }
 
     public void insertProducts() {
@@ -125,13 +133,11 @@ public class NewProductViewModel extends ViewModel {
     public void onExpirationDateChanged(int year, int month, int day) {
         month++;
         useCase.setExpirationDate(year, month, day);
-        expirationDateVisible = useCase.getDateInFormatToShow(day, month, year);
     }
 
     public void onProductionDateChanged(int year, int month, int day) {
         month++;
         useCase.setProductionDate(year, month, day);
-        productionDateVisible = useCase.getDateInFormatToShow(day, month, year);
     }
 
     @NonNull
@@ -177,16 +183,13 @@ public class NewProductViewModel extends ViewModel {
         productName.set("");
         mainCategory.setValue("");
         detailCategory.setValue("");
-        DateHelper.resetDateInDatePicker(expirationDateYear, expirationDateMonth, expirationDateDay);
-        DateHelper.resetDateInDatePicker(productionDateYear, productionDateMonth, productionDateDay);
-        expirationDateVisible = "";
-        productionDateVisible = "";
         quantity.set("1");
         weight.set("");
         volume.set("");
         isVege.set(false);
         hasSugar.set(false);
         hasSalt.set(false);
+        resetDateData();
     }
 
     public void setOwnCategoriesNamesArray(String[] ownCategoriesNamesArray) {
@@ -197,20 +200,27 @@ public class NewProductViewModel extends ViewModel {
         if(checkBox.getId() == R.id.productExpirationDateCheckbox) {
             if (isChecked) {
                 expirationDatePickerVisibility.set(View.GONE);
-                expirationDateVisible = "";
                 useCase.clearExpirationDate();
             }
-            else
+            else {
                 expirationDatePickerVisibility.set(View.VISIBLE);
+                int year = expirationDateYear.get();
+                int month = expirationDateMonth.get();
+                int day = expirationDateDay.get();
+                useCase.setExpirationDate(year, month, day);
+            }
         }
         if(checkBox.getId() == R.id.productProductionDateCheckbox) {
             if (isChecked) {
                 productionDatePickerVisibility.set(View.GONE);
-                productionDateVisible = "";
                 useCase.clearProductionDate();
             }
             else
                 productionDatePickerVisibility.set(View.VISIBLE);
+            int year = productionDateYear.get();
+            int month = productionDateMonth.get();
+            int day = productionDateDay.get();
+            useCase.setProductionDate(year, month, day);
         }
     }
 
@@ -230,7 +240,7 @@ public class NewProductViewModel extends ViewModel {
             }
             else if(groupProductArrayList.size() > 1) {
                 String[] groupProductNames = useCase.getGroupProductNames(productArrayList);
-                newProductDialogListener.showDialogChooseProductToCopy(groupProductNames);
+                newProductViewActions.showDialogChooseProductToCopy(groupProductNames);
             }
         }
     }
@@ -246,8 +256,8 @@ public class NewProductViewModel extends ViewModel {
         hasSalt.set(product.getHasSalt());
     }
 
-    public void setNewProductDialogListener(NewProductDialogListener newProductDialogListener) {
-        this.newProductDialogListener = newProductDialogListener;
+    public void setNewProductDialogListener(NewProductViewActions newProductViewActions) {
+        this.newProductViewActions = newProductViewActions;
     }
 
     public void showSelectedProductData(int position) {
@@ -255,5 +265,14 @@ public class NewProductViewModel extends ViewModel {
         Product product = groupProductList.get(position).getProduct();
         int productQuantity = groupProductList.get(position).getQuantity();
         showProductData(product, productQuantity);
+    }
+
+    public boolean isFormValid() {
+        boolean isValidForm = false;
+        if(Objects.requireNonNull(productName.get()).length() < 3)
+            newProductViewActions.showErrorNameIsTooShort();
+        else
+            isValidForm = true;
+        return isValidForm;
     }
 }

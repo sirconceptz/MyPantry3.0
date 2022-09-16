@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData;
 import com.hermanowicz.pantry.dao.db.product.Product;
 import com.hermanowicz.pantry.model.DatabaseMode;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface EditProductUseCase {
@@ -38,4 +39,14 @@ public interface EditProductUseCase {
     int[] getExpirationDateArray();
 
     int[] getProductionDateArray();
+
+    void setProductArrayList(ArrayList<Product> productArrayList);
+
+    List<Product> getAllProductList();
+
+    int getDetailCategorySpinnerPosition(int productMainCategorySpinnerPosition);
+
+    int getProductMainCategorySpinnerPosition();
+
+    int getProductStorageLocationPosition();
 }

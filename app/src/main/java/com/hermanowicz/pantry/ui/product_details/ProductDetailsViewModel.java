@@ -70,9 +70,9 @@ public class ProductDetailsViewModel extends ViewModel {
         String no = resources.getString(R.string.general_no);
         String expirationDateInShowFormat = "", productionDateInShowFormat = "";
 
-        if(!Objects.equals(product.getExpirationDate(), ""))
+        if(!Objects.equals(product.getExpirationDate(), "-"))
             expirationDateInShowFormat = useCase.getDateInFormatToShow(product.getExpirationDate());
-        if(!Objects.equals(product.getProductionDate(), ""))
+        if(!Objects.equals(product.getProductionDate(), "-"))
             productionDateInShowFormat = useCase.getDateInFormatToShow(product.getProductionDate());
 
         productName.setValue(product.getName());

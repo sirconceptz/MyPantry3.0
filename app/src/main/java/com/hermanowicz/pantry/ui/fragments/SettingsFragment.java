@@ -18,9 +18,12 @@ import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract;
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult;
 import com.hermanowicz.pantry.R;
+import com.hermanowicz.pantry.interfaces.AvailableDataListener;
 import com.hermanowicz.pantry.interfaces.PricingListener;
 import com.hermanowicz.pantry.interfaces.PreferencesListener;
 import com.hermanowicz.pantry.ui.database_mode.DatabaseModeViewModel;
+import com.hermanowicz.pantry.ui.dialogs.SettingsDialogs;
+import com.hermanowicz.pantry.ui.product.ProductViewModel;
 import com.hermanowicz.pantry.ui.settings.SettingsViewModel;
 
 import java.util.Collections;
@@ -29,10 +32,14 @@ import java.util.List;
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
-public class SettingsFragment extends PreferenceFragmentCompat implements PricingListener, PreferencesListener {
+public class SettingsFragment extends PreferenceFragmentCompat implements PricingListener, PreferencesListener, AvailableDataListener {
 
     private SettingsViewModel settingsViewModel;
     private DatabaseModeViewModel databaseModeViewModel;
+    private ProductViewModel productViewModel;
+
+    private SharedPreferences.OnSharedPreferenceChangeListener preferenceChangeListener;
+    private SharedPreferences sharedPreferences;
 
     private Preference goPremium;
     private Preference databaseMode;
@@ -53,6 +60,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Pricin
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         settingsViewModel = new ViewModelProvider(this).get(SettingsViewModel.class);
         databaseModeViewModel = new ViewModelProvider(this).get(DatabaseModeViewModel.class);
+        productViewModel = new ViewModelProvider(this).get(ProductViewModel.class);
     }
 
     @Override
@@ -64,6 +72,9 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Pricin
     }
 
     private void initView() {
+        productViewModel.setAvailableDataListener(this);
+        productViewModel.setDefaultDatabaseMode(databaseModeViewModel.getDatabaseModeFromSettings());
+
         setPreferencesFromResource(R.xml.preferences, null);
         goPremium = findPreference(getString(R.string.preferences_key_go_premium));
         databaseMode = findPreference(getString(R.string.preferences_key_database_mode));
@@ -86,61 +97,36 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Pricin
     }
 
     private void setListeners() {
-        SharedPreferences sharedPreferences = PreferenceManager
-                .getDefaultSharedPreferences(requireActivity());
-        sharedPreferences.registerOnSharedPreferenceChangeListener(databaseModeViewModel.sharedPreferencesListener);
-        
         goPremium.setOnPreferenceClickListener(preference -> {
             initPremiumPurchase();
             return false;
         });
-        activeUser.setOnPreferenceClickListener(preference -> {
-            showLoginAndRegisterForm();
-            return false;
-        });
-        backupProductDb.setOnPreferenceClickListener(preference -> {
-            settingsViewModel.onClickBackupProductDatabase();
-            return false;
-        });
-        restoreProductDb.setOnPreferenceClickListener(preference -> {
-            settingsViewModel.onClickRestoreProductDatabase();
-            return false;
-        });
-        clearProductDb.setOnPreferenceClickListener(preference -> {
-            settingsViewModel.onClickClearProductDatabase();
-            return false;
-        });
-        backupCategoryDb.setOnPreferenceClickListener(preference -> {
-            settingsViewModel.onClickBackupCategoryDatabase();
-            return false;
-        });
-        restoreCategoryDb.setOnPreferenceClickListener(preference -> {
-            settingsViewModel.onClickRestoreCategoryDatabase();
-            return false;
-        });
-        clearCategoryDb.setOnPreferenceClickListener(preference -> {
-            settingsViewModel.onClickClearCategoryDatabase();
-            return false;
-        });
-        backupStorageLocationDb.setOnPreferenceClickListener(preference -> {
-            settingsViewModel.onClickBackupStorageLocationDatabase();
-            return false;
-        });
-        restoreStorageLocationDb.setOnPreferenceClickListener(preference -> {
-            settingsViewModel.onClickRestoreStorageLocationDatabase();
-            return false;
-        });
-        clearStorageLocationDb.setOnPreferenceClickListener(preference -> {
-            settingsViewModel.onClickClearStorageLocationDatabase();
-            return false;
-        });
-        importDb.setOnPreferenceClickListener(preference -> {
-            settingsViewModel.onClickImportLocalDatabaseToCloud();
-            return false;
-        });
-    }
+        activeUser.setOnPreferenceClickListener(this::showLoginAndRegisterForm);
+        backupProductDb.setOnPreferenceClickListener(this::showDialogBackupProductDb);
+        restoreProductDb.setOnPreferenceClickListener(this::showDialogRestoreProductDb);
+        clearProductDb.setOnPreferenceClickListener(this::showDialogClearProductDb);
+        backupCategoryDb.setOnPreferenceClickListener(this::showDialogBackupOwnCategoriesDb);
+        restoreCategoryDb.setOnPreferenceClickListener(this::showDialogRestoreOwnCategoriesDb);
+        clearCategoryDb.setOnPreferenceClickListener(this::showDialogClearOwnCategoryDb);
+        backupStorageLocationDb.setOnPreferenceClickListener(this::showDialogBackupStorageLocationDb);
+        restoreStorageLocationDb.setOnPreferenceClickListener(this::showDialogRestoreStorageLocationDb);
+        clearStorageLocationDb.setOnPreferenceClickListener(this::showDialogClearStorageLocationDb);
+        importDb.setOnPreferenceClickListener(this::showDialogImportLocalDatabaseToCloud);
 
-    public void showLoginAndRegisterForm() {
+        preferenceChangeListener = (prefs, key) -> {
+            if (key.equals(getString(R.string.preferences_key_email_address)) ||
+                    key.equals(getString(R.string.preferences_key_push_notifications))||
+                    key.equals(getString(R.string.preferences_key_email_notifications))||
+                    key.equals(getString(R.string.preferences_key_notification_days_before_expiration))) {
+                settingsViewModel.setNotificationsToRestoreFlag();
+            }
+        };
+
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireActivity());
+        sharedPreferences.registerOnSharedPreferenceChangeListener(preferenceChangeListener);
+        }
+
+    private boolean showLoginAndRegisterForm(Preference preference) {
         List<AuthUI.IdpConfig> providers = Collections.singletonList(
                 new AuthUI.IdpConfig.EmailBuilder().build());
         Intent signInIntent = AuthUI.getInstance()
@@ -148,21 +134,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Pricin
                 .setAvailableProviders(providers)
                 .build();
         signInLauncher.launch(signInIntent);
-    }
-
-    @Override
-    public void showDialogClearProductDb() {
-
-    }
-
-    @Override
-    public void showDialogClearOwnCategoryDb() {
-
-    }
-
-    @Override
-    public void showDialogClearStorageLocationDb() {
-
+        return false;
     }
 
     private final ActivityResultLauncher<Intent> signInLauncher = registerForActivityResult(
@@ -211,80 +183,105 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Pricin
         Toast.makeText(getContext(), getString(R.string.error_for_premium_users_only), Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    public void showDialogBackupProductDb() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
-        builder.setTitle(getString(R.string.general_permission_required_title))
-                .setMessage(getString(R.string.general_permission_required_message))
-                .setPositiveButton(getString(android.R.string.ok), (dialog, click) ->
-                        settingsViewModel.onClickBackupProductDatabase())
-                .setNegativeButton(getString(R.string.general_no_thanks), (dialog, click) -> dialog.cancel())
-                .show();
+    public boolean showDialogBackupProductDb(Preference preference) {
+        AlertDialog.Builder dialog = SettingsDialogs.getBackupProductDbDialog(requireActivity());
+                dialog.setPositiveButton(getString(android.R.string.ok), (d, click) ->
+                                settingsViewModel.onClickBackupProductDatabase())
+                        .show();
+        return false;
     }
 
-    @Override
-    public void showDialogRestoreProductDb() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
-        builder.setTitle(getString(R.string.settings_restore_product_database))
-                .setMessage(getString(R.string.statement_restore_database))
-                .setPositiveButton(getString(android.R.string.ok), (dialog, click) ->
+    public boolean showDialogRestoreProductDb(Preference preference) {
+        AlertDialog.Builder dialog = SettingsDialogs.getRestoreProductDbDialog(requireActivity());
+        dialog.setPositiveButton(getString(android.R.string.ok), (d, click) ->
                         settingsViewModel.onClickRestoreProductDatabase())
-                .setNegativeButton(getString(R.string.general_no_thanks), (dialog, click) -> dialog.cancel())
                 .show();
+        return false;
     }
 
-    @Override
-    public void showDialogBackupOwnCategoriesDb() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
-        builder.setTitle(getString(R.string.settings_backup_category_database))
-                .setMessage(getString(R.string.statement_backup_database))
-                .setPositiveButton(getString(android.R.string.ok), (dialog, click) ->
+    public boolean showDialogBackupOwnCategoriesDb(Preference preference) {
+        AlertDialog.Builder dialog = SettingsDialogs.getBackupOwnCategoriesDbDialog(requireActivity());
+        dialog.setPositiveButton(getString(android.R.string.ok), (d, click) ->
                         settingsViewModel.onClickBackupCategoryDatabase())
-                .setNegativeButton(getString(R.string.general_no_thanks), (dialog, click) -> dialog.cancel())
                 .show();
+        return false;
     }
 
-    @Override
-    public void showDialogRestoreOwnCategoriesDb() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
-        builder.setTitle(getString(R.string.settings_restore_category_database))
-                .setMessage(getString(R.string.statement_restore_database))
-                .setPositiveButton(getString(android.R.string.ok), (dialog, click) ->
+    public boolean showDialogRestoreOwnCategoriesDb(Preference preference) {
+        AlertDialog.Builder dialog = SettingsDialogs.getRestoreOwnCategoriesDbDialog(requireActivity());
+        dialog.setPositiveButton(getString(android.R.string.ok), (d, click) ->
                         settingsViewModel.onClickRestoreCategoryDatabase())
-                .setNegativeButton(getString(R.string.general_no_thanks), (dialog, click) -> dialog.cancel())
                 .show();
+        return false;
     }
 
-    @Override
-    public void showDialogBackupStorageLocationDb() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
-        builder.setTitle(getString(R.string.settings_backup_storage_location_database))
-                .setMessage(getString(R.string.statement_backup_database))
-                .setPositiveButton(getString(android.R.string.ok), (dialog, click) ->
+    public boolean showDialogBackupStorageLocationDb(Preference preference) {
+        AlertDialog.Builder dialog = SettingsDialogs.getBackupStorageLocationsDbDialog(requireActivity());
+        dialog.setPositiveButton(getString(android.R.string.ok), (d, click) ->
                         settingsViewModel.onClickBackupStorageLocationDatabase())
-                .setNegativeButton(getString(R.string.general_no_thanks), (dialog, click) -> dialog.cancel())
                 .show();
+        return false;
     }
 
-    @Override
-    public void showDialogRestoreStorageLocationDb() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
-        builder.setTitle(getString(R.string.settings_restore_storage_location_database))
-                .setMessage(getString(R.string.statement_restore_database))
-                .setPositiveButton(getString(android.R.string.ok), (dialog, click) ->
+    public boolean showDialogRestoreStorageLocationDb(Preference preference) {
+        AlertDialog.Builder dialog = SettingsDialogs.getRestoreStorageLocationsDbDialog(requireActivity());
+        dialog.setPositiveButton(getString(android.R.string.ok), (d, click) ->
                         settingsViewModel.onClickRestoreStorageLocationDatabase())
-                .setNegativeButton(getString(R.string.general_no_thanks), (dialog, click) -> dialog.cancel())
                 .show();
+        return false;
+    }
+
+    public boolean showDialogImportLocalDatabaseToCloud(Preference preference) {
+        AlertDialog.Builder dialog = SettingsDialogs.getImportProductLocalDbToCloud(requireActivity());
+        dialog.setPositiveButton(getString(android.R.string.ok), (d, click) ->
+                        settingsViewModel.onClickImportLocalDatabaseToCloud())
+                .show();
+        return false;
+    }
+
+    public boolean showDialogClearProductDb(Preference preference) {
+        AlertDialog.Builder dialog = SettingsDialogs.getImportProductLocalDbToCloud(requireActivity());
+        dialog.setPositiveButton(getString(android.R.string.ok), (d, click) ->
+                        settingsViewModel.onClickClearProductDatabase())
+                .show();
+        return false;
+    }
+
+    public boolean showDialogClearOwnCategoryDb(Preference preference) {
+        AlertDialog.Builder dialog = SettingsDialogs.getImportProductLocalDbToCloud(requireActivity());
+        dialog.setPositiveButton(getString(android.R.string.ok), (d, click) ->
+                        settingsViewModel.onClickClearCategoryDatabase())
+                .show();
+        return false;
+    }
+
+    public boolean showDialogClearStorageLocationDb(Preference preference) {
+        AlertDialog.Builder dialog = SettingsDialogs.getImportProductLocalDbToCloud(requireActivity());
+        dialog.setPositiveButton(getString(android.R.string.ok), (d, click) ->
+                        settingsViewModel.onClickClearStorageLocationDatabase())
+                .show();
+        return false;
     }
 
     @Override
-    public void showDialogImportLocalDatabaseToCloud() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
-        builder.setTitle(getString(R.string.settings_import_local_db_to_cloud))
-                .setMessage(getString(R.string.statement_import_local_db_to_cloud_warning))
-                .setPositiveButton(getString(android.R.string.ok), (dialog, click) ->
-                        settingsViewModel.onClickImportLocalDatabaseToCloud())
-                .setNegativeButton(getString(R.string.general_no_thanks), (dialog, click) -> dialog.cancel())
-                .show();
+    public void observeAvailableData() {
+        databaseModeViewModel.getDatabaseMode().observe(getViewLifecycleOwner(),
+                productViewModel::updateDataForSelectedDatabase);
+        productViewModel.getAllProductList().observe(getViewLifecycleOwner(),
+                settingsViewModel::setProductList);
+    }
+
+    @Override
+    public void onStart(){
+        if(productViewModel.isAvailableData())
+            observeAvailableData();
+        super.onStart();
+    }
+
+    @Override
+    public void onPause() {
+        productViewModel.clearDisposable();
+        sharedPreferences.unregisterOnSharedPreferenceChangeListener(preferenceChangeListener);
+        super.onPause();
     }
 }

@@ -64,7 +64,7 @@ public class StorageLocationRepositoryImpl implements StorageLocationRepository 
     }
 
     private void insertOnlineStorageLocation(StorageLocation storageLocation) {
-        DatabaseReference dbRef = DatabaseMode.getOnlineDatabaseReference("storage_locations");
+        DatabaseReference dbRef = DatabaseMode.getOnlineDatabaseReference(DatabaseMode.dbTableStorageLocations);
         dbRef.child(String.valueOf(storageLocation.getId())).setValue(storageLocation);
     }
 
@@ -103,7 +103,7 @@ public class StorageLocationRepositoryImpl implements StorageLocationRepository 
     }
 
     private void deleteOnlineStorageLocation(StorageLocation storageLocation) {
-        DatabaseReference dbRef = DatabaseMode.getOnlineDatabaseReference("storage_locations");
+        DatabaseReference dbRef = DatabaseMode.getOnlineDatabaseReference(DatabaseMode.dbTableStorageLocations);
         dbRef.child(String.valueOf(storageLocation.getId())).removeValue();
     }
 
@@ -125,7 +125,7 @@ public class StorageLocationRepositoryImpl implements StorageLocationRepository 
     }
 
     private void deleteAllOnlineStorageLocations() {
-        DatabaseReference dbRef = DatabaseMode.getOnlineDatabaseReference("storage_locations");
+        DatabaseReference dbRef = DatabaseMode.getOnlineDatabaseReference(DatabaseMode.dbTableStorageLocations);
         dbRef.removeValue();
     }
 

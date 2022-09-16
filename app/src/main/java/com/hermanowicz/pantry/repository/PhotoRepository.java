@@ -43,11 +43,15 @@ public interface PhotoRepository {
 
     boolean checkIsInternetConnection();
 
-    MutableLiveData<List<Photo>> getOfflinePhotoListLiveData();
-
-    void setOfflinePhotoListLiveData(MutableLiveData<List<Photo>> offlinePhotoListLiveData);
-
     MutableLiveData<List<Photo>> getOnlinePhotoListLiveData();
 
     void setOnlinePhotoListLiveData(MutableLiveData<List<Photo>> onlinePhotoListLiveData);
+
+    void deleteLocalPhotoFile();
+
+    void deleteOnlinePhoto();
+
+    void setCurrentPhotoList(List<Photo> photos);
+
+    List<Photo> getCurrentPhotoList();
 }

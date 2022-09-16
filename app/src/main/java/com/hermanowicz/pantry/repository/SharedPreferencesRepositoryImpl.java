@@ -48,6 +48,16 @@ public class SharedPreferencesRepositoryImpl implements SharedPreferencesReposit
     }
 
     @Override
+    public boolean getIsNotificationsToRestore() {
+        return sharedPreferences.getBoolean("IS_NOTIFICATIONS_TO_RESTORE", false);
+    }
+
+    @Override
+    public void setIsNotificationsToRestore(boolean notificationsToRestore) {
+        sharedPreferences.edit().putBoolean("IS_NOTIFICATIONS_TO_RESTORE", notificationsToRestore).apply();
+    }
+
+    @Override
     public MutableLiveData<DatabaseMode> getDatabaseMode() {
         return databaseModeMutableLiveData;
     }

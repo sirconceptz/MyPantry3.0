@@ -64,7 +64,7 @@ public class PricingRepositoryImpl implements PricingRepository, PurchasesUpdate
     @Override
     public void onPurchasesUpdated(@NonNull BillingResult billingResult, @Nullable List<Purchase> purchaseList) {
         int responseCode = billingResult.getResponseCode();
-        if (ifAvailableToBuy(responseCode, purchaseList)) {
+        if (ifAvailableToBuy(responseCode, purchaseList) && purchaseList != null) {
             for (Purchase purchase : purchaseList) {
                 handlePurchase(purchase);
             }

@@ -17,6 +17,7 @@
 
 package com.hermanowicz.pantry.util;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,6 +49,7 @@ public class StorageLocationsAdapter extends RecyclerView.Adapter<StorageLocatio
     private List<StorageLocation> storageLocationList = new ArrayList<>();
     private int itemAnimPosition;
 
+    @SuppressLint("NotifyDataSetChanged")
     public void setData(List<StorageLocation> storageLocations) {
         this.storageLocationList = storageLocations;
         notifyDataSetChanged();

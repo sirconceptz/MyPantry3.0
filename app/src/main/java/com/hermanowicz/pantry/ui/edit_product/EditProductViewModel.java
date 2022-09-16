@@ -1,5 +1,6 @@
 package com.hermanowicz.pantry.ui.edit_product;
 
+import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CompoundButton;
@@ -14,6 +15,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.hermanowicz.pantry.R;
 import com.hermanowicz.pantry.dao.db.product.Product;
+import com.hermanowicz.pantry.interfaces.EditProductViewActions;
 import com.hermanowicz.pantry.model.DatabaseMode;
 import com.hermanowicz.pantry.util.CategorySpinnerListener;
 import com.hermanowicz.pantry.util.DateHelper;
@@ -77,7 +79,8 @@ public class EditProductViewModel extends ViewModel {
             new CategorySpinnerListener(mainCategory, detailCategory, detailCategoryVisibility);
     public AdapterView.OnItemSelectedListener storageLocationSelectionListener =
             new StorageLocationListener(storageLocation);
-    private ArrayList<Product> productArrayList;
+
+    private EditProductViewActions viewActionsListener;
 
     @Inject
     public EditProductViewModel(EditProductUseCaseImpl editProductUseCase) {
@@ -86,8 +89,12 @@ public class EditProductViewModel extends ViewModel {
         ownCategoriesNamesLiveData = useCase.getAllOwnCategoriesNames();
     }
 
-    public ArrayList<Product> getProductArrayList() {
-        return productArrayList;
+    public void setViewActionsListener (EditProductViewActions viewActionsListener) {
+        this.viewActionsListener = viewActionsListener;
+    }
+
+    public List<Product> getProductArrayList() {
+        return useCase.getAllProductList();
     }
 
     public void onClickUpdateProduct() {
@@ -96,7 +103,8 @@ public class EditProductViewModel extends ViewModel {
 
     private void updateProducts() {
         List<Product> productListToUpdate = new ArrayList<>();
-        for (Product product : productArrayList) {
+        List<Product> productList = useCase.getAllProductList();
+        for (Product product : productList) {
             productListToUpdate.add(getUpdatedProduct(product));
         }
         useCase.updateProductList(productListToUpdate);
@@ -214,21 +222,30 @@ public class EditProductViewModel extends ViewModel {
         dosage.set(product.getDosage());
         weight.set(String.valueOf(product.getWeight()));
         volume.set(String.valueOf(product.getVolume()));
+
+        int productMainCategorySpinnerPosition = useCase.getProductMainCategorySpinnerPosition();
+        int productDetailCategorySpinnerPosition = useCase.getDetailCategorySpinnerPosition(productMainCategorySpinnerPosition);
+        int productStorageLocationSpinnerPosition = useCase.getProductStorageLocationPosition();
+        viewActionsListener.setSpinnerSelections(productMainCategorySpinnerPosition, productDetailCategorySpinnerPosition, productStorageLocationSpinnerPosition);
     }
 
     private void setupDatepickersAndSetDates(Product product) {
         useCase.setExpirationDate(product.getExpirationDate());
         useCase.setProductionDate(product.getProductionDate());
 
-        int[] expirationDate = useCase.getExpirationDateArray();
-        expirationDateYear.set(expirationDate[0]);
-        expirationDateMonth.set(expirationDate[1]);
-        expirationDateDay.set(expirationDate[2]);
+        if(!product.getExpirationDate().equals("-")) {
+            int[] expirationDate = useCase.getExpirationDateArray();
+            expirationDateYear.set(expirationDate[0]);
+            expirationDateMonth.set(expirationDate[1]);
+            expirationDateDay.set(expirationDate[2]);
+        }
 
-        int[] productionDate = useCase.getProductionDateArray();
-        productionDateYear.set(productionDate[0]);
-        productionDateMonth.set(productionDate[1]);
-        productionDateDay.set(productionDate[2]);
+        if(!product.getProductionDate().equals("-")) {
+            int[] productionDate = useCase.getProductionDateArray();
+            productionDateYear.set(productionDate[0]);
+            productionDateMonth.set(productionDate[1]);
+            productionDateDay.set(productionDate[2]);
+        }
 
         if(product.getExpirationDate().equals("")) {
             expirationCheckBoxChecked.set(true);
@@ -260,10 +277,22 @@ public class EditProductViewModel extends ViewModel {
     }
 
     public void setArrayProductList(ArrayList<Product> productArrayList) {
-        this.productArrayList = productArrayList;
+        useCase.setProductArrayList(productArrayList);
     }
 
     public void setDatabaseMode(DatabaseMode databaseMode) {
         useCase.setDatabaseMode(databaseMode);
+        showDataForSelectedDatabase();
+    }
+
+    public void getProductAndShow(@Nullable Bundle arguments) {
+        if (arguments != null) {
+            ArrayList<Product> productArrayLists = arguments.getParcelableArrayList("productArrayList");
+            setArrayProductList(productArrayLists);
+        }
+    }
+
+    public String[] getDetailCategoryArray(String mainCategory) {
+        return useCase.getDetailCategoryArray(mainCategory);
     }
 }

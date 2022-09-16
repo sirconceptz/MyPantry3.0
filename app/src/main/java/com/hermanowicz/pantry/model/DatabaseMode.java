@@ -8,9 +8,14 @@ import java.util.Objects;
 
 public class DatabaseMode {
 
-    private Mode databaseMode = Mode.LOCAL;
+    public static final String dbTableProducts = "products";
+    public static final String dbTableCategories = "categories";
+    public static final String dbTableStorageLocations = "storage_locations";
+    public static final String dbTablePhotos = "categories";
 
-    public enum Mode {LOCAL, ONLINE}
+    private Mode databaseMode = Mode.LOCAL; // default value
+
+    public enum Mode { LOCAL, ONLINE }
 
     public Mode getDatabaseMode() {
         return databaseMode;

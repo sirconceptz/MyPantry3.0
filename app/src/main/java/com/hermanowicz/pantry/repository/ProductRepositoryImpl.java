@@ -2,13 +2,17 @@ package com.hermanowicz.pantry.repository;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.Base64;
 import android.util.Log;
 
 import androidx.databinding.ObservableField;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.hermanowicz.pantry.dao.db.photo.Photo;
 import com.hermanowicz.pantry.dao.db.product.Product;
 import com.hermanowicz.pantry.dao.db.product.ProductDao;
 import com.hermanowicz.pantry.dao.db.product.ProductDb;
@@ -16,6 +20,7 @@ import com.hermanowicz.pantry.model.DatabaseMode;
 import com.hermanowicz.pantry.model.GroupProduct;
 import com.hermanowicz.pantry.util.InternetConnection;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -90,23 +95,52 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
-    public void addOnlinePhoto(Bitmap bitmap, String photoDescription, ArrayList<Product> productArrayList, String fileName) {
-        //todo: implement
+    public void addOnlinePhoto(Bitmap bitmap, String photoDescription, List<Product> productList, List<Photo> currentPhotoList) {
+        String encodedImage = "";
+        String photoName = "";
+        if(bitmap != null) {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 70, baos);
+            byte[] byteArray = baos.toByteArray();
+            encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
+            photoName = String.valueOf(encodedImage.hashCode());
+        }
+        DatabaseReference ref = DatabaseMode.getOnlineDatabaseReference(DatabaseMode.dbTablePhotos);
+        int photoId = productList.get(0).getId();
+        for(Photo photo : currentPhotoList) {
+            if(photo.getName().equals(productList.get(0).getPhotoName()))
+                ref.child(String.valueOf(photo.getId())).removeValue();
+        }
+        Photo newPhoto = new Photo();
+        newPhoto.setId(photoId);
+        newPhoto.setName(String.valueOf(encodedImage.hashCode()));
+        newPhoto.setContent(encodedImage);
+        ref.child(String.valueOf(newPhoto.getId())).setValue(newPhoto);
+
+        ref = DatabaseMode.getOnlineDatabaseReference(DatabaseMode.dbTableProducts);
+        for(Product product : productList) {
+            if(encodedImage.length() > 0)
+                product.setPhotoName(photoName);
+            product.setPhotoDescription(photoDescription);
+            ref.child(String.valueOf(product.getId())).setValue(product);
+        }
     }
 
     @Override
     public void deleteOfflinePhoto(ArrayList<Product> productArrayList) {
-        //todo: implement
+        deletePhotoData(productArrayList);
     }
 
     @Override
     public void deleteOnlinePhoto(ArrayList<Product> productArrayList) {
-        //todo: implement
+        deletePhotoData(productArrayList);
     }
 
-    @Override
-    public LiveData<List<Product>> getAllLocalProducts() {
-        return productDao.getAllProducts();
+    private void deletePhotoData(List<Product> productList) {
+        for (Product product : productList) {
+            product.setPhotoName("");
+            product.setPhotoDescription("");
+        }
     }
 
     @Override
@@ -191,7 +225,7 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     private void insertOnlineProductList(List<Product> productList) {
-        DatabaseReference ref = DatabaseMode.getOnlineDatabaseReference("products");
+        DatabaseReference ref = DatabaseMode.getOnlineDatabaseReference(DatabaseMode.dbTableProducts);
         insertOnlineProductList(productList, ref);
     }
 
@@ -208,21 +242,21 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     private void updateOnlineProducts(List<Product> productList) {
-        DatabaseReference ref = DatabaseMode.getOnlineDatabaseReference("products");
+        DatabaseReference ref = DatabaseMode.getOnlineDatabaseReference(DatabaseMode.dbTableProducts);
         for(Product product : productList) {
             ref.child(String.valueOf(product.getId())).setValue(product);
         }
     }
 
     private void deleteOnlineProducts(List<Product> productList) {
-        DatabaseReference ref = DatabaseMode.getOnlineDatabaseReference("products");
+        DatabaseReference ref = DatabaseMode.getOnlineDatabaseReference(DatabaseMode.dbTableProducts);
         for(Product product : productList) {
             ref.child(String.valueOf(product.getId())).removeValue();
         }
     }
 
     private void deleteAllOnlineProducts() {
-        DatabaseReference ref = DatabaseMode.getOnlineDatabaseReference("products");
+        DatabaseReference ref = DatabaseMode.getOnlineDatabaseReference(DatabaseMode.dbTableProducts);
         ref.removeValue();
     }
 

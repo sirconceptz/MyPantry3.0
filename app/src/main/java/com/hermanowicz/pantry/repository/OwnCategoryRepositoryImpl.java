@@ -65,7 +65,7 @@ public class OwnCategoryRepositoryImpl implements OwnCategoryRepository {
     }
 
     private void insertOnlineCategory(Category category) {
-        DatabaseReference dbRef = DatabaseMode.getOnlineDatabaseReference("categories");
+        DatabaseReference dbRef = DatabaseMode.getOnlineDatabaseReference(DatabaseMode.dbTableCategories);
         dbRef.child(String.valueOf(category.getId())).setValue(category);
     }
 
@@ -104,7 +104,7 @@ public class OwnCategoryRepositoryImpl implements OwnCategoryRepository {
     }
 
     private void deleteOnlineCategory(Category category) {
-        DatabaseReference dbRef = DatabaseMode.getOnlineDatabaseReference("categories");
+        DatabaseReference dbRef = DatabaseMode.getOnlineDatabaseReference(DatabaseMode.dbTableCategories);
         dbRef.child(String.valueOf(category.getId())).removeValue();
     }
 
@@ -126,7 +126,7 @@ public class OwnCategoryRepositoryImpl implements OwnCategoryRepository {
     }
 
     private void deleteAllOnlineCategories() {
-        DatabaseReference dbRef = DatabaseMode.getOnlineDatabaseReference("categories");
+        DatabaseReference dbRef = DatabaseMode.getOnlineDatabaseReference(DatabaseMode.dbTableCategories);
         dbRef.removeValue();
     }
 
@@ -143,5 +143,19 @@ public class OwnCategoryRepositoryImpl implements OwnCategoryRepository {
     @Override
     public List<Category> getAllLocalCategoriesAsList() {
         return categoryDao.getOwnCategoriesAsList();
+    }
+
+    @Override
+    public String[] getAllCategoriesNameAsList(DatabaseMode databaseMode) {
+        LiveData<List<Category>> categoryLiveDataList = getAllCategories(databaseMode);
+        List<Category> categoryList = categoryLiveDataList.getValue();
+        String[] allCategoriesNames = new String[0];
+        if (categoryList != null) {
+            allCategoriesNames = new String[categoryList.size()];
+            for(int counter = 0; counter <= categoryList.size(); counter++) {
+                allCategoriesNames[counter] = categoryList.get(counter).getName();
+            }
+        }
+        return allCategoriesNames;
     }
 }

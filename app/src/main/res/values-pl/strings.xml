@@ -125,7 +125,7 @@
     <string-array name="product_choose_array">
         <item>Wybierz</item>
     </string-array>
-    <string-array name="ProductDetailsActivity_store_products_array">
+    <string-array name="product_store_products_array">
         <item>Wybierz</item>
         <item>Produkty sklepowe</item>
     </string-array>
@@ -215,7 +215,7 @@
     <string name="settings_give_email_adress">Adres email do powiadomień</string>
     <string name="settings_how_many_days_before_the_expiration_date_send_a_notification">Ile dni przed przeterminowaniem?</string>
     <string name="settings_restore_product_database">Importuj bazę produktów</string>
-    <string name="settings_export_product_database">Eksportuj bazę produktów</string>
+    <string name="settings_backup_product_database">Eksportuj bazę produktów</string>
     <string name="settings_clear_product_database">Wyczyść bazę danych produktów</string>
     <string name="settings_restore_category_database">Importuj bazę kategorii</string>
     <string name="settings_backup_category_database">Eksportuj bazę kategorii</string>

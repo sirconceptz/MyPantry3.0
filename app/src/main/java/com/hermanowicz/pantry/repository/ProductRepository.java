@@ -6,6 +6,7 @@ import androidx.databinding.ObservableField;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.hermanowicz.pantry.dao.db.photo.Photo;
 import com.hermanowicz.pantry.dao.db.product.Product;
 import com.hermanowicz.pantry.model.DatabaseMode;
 import com.hermanowicz.pantry.model.GroupProduct;
@@ -36,13 +37,11 @@ public interface ProductRepository {
 
     void addOfflinePhoto(String photoDescription, ArrayList<Product> productArrayList, String fileName);
 
-    void addOnlinePhoto(Bitmap bitmap, String photoDescription, ArrayList<Product> productArrayList, String fileName);
+    void addOnlinePhoto(Bitmap bitmap, String photoDescription, List<Product> productList, List<Photo> currentPhotoList);
 
     void deleteOfflinePhoto(ArrayList<Product> productArrayList);
 
     void deleteOnlinePhoto(ArrayList<Product> productArrayList);
-
-    LiveData<List<Product>> getAllLocalProducts();
 
     String[] getGroupProductNames(ArrayList<Product> productArrayList);
 

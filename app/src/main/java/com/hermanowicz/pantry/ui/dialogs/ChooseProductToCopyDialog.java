@@ -74,7 +74,7 @@ public class ChooseProductToCopyDialog extends AppCompatDialogFragment {
         view = binding.getRoot();
         chooseProductToCopySpinner = view.findViewById(R.id.spinner_chooseProductToCopy);
 
-        ArrayAdapter<CharSequence> adapter = new ArrayAdapter<>(getActivity(), R.layout.custom_spinner, namesProductList);
+        ArrayAdapter<CharSequence> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, namesProductList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         chooseProductToCopySpinner.setAdapter(adapter);
     }

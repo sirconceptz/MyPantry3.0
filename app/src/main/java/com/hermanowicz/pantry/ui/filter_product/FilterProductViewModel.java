@@ -78,6 +78,19 @@ public class FilterProductViewModel extends ViewModel {
         useCase = filterProductUseCase;
         storageLocations = useCase.getAllStorageLocationsNames();
         ownCategoriesNamesLiveData = useCase.getAllOwnCategoriesNames();
+
+        resetDateData();
+    }
+
+    private void resetDateData() {
+        DateHelper.resetDateInDatePicker(expirationDateSinceYear, expirationDateSinceMonth, expirationDateSinceDay);
+        DateHelper.resetDateInDatePicker(expirationDateForYear, expirationDateForMonth, expirationDateForDay);
+        DateHelper.resetDateInDatePicker(productionDateSinceYear, productionDateSinceMonth, productionDateSinceDay);
+        DateHelper.resetDateInDatePicker(productionDateForYear, productionDateForMonth, productionDateForDay);
+        useCase.clearExpirationDateSince();
+        useCase.clearExpirationDateFor();
+        useCase.clearProductionDateSince();
+        useCase.clearProductionDateFor();
     }
 
     public FilterModel getFilterModel() {
@@ -98,11 +111,11 @@ public class FilterProductViewModel extends ViewModel {
         if(!Objects.equals(weightSince.get(), ""))
             filterModel.setWeightSince(Integer.parseInt(Objects.requireNonNull(weightSince.get())));
         if(!Objects.equals(weightFor.get(), ""))
-        filterModel.setWeightFor(Integer.parseInt(Objects.requireNonNull(weightFor.get())));
+            filterModel.setWeightFor(Integer.parseInt(Objects.requireNonNull(weightFor.get())));
         if(!Objects.equals(volumeSince.get(), ""))
-        filterModel.setVolumeSince(Integer.parseInt(Objects.requireNonNull(volumeSince.get())));
+            filterModel.setVolumeSince(Integer.parseInt(Objects.requireNonNull(volumeSince.get())));
         if(!Objects.equals(volumeFor.get(), ""))
-        filterModel.setVolumeFor(Integer.parseInt(Objects.requireNonNull(volumeFor.get())));
+            filterModel.setVolumeFor(Integer.parseInt(Objects.requireNonNull(volumeFor.get())));
 
         return filterModel;
     }
@@ -155,14 +168,6 @@ public class FilterProductViewModel extends ViewModel {
         productName.set("");
         mainCategory.setValue("");
         detailCategory.setValue("");
-        DateHelper.resetDateInDatePicker(expirationDateSinceYear, expirationDateSinceMonth, expirationDateSinceDay);
-        DateHelper.resetDateInDatePicker(expirationDateForYear, expirationDateForMonth, expirationDateForDay);
-        DateHelper.resetDateInDatePicker(productionDateSinceYear, productionDateSinceMonth, productionDateSinceDay);
-        DateHelper.resetDateInDatePicker(productionDateForYear, productionDateForMonth, productionDateForDay);
-        useCase.clearExpirationDateSince();
-        useCase.clearExpirationDateFor();
-        useCase.clearProductionDateSince();
-        useCase.clearProductionDateFor();
         weightSince.set("");
         weightFor.set("");
         volumeSince.set("");
@@ -176,5 +181,7 @@ public class FilterProductViewModel extends ViewModel {
         isBitter.set(false);
         hasSugar.set(false);
         hasSalt.set(false);
+
+        resetDateData();
     }
 }

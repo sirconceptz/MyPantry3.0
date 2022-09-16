@@ -38,20 +38,21 @@ android {
         dataBinding true
     }
     buildToolsVersion '32.1.0-rc1'
+    namespace 'com.hermanowicz.pantry'
 }
 
 dependencies {
     //core
-    implementation 'androidx.appcompat:appcompat:1.5.0'
+    implementation 'androidx.appcompat:appcompat:1.5.1'
     implementation "androidx.multidex:multidex:2.0.1"
     implementation 'com.google.android.material:material:1.6.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.1'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.5.1'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.2'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.5.2'
     implementation 'androidx.preference:preference-ktx:1.2.0'
-    implementation 'androidx.work:work-runtime-ktx:2.8.0-alpha03'
+    implementation 'androidx.work:work-runtime-ktx:2.8.0-alpha04'
     implementation 'com.google.android.gms:play-services-auth:20.3.0'
 
     //premium payment
@@ -60,7 +61,7 @@ dependencies {
     //firebase
     implementation 'com.google.firebase:firebase-analytics:21.1.1'
     implementation 'com.google.firebase:firebase-core:21.1.1'
-    implementation 'com.google.firebase:firebase-firestore:24.3.0'
+    implementation 'com.google.firebase:firebase-firestore:24.3.1'
     implementation 'com.google.firebase:firebase-messaging:23.0.8'
     implementation 'com.google.firebase:firebase-auth:21.0.8'
     implementation 'com.google.firebase:firebase-database:20.0.6'

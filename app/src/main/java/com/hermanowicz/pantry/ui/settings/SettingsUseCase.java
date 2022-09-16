@@ -3,8 +3,13 @@ package com.hermanowicz.pantry.ui.settings;
 import android.app.Activity;
 import android.content.Context;
 
+import androidx.lifecycle.MutableLiveData;
+
+import com.hermanowicz.pantry.dao.db.product.Product;
 import com.hermanowicz.pantry.interfaces.PricingListener;
 import com.hermanowicz.pantry.util.PremiumAccess;
+
+import java.util.List;
 
 public interface SettingsUseCase {
     void setPremiumActivationListenerAndSetupBillingClient(Context context, PricingListener pricingListener);
@@ -38,4 +43,10 @@ public interface SettingsUseCase {
     void clearOwnCategoriesDb();
 
     void clearStorageLocationsDb();
+
+    void restoreNotificationsIfNeeded();
+
+    void setNotificationsToRestoreFlag();
+
+    void setProductList(List<Product> productList);
 }

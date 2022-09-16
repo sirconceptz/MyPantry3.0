@@ -40,7 +40,7 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
         intentNotificationService.putExtra("product_name",
                 intent.getStringExtra("product_name"));
         intentNotificationService.putExtra("product_id",
-                intent.getStringExtra("product_id"));
+                intent.getIntExtra("product_id", 0));
         context.startService(intentNotificationService);
     }
 }

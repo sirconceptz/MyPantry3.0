@@ -23,6 +23,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -61,6 +62,7 @@ public class ProductsPhotoViewModel extends ViewModel {
     ProductsPhotoUseCaseImpl useCase;
     private final String TAG = "RxJava-Photos";
     private ArrayList<Product> productArrayList = new ArrayList<>();
+    private LiveData<List<Photo>> photoList;
     private final CompositeDisposable disposable = new CompositeDisposable();
     private AvailableDataListener availableDataListener;
     private ProductPhotoViewActions viewActionsListener;
@@ -81,6 +83,7 @@ public class ProductsPhotoViewModel extends ViewModel {
 
     public void setDatabaseModeAndShowPhoto(DatabaseMode databaseMode){
         useCase.setDatabaseMode(databaseMode);
+        photoList = useCase.getPhotoList(databaseMode);
         showPhoto();
     }
 
@@ -178,7 +181,6 @@ public class ProductsPhotoViewModel extends ViewModel {
         };
     }
 
-
     public ArrayList<Product> getProductArrayList() {
         return productArrayList;
     }
@@ -189,5 +191,13 @@ public class ProductsPhotoViewModel extends ViewModel {
 
     public void setAvailableDataListener(AvailableDataListener availableDataListener) {
         this.availableDataListener = availableDataListener;
+    }
+
+    public LiveData<List<Photo>> getPhotoList() {
+        return photoList;
+    }
+
+    public void setCurrentPhotoList(List<Photo> photos) {
+        useCase.setCurrentPhotoList(photos);
     }
 }

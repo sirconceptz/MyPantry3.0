@@ -26,6 +26,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
@@ -48,10 +49,10 @@ public class PhotoRepositoryImpl implements PhotoRepository {
     private final String filePath;
     private String fileName;
     private Bitmap photoBitmap;
-    private ContentResolver contentResolver;
+    private final ContentResolver contentResolver;
+    private List<Photo> currentPhotoList;
     private final InternetConnection internetConnection;
     private MutableLiveData<List<Photo>> onlinePhotoListLiveData;
-    private MutableLiveData<List<Photo>> offlinePhotoListLiveData;
 
     public PhotoRepositoryImpl(Context context){
         filePath = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES
@@ -111,7 +112,14 @@ public class PhotoRepositoryImpl implements PhotoRepository {
 
     @Override
     public void setPhotoFileFromOnlineDb(String photoName) {
-
+        if(currentPhotoList != null) {
+            for (Photo photo : currentPhotoList) {
+                if (photo.getName().equals(photoName)) {
+                    byte[] decodedString = Base64.decode(photo.getContent(), Base64.DEFAULT);
+                    photoBitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                }
+            }
+        }
     }
 
     private void savePhotoIfBelowAPI28(Bitmap bitmap, String fileName) throws IOException {
@@ -145,16 +153,6 @@ public class PhotoRepositoryImpl implements PhotoRepository {
     }
 
     @Override
-    public MutableLiveData<List<Photo>> getOfflinePhotoListLiveData() {
-        return offlinePhotoListLiveData;
-    }
-
-    @Override
-    public void setOfflinePhotoListLiveData(MutableLiveData<List<Photo>> offlinePhotoListLiveData) {
-        this.offlinePhotoListLiveData = offlinePhotoListLiveData;
-    }
-
-    @Override
     public MutableLiveData<List<Photo>> getOnlinePhotoListLiveData() {
         return onlinePhotoListLiveData;
     }
@@ -162,5 +160,25 @@ public class PhotoRepositoryImpl implements PhotoRepository {
     @Override
     public void setOnlinePhotoListLiveData(MutableLiveData<List<Photo>> onlinePhotoListLiveData) {
         this.onlinePhotoListLiveData = onlinePhotoListLiveData;
+    }
+
+    @Override
+    public void deleteLocalPhotoFile() {
+        photoFile.delete();
+    }
+
+    @Override
+    public void deleteOnlinePhoto() {
+
+    }
+
+    @Override
+    public void setCurrentPhotoList(List<Photo> photos) {
+        currentPhotoList = photos;
+    }
+
+    @Override
+    public List<Photo> getCurrentPhotoList() {
+        return currentPhotoList;
     }
 }

@@ -19,6 +19,7 @@ import com.hermanowicz.pantry.repository.PricingRepositoryImpl;
 import com.hermanowicz.pantry.repository.ProductRepository;
 import com.hermanowicz.pantry.repository.SharedPreferencesRepository;
 import com.hermanowicz.pantry.repository.StorageLocationRepository;
+import com.hermanowicz.pantry.util.Notifications;
 import com.hermanowicz.pantry.util.PremiumAccess;
 
 import java.util.List;
@@ -34,15 +35,23 @@ public class SettingsUseCaseImpl implements SettingsUseCase {
     private final StorageLocationRepository storageLocationRepository;
     private final DatabaseBackupRepository databaseBackupRepository;
     private final SharedPreferencesRepository sharedPreferencesRepository;
+    private final Notifications notifications;
 
     @Inject
-    public SettingsUseCaseImpl(PremiumAccess premiumAccess, ProductRepository productRepository, OwnCategoryRepository ownCategoryRepository, StorageLocationRepository storageLocationRepository, DatabaseBackupRepository databaseBackupRepository, SharedPreferencesRepository sharedPreferencesRepository) {
+    public SettingsUseCaseImpl(PremiumAccess premiumAccess,
+                               ProductRepository productRepository,
+                               OwnCategoryRepository ownCategoryRepository,
+                               StorageLocationRepository storageLocationRepository,
+                               DatabaseBackupRepository databaseBackupRepository,
+                               SharedPreferencesRepository sharedPreferencesRepository,
+                               Notifications notifications) {
         this.premiumAccess = premiumAccess;
         this.productRepository = productRepository;
         this.ownCategoryRepository = ownCategoryRepository;
         this.storageLocationRepository = storageLocationRepository;
         this.databaseBackupRepository = databaseBackupRepository;
         this.sharedPreferencesRepository = sharedPreferencesRepository;
+        this.notifications = notifications;
     }
 
     @Override
@@ -180,5 +189,24 @@ public class SettingsUseCaseImpl implements SettingsUseCase {
     public void clearStorageLocationsDb() {
         DatabaseMode currentDatabaseMode = sharedPreferencesRepository.getDatabaseModeFromSettings();
         storageLocationRepository.deleteAll(currentDatabaseMode);
+    }
+
+    @Override
+    public void restoreNotificationsIfNeeded() {
+        if(sharedPreferencesRepository.getIsNotificationsToRestore()) {
+            notifications.cancelNotificationsForAllProducts();
+            notifications.createNotificationsForAllProducts();
+            sharedPreferencesRepository.setIsNotificationsToRestore(false);
+        }
+    }
+
+    @Override
+    public void setNotificationsToRestoreFlag() {
+        sharedPreferencesRepository.setIsNotificationsToRestore(true);
+    }
+
+    @Override
+    public void setProductList(List<Product> productList) {
+        notifications.setProductList(productList);
     }
 }

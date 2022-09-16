@@ -17,10 +17,8 @@
 
 package com.hermanowicz.pantry.interfaces;
 
-import com.hermanowicz.pantry.model.GroupProduct;
-
-import java.util.ArrayList;
-
-public interface NewProductDialogListener {
+public interface NewProductViewActions {
     void showDialogChooseProductToCopy(String[] groupProductNames);
+
+    void showErrorNameIsTooShort();
 }

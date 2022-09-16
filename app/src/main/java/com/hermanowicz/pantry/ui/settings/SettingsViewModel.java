@@ -5,9 +5,12 @@ import android.content.Context;
 
 import androidx.lifecycle.ViewModel;
 
+import com.hermanowicz.pantry.dao.db.product.Product;
 import com.hermanowicz.pantry.interfaces.PricingListener;
 import com.hermanowicz.pantry.interfaces.PreferencesListener;
 import com.hermanowicz.pantry.util.PremiumAccess;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -122,6 +125,21 @@ public class SettingsViewModel extends ViewModel implements PricingListener {
     }
 
     public void onClickImportLocalDatabaseToCloud() {
-        useCase.importLocalDataToCloud();
+        if(isPremiumAccess.isPremium())
+            useCase.importLocalDataToCloud();
+        else
+            preferencesListener.showInfoForPremiumUserOnly();
+    }
+
+    public void setProductList(List<Product> productList) {
+        useCase.setProductList(productList);
+    }
+
+    public void restoreNotificationsIfNeeded() {
+        useCase.restoreNotificationsIfNeeded();
+    }
+
+    public void setNotificationsToRestoreFlag() {
+        useCase.setNotificationsToRestoreFlag();
     }
 }

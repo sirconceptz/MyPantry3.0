@@ -16,4 +16,8 @@ public interface SharedPreferencesRepository {
     boolean getSelectedSoundMode();
 
     boolean getIsBigPrintQRCode();
+
+    boolean getIsNotificationsToRestore();
+
+    void setIsNotificationsToRestore(boolean notificationsToRestore);
 }

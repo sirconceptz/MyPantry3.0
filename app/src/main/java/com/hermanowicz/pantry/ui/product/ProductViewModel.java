@@ -53,7 +53,6 @@ public class ProductViewModel extends ViewModel {
     @Inject
     public ProductViewModel(ProductUseCaseImpl productUseCase) {
         this.useCase = productUseCase;
-        loadOnlineProducts();
     }
 
     public GroupProduct getGroupProduct(int position) {
@@ -148,6 +147,7 @@ public class ProductViewModel extends ViewModel {
 
     public void setAvailableDataListener(AvailableDataListener listener) {
         availableDataListener = listener;
+        loadOnlineProducts();
     }
 
     public LiveData<List<Product>> getAllProductList() {

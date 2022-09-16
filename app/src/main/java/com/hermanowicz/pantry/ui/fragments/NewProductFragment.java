@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -15,21 +16,19 @@ import androidx.navigation.Navigation;
 import com.hermanowicz.pantry.R;
 import com.hermanowicz.pantry.dao.db.product.Product;
 import com.hermanowicz.pantry.databinding.FragmentNewProductBinding;
-import com.hermanowicz.pantry.interfaces.NewProductDialogListener;
+import com.hermanowicz.pantry.interfaces.NewProductViewActions;
 import com.hermanowicz.pantry.interfaces.ProductToCopyView;
-import com.hermanowicz.pantry.model.GroupProduct;
 import com.hermanowicz.pantry.ui.database_mode.DatabaseModeViewModel;
 import com.hermanowicz.pantry.ui.dialogs.ChooseProductToCopyDialog;
 import com.hermanowicz.pantry.ui.new_product.NewProductViewModel;
 import com.hermanowicz.pantry.util.DetailCategoryAdapter;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
-public class NewProductFragment extends Fragment implements NewProductDialogListener, ProductToCopyView {
+public class NewProductFragment extends Fragment implements NewProductViewActions, ProductToCopyView {
 
     private FragmentNewProductBinding binding;
     private DatabaseModeViewModel databaseModeViewModel;
@@ -86,11 +85,19 @@ public class NewProductFragment extends Fragment implements NewProductDialogList
     }
 
     private void onClickAddNewProduct(View view) {
-        int selectedTasteId = binding.radiogroupTaste.getCheckedRadioButtonId();
-        RadioButton taste = view.findViewById(selectedTasteId);
-        newProductViewModel.setTaste(taste);
-        newProductViewModel.insertProducts();
-        navigateToPrintQRCodes(newProductViewModel.getProductListToInsert());
+        if(newProductViewModel.isFormValid()) {
+            int selectedTasteId = binding.radiogroupTaste.getCheckedRadioButtonId();
+            RadioButton taste = view.findViewById(selectedTasteId);
+            newProductViewModel.setTaste(taste);
+            newProductViewModel.insertProducts();
+            navigateToPrintQRCodes(newProductViewModel.getProductListToInsert());
+        }
+        else
+            showErrorFormWrongFilled();
+    }
+
+    private void showErrorFormWrongFilled() {
+
     }
 
     private void navigateToPrintQRCodes(ArrayList<Product> productArrayList) {
@@ -114,6 +121,12 @@ public class NewProductFragment extends Fragment implements NewProductDialogList
     public void showDialogChooseProductToCopy(String[] groupProductNames) {
         ChooseProductToCopyDialog dialog = new ChooseProductToCopyDialog(groupProductNames);
         dialog.show(requireActivity().getSupportFragmentManager(), "");
+    }
+
+    @Override
+    public void showErrorNameIsTooShort() {
+        binding.productNameText.setError(getString(R.string.error_product_name_is_required));
+        Toast.makeText(requireActivity(), getString(R.string.error_product_name_is_required), Toast.LENGTH_LONG).show();
     }
 
     @Override

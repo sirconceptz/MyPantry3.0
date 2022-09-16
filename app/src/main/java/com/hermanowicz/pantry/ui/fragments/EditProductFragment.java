@@ -13,18 +13,16 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import com.hermanowicz.pantry.R;
-import com.hermanowicz.pantry.dao.db.product.Product;
 import com.hermanowicz.pantry.databinding.FragmentEditProductBinding;
+import com.hermanowicz.pantry.interfaces.EditProductViewActions;
 import com.hermanowicz.pantry.ui.database_mode.DatabaseModeViewModel;
 import com.hermanowicz.pantry.ui.edit_product.EditProductViewModel;
 import com.hermanowicz.pantry.util.DetailCategoryAdapter;
 
-import java.util.ArrayList;
-
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
-public class EditProductFragment extends Fragment {
+public class EditProductFragment extends Fragment implements EditProductViewActions {
 
     private FragmentEditProductBinding binding;
     private DatabaseModeViewModel databaseModeViewModel;
@@ -44,6 +42,7 @@ public class EditProductFragment extends Fragment {
     private void initView(@NonNull LayoutInflater inflater, ViewGroup container) {
         databaseModeViewModel = new ViewModelProvider(this).get(DatabaseModeViewModel.class);
         editProductViewModel = new ViewModelProvider(this).get(EditProductViewModel.class);
+        editProductViewModel.setViewActionsListener(this);
 
         binding = FragmentEditProductBinding.inflate(inflater, container, false);
         binding.setViewModel(editProductViewModel);
@@ -70,22 +69,12 @@ public class EditProductFragment extends Fragment {
     private void setObservers() {
         databaseModeViewModel.getDatabaseMode().observe(getViewLifecycleOwner(),
                 editProductViewModel::setDatabaseMode);
-        editProductViewModel.getMainCategoryValue().observe(getViewLifecycleOwner(), this::updateDetailCategoryAdapter);
         editProductViewModel.getStorageLocations().observe(getViewLifecycleOwner(), this::updateStorageLocationAdapter);
         editProductViewModel.getOwnCategoriesNamesLiveData().observe(getViewLifecycleOwner(), editProductViewModel::setOwnCategoriesNamesArray);
     }
 
     private void getProductAndShow() {
-        assert getArguments() != null;
-        ArrayList<Product> productArrayLists = getArguments().getParcelableArrayList("productArrayList");
-        editProductViewModel.setArrayProductList(productArrayLists);
-        editProductViewModel.showDataForSelectedDatabase();
-    }
-
-    private void updateDetailCategoryAdapter(String selectedMainCategory) {
-        ArrayAdapter<CharSequence> detailCategoryAdapter =
-                DetailCategoryAdapter.getDetailCategoryAdapter(requireContext(), selectedMainCategory, editProductViewModel.getOwnCategoriesNamesArray());
-        binding.detailCategoryInput.setAdapter(detailCategoryAdapter);
+        editProductViewModel.getProductAndShow(getArguments());
     }
 
     private void updateStorageLocationAdapter(String[] storageLocations) {
@@ -97,5 +86,20 @@ public class EditProductFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    @Override
+    public void setSpinnerSelections(int productMainCategorySpinner, int productDetailCategorySpinner, int productStorageLocationSpinnerPosition) {
+        binding.mainCategoryInput.setSelection(productMainCategorySpinner);
+        setDetailCategoryAdapter(productDetailCategorySpinner);
+        binding.storageLocationInput.setSelection(productStorageLocationSpinnerPosition);
+    }
+
+    private void setDetailCategoryAdapter(int productDetailCategorySpinner) {
+        String mainCategory = binding.mainCategoryInput.getSelectedItem().toString();
+        String[] detailCategoryArray = editProductViewModel.getDetailCategoryArray(mainCategory);
+        ArrayAdapter<CharSequence> detailCategoryAdapter = new ArrayAdapter<>(requireActivity(), android.R.layout.simple_spinner_dropdown_item, detailCategoryArray);
+        binding.detailCategoryInput.setAdapter(detailCategoryAdapter);
+        binding.detailCategoryInput.setSelection(productDetailCategorySpinner);
     }
 }

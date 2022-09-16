@@ -24,6 +24,7 @@ import com.hermanowicz.pantry.model.GroupProduct;
 import com.hermanowicz.pantry.ui.database_mode.DatabaseModeViewModel;
 import com.hermanowicz.pantry.ui.filter_product.FilterProductViewModel;
 import com.hermanowicz.pantry.ui.product.ProductViewModel;
+import com.hermanowicz.pantry.ui.settings.SettingsViewModel;
 import com.hermanowicz.pantry.util.ProductsAdapter;
 import com.hermanowicz.pantry.util.RecyclerClickListener;
 
@@ -36,9 +37,9 @@ import dagger.hilt.android.AndroidEntryPoint;
 public class MyPantryFragment extends Fragment implements AvailableDataListener, FilteredDataListener {
 
     private FragmentMyPantryBinding binding;
-    private FilterProductViewModel filterProductViewModel;
     private ProductViewModel productViewModel;
     private DatabaseModeViewModel databaseModeViewModel;
+    private SettingsViewModel settingsViewModel;
     private View view;
     private ProductsAdapter productsAdapter;
 
@@ -53,9 +54,9 @@ public class MyPantryFragment extends Fragment implements AvailableDataListener,
     }
 
     private void initView(@NonNull LayoutInflater inflater, ViewGroup container) {
-        filterProductViewModel = new ViewModelProvider(this).get(FilterProductViewModel.class);
         productViewModel = new ViewModelProvider(this).get(ProductViewModel.class);
         databaseModeViewModel = new ViewModelProvider(this).get(DatabaseModeViewModel.class);
+        settingsViewModel = new ViewModelProvider(this).get(SettingsViewModel.class);
 
         productViewModel.setFilterModelFromArguments(getArguments());
         productViewModel.setFilteredDataListener(this);
@@ -133,11 +134,17 @@ public class MyPantryFragment extends Fragment implements AvailableDataListener,
         databaseModeViewModel.getDatabaseMode().observe(getViewLifecycleOwner(),
                 productViewModel::updateDataForSelectedDatabase);
         productViewModel.getAllProductList().observe(getViewLifecycleOwner(),
-            productViewModel::filterProductList);
+            this::filterProductList);
+    }
+
+    private void filterProductList(List<Product> productList) {
+        settingsViewModel.setProductList(productList);
+        productViewModel.filterProductList(productList);
     }
 
     @Override
     public void observeFilteredData() {
+        settingsViewModel.restoreNotificationsIfNeeded();
         productViewModel.getFilteredProductsLiveData().observe(getViewLifecycleOwner(),
                 productViewModel::convertProductListToGroupProductList);
         productViewModel.getAllGroupProductList().observe(getViewLifecycleOwner(),

@@ -44,8 +44,6 @@ public class ProductsPhotoUseCaseImpl implements ProductsPhotoUseCase {
     public ProductsPhotoUseCaseImpl(ProductRepository productRepository, PhotoRepository photoRepository){
         this.productRepository = productRepository;
         this.photoRepository = photoRepository;
-        LiveData<List<Product>> productList = productRepository.getAllLocalProducts();
-        //photoRepository.setOfflinePhotoListLiveData(productList);
     }
 
     @Override
@@ -55,14 +53,18 @@ public class ProductsPhotoUseCaseImpl implements ProductsPhotoUseCase {
             photoRepository.savePhotoInGallery(bitmap, fileName);
             productRepository.addOfflinePhoto(photoDescription, productArrayList, fileName);
         }
-        else if (databaseMode.getDatabaseMode() == DatabaseMode.Mode.ONLINE)
-            productRepository.addOnlinePhoto(bitmap, photoDescription, productArrayList, fileName);
+        else if (databaseMode.getDatabaseMode() == DatabaseMode.Mode.ONLINE) {
+            List<Photo> currentPhotoList = photoRepository.getCurrentPhotoList();
+            productRepository.addOnlinePhoto(bitmap, photoDescription, productArrayList, currentPhotoList);
+        }
     }
 
     @Override
     public void deletePhoto(ArrayList<Product> productArrayList) {
-        if(databaseMode.getDatabaseMode() == DatabaseMode.Mode.LOCAL)
+        if(databaseMode.getDatabaseMode() == DatabaseMode.Mode.LOCAL) {
             productRepository.deleteOfflinePhoto(productArrayList);
+            photoRepository.deleteLocalPhotoFile();
+        }
         else if (databaseMode.getDatabaseMode() == DatabaseMode.Mode.ONLINE)
             productRepository.deleteOnlinePhoto(productArrayList);
     }
@@ -103,5 +105,15 @@ public class ProductsPhotoUseCaseImpl implements ProductsPhotoUseCase {
     @Override
     public void setOnlinePhotoList(MutableLiveData<List<Photo>> photoList) {
         photoRepository.setOnlinePhotoListLiveData(photoList);
+    }
+
+    @Override
+    public LiveData<List<Photo>> getPhotoList(DatabaseMode databaseMode) {
+        return photoRepository.getOnlinePhotoListLiveData();
+    }
+
+    @Override
+    public void setCurrentPhotoList(List<Photo> photos) {
+        photoRepository.setCurrentPhotoList(photos);
     }
 }

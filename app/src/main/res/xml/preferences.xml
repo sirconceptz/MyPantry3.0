@@ -134,7 +134,7 @@
             android:selectable="true"
             android:enabled="true"
             android:key="@string/preferences_key_backup_product_db"
-            android:title="@string/settings_export_product_database" />
+            android:title="@string/settings_backup_product_database" />
 
         <Preference
             android:icon="@drawable/ic_clear_db"

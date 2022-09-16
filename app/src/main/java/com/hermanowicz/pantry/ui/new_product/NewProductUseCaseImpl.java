@@ -11,6 +11,7 @@ import com.hermanowicz.pantry.model.GroupProduct;
 import com.hermanowicz.pantry.repository.OwnCategoryRepository;
 import com.hermanowicz.pantry.repository.ProductRepository;
 import com.hermanowicz.pantry.repository.StorageLocationRepository;
+import com.hermanowicz.pantry.util.Notifications;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -26,24 +27,27 @@ public class NewProductUseCaseImpl implements NewProductUseCase {
     private final StorageLocationRepository storageLocationRepository;
     private final OwnCategoryRepository ownCategoryRepository;
     private final Resources resources;
+    private final Notifications notifications;
     private DatabaseMode databaseMode;
-    private String expirationDate = "";
-    private String productionDate = "";
+    private String expirationDate = "-";
+    private String productionDate = "-";
 
     @Inject
     public NewProductUseCaseImpl(ProductRepository productRepository,
                                  StorageLocationRepository storageLocationRepository,
                                  OwnCategoryRepository ownCategoryRepository,
-                                 Resources resources) {
+                                 Resources resources, Notifications notifications) {
         this.productRepository = productRepository;
         this.storageLocationRepository = storageLocationRepository;
         this.ownCategoryRepository = ownCategoryRepository;
         this.resources = resources;
+        this.notifications = notifications;
     }
 
     @Override
     public void insert(List<Product> productList) {
         productRepository.insert(productList, databaseMode);
+        notifications.createNotification(productList);
     }
 
     @Override
@@ -122,11 +126,11 @@ public class NewProductUseCaseImpl implements NewProductUseCase {
 
     @Override
     public void clearExpirationDate() {
-        expirationDate = "";
+        expirationDate = "-";
     }
 
     @Override
     public void clearProductionDate() {
-        productionDate = "";
+        productionDate = "-";
     }
 }

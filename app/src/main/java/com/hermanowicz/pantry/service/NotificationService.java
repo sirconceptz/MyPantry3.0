@@ -28,7 +28,6 @@ import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.media.RingtoneManager;
-import android.os.Build;
 import android.preference.PreferenceManager;
 
 import androidx.annotation.NonNull;
@@ -37,9 +36,10 @@ import androidx.core.content.ContextCompat;
 
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.hermanowicz.pantry.MyApp;
 import com.hermanowicz.pantry.R;
 import com.hermanowicz.pantry.ui.activity.MainActivity;
-import com.hermanowicz.pantry.util.EmailManager;
+import com.hermanowicz.pantry.util.Notifications;
 
 import org.json.JSONObject;
 
@@ -65,7 +65,7 @@ public class NotificationService extends IntentService {
     static final String API_MAIL_FILE = "mail.php";
 
     private String productName;
-    private String daysToNotification;
+    private int daysToNotification;
 
     public NotificationService() {
         super("NotificationService");
@@ -84,28 +84,25 @@ public class NotificationService extends IntentService {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         productName = intent.getStringExtra("product_name");
         int productID = intent.getIntExtra("product_id", 0);
-        daysToNotification = "3";
-        daysToNotification = preferences.getString(
-                PREFERENCES_DAYS_TO_NOTIFICATIONS, com.hermanowicz.pantry.util.Notification.NOTIFICATION_DEFAULT_DAYS);
+        daysToNotification = 3;
+        daysToNotification = preferences.getInt(
+                PREFERENCES_DAYS_TO_NOTIFICATIONS, Notifications.NOTIFICATION_DEFAULT_DAYS);
 
         if (preferences.getBoolean(PREFERENCES_PUSH_NOTIFICATIONS,
                 true)) {
             String channelId = "my_channel_" + productID;
             NotificationManager notificationManager = (NotificationManager)
                     context.getSystemService(Context.NOTIFICATION_SERVICE);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                CharSequence name = "my_channel";
-                String Description = "Products expiration dates notification channel";
-                int importance = NotificationManager.IMPORTANCE_DEFAULT;
-                NotificationChannel mChannel = new NotificationChannel(channelId, name, importance);
-                mChannel.setDescription(Description);
-                mChannel.enableLights(true);
-                mChannel.setLightColor(Color.RED);
-                mChannel.enableVibration(true);
-                mChannel.setShowBadge(false);
-                assert notificationManager != null;
-                notificationManager.createNotificationChannel(mChannel);
-            }
+            CharSequence name = "my_channel";
+            String Description = "Products expiration dates notification channel";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel mChannel = new NotificationChannel(channelId, name, importance);
+            mChannel.setDescription(Description);
+            mChannel.enableLights(true);
+            mChannel.setLightColor(Color.RED);
+            mChannel.enableVibration(true);
+            mChannel.setShowBadge(false);
+            notificationManager.createNotificationChannel(mChannel);
             String notificationStatement = createStatement();
 
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelId);
@@ -122,10 +119,9 @@ public class NotificationService extends IntentService {
             notifyIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
                     | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             PendingIntent pendingIntent = PendingIntent.getActivity(
-                    context, productID, notifyIntent, 0);
+                    context, 0, notifyIntent, PendingIntent.FLAG_IMMUTABLE);
             builder.setContentIntent(pendingIntent);
             Notification notificationCompat = builder.build();
-            assert notificationManager != null;
             notificationManager.notify(productID, notificationCompat);
         }
         if (preferences.getBoolean(PREFERENCES_EMAIL_NOTIFICATIONS,
@@ -139,7 +135,8 @@ public class NotificationService extends IntentService {
             JsonObjectRequest request_json = new JsonObjectRequest(url, new JSONObject(params),
                     response -> {
                     }, error -> VolleyLog.e(getString(R.string.error_error), error.getMessage()));
-            EmailManager.getInstance().addEmailToRequestQueue(request_json);
+            MyApp myApp = MyApp.getInstance();
+            myApp.addEmailToRequestQueue(request_json);
         }
     }
 }
