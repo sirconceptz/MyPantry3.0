@@ -13,6 +13,9 @@ import androidx.fragment.app.Fragment;
 import com.hermanowicz.pantry.R;
 import com.hermanowicz.pantry.databinding.FragmentAboutAuthorBinding;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class AboutAuthorFragment extends Fragment {
 
     private FragmentAboutAuthorBinding binding;

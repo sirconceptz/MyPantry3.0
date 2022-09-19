@@ -45,6 +45,8 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
 /**
  * <h1>NotificationService</h1>
  * A service to handling the notifications in application. User will be informed about
@@ -53,6 +55,7 @@ import java.util.HashMap;
  * @author Mateusz Hermanowicz
  */
 
+@AndroidEntryPoint
 public class NotificationService extends IntentService {
 
     private static final String PREFERENCES_EMAIL_ADDRESS = "EMAIL_ADDRESS";

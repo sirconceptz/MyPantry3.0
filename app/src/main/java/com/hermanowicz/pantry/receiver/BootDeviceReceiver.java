@@ -25,6 +25,8 @@ import android.content.SharedPreferences;
 import androidx.annotation.NonNull;
 import androidx.preference.PreferenceManager;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
 /**
  * <h1>BootDeviceReceiver</h1>
  * A receiver for boot device. This class is needed to renew a notifications on the device.
@@ -34,6 +36,7 @@ import androidx.preference.PreferenceManager;
  * @author Mateusz Hermanowicz
  */
 
+@AndroidEntryPoint
 public class BootDeviceReceiver extends BroadcastReceiver {
 
     @Override

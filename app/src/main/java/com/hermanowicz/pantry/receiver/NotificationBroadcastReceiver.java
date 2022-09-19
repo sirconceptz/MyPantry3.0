@@ -25,6 +25,8 @@ import androidx.annotation.NonNull;
 
 import com.hermanowicz.pantry.service.NotificationService;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
 /**
  * <h1>NotificationBroadcastReceiver</h1>
  * Broadcast receiver for notifications. Sending details needed to prepare notification.
@@ -32,6 +34,7 @@ import com.hermanowicz.pantry.service.NotificationService;
  * @author Mateusz Hermanowicz
  */
 
+@AndroidEntryPoint
 public class NotificationBroadcastReceiver extends BroadcastReceiver {
 
     @Override
