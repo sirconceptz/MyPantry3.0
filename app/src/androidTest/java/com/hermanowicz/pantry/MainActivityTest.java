@@ -87,12 +87,89 @@ public class MainActivityTest {
     }
 
     @Test
-    public void useAppContext() {
+    public void happy_scenario_check_is_right_context() {
         assertEquals("com.hermanowicz.pantry", context.getPackageName());
     }
 
+    //navigation
     @Test
-    public void testNavigationToAuthorFragment() {
+    public void happy_scenario_should_show_fragment_my_pantry() {
+        onView(withId(R.id.drawer_layout)).check(matches(isDisplayed()));
+        onView(withId(R.id.recyclerview_products)).check(matches(isDisplayed()));
+        onView(withId(R.id.newProductFab)).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void happy_scenario_should_go_to_new_product_and_show_fragment() {
+        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
+        onView(withText(R.string.title_new_product)).perform(ViewActions.click());
+
+        onView(withId(R.id.button_addNewProduct)).check(matches(isDisplayed()));
+        onView(withId(R.id.button_clearFields)).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void happy_scenario_should_go_to_scan_product_and_show_fragment() {
+        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
+        onView(withText(R.string.title_scan_product)).perform(ViewActions.click());
+
+        onView(withId(R.id.button_scanProductBarcode)).check(matches(isDisplayed()));
+        onView(withId(R.id.button_scanProductQRCode)).check(matches(isDisplayed()));
+        onView(withId(R.id.button_enterBarcodeManually)).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void happy_scenario_should_go_to_own_categories_and_show_fragment() {
+        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
+        onView(withText(R.string.title_own_categories)).perform(ViewActions.click());
+
+        onView(withId(R.id.recyclerview_categories)).check(matches(isDisplayed()));
+        onView(withId(R.id.newCategoryFab)).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void happy_scenario_should_go_to_new_category_and_show_fragment() {
+        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
+        onView(withText(R.string.title_own_categories)).perform(ViewActions.click());
+        onView(withId(R.id.newCategoryFab)).perform(ViewActions.click());
+
+        onView(withId(R.id.categoryNameInput)).check(matches(isDisplayed()));
+        onView(withId(R.id.categoryDescriptionInput)).check(matches(isDisplayed()));
+        onView(withId(R.id.button_addNewCategory)).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void happy_scenario_should_go_to_storage_locations_and_show_fragment() {
+        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
+        onView(withText(R.string.title_storage_locations)).perform(ViewActions.click());
+
+        onView(withId(R.id.recyclerview_storage_locations)).check(matches(isDisplayed()));
+        onView(withId(R.id.newStorageLocationFab)).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void happy_scenario_should_go_to_new_storage_location_and_show_fragment() {
+        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
+        onView(withText(R.string.title_storage_locations)).perform(ViewActions.click());
+        onView(withId(R.id.newStorageLocationFab)).perform(ViewActions.click());
+
+        onView(withId(R.id.storageLocationNameInput)).check(matches(isDisplayed()));
+        onView(withId(R.id.storageLocationDescriptionInput)).check(matches(isDisplayed()));
+        onView(withId(R.id.button_addStorageLocation)).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void happy_scenario_should_go_to_settings_and_show_fragment() {
+        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
+        onView(withText(R.string.title_app_settings)).perform(ViewActions.click());
+
+        onView(withText(context.getString(R.string.settings_general_settings))).check(matches(isDisplayed()));
+        onView(withText(context.getString(R.string.settings_go_premium))).check(matches(isDisplayed()));
+        onView(withText(context.getString(R.string.settings_database_mode))).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void happy_scenario_should_go_to_about_author_and_show_fragment() {
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withText(R.string.title_about_author)).perform(ViewActions.click());
 
