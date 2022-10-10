@@ -31,7 +31,9 @@ import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.google.firebase.database.DatabaseReference;
 import com.hermanowicz.pantry.dao.db.photo.Photo;
+import com.hermanowicz.pantry.dao.db.product.Product;
 import com.hermanowicz.pantry.model.DatabaseMode;
 import com.hermanowicz.pantry.util.DateHelper;
 import com.hermanowicz.pantry.util.InternetConnection;
@@ -40,6 +42,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -168,8 +171,12 @@ public class PhotoRepositoryImpl implements PhotoRepository {
     }
 
     @Override
-    public void deleteOnlinePhoto() {
-
+    public void deleteOnlinePhoto(ArrayList<Product> productArrayList) {
+        DatabaseReference ref = DatabaseMode.getOnlineDatabaseReference(DatabaseMode.dbTablePhotos);
+        for(Photo photo : currentPhotoList) {
+            if(photo.getName().equals(productArrayList.get(0).getPhotoName()))
+                ref.child(String.valueOf(photo.getId())).removeValue();
+        }
     }
 
     @Override

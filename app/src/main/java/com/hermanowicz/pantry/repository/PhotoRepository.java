@@ -22,8 +22,10 @@ import android.graphics.Bitmap;
 import androidx.lifecycle.MutableLiveData;
 
 import com.hermanowicz.pantry.dao.db.photo.Photo;
+import com.hermanowicz.pantry.dao.db.product.Product;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 public interface PhotoRepository {
@@ -49,7 +51,7 @@ public interface PhotoRepository {
 
     void deleteLocalPhotoFile();
 
-    void deleteOnlinePhoto();
+    void deleteOnlinePhoto(ArrayList<Product> productArrayList);
 
     void setCurrentPhotoList(List<Photo> photos);
 

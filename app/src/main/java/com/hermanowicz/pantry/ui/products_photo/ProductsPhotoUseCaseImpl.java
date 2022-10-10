@@ -65,8 +65,10 @@ public class ProductsPhotoUseCaseImpl implements ProductsPhotoUseCase {
             productRepository.deleteOfflinePhoto(productArrayList);
             photoRepository.deleteLocalPhotoFile();
         }
-        else if (databaseMode.getDatabaseMode() == DatabaseMode.Mode.ONLINE)
+        else if (databaseMode.getDatabaseMode() == DatabaseMode.Mode.ONLINE) {
             productRepository.deleteOnlinePhoto(productArrayList);
+            photoRepository.deleteOnlinePhoto(productArrayList);
+        }
     }
 
     @Override
