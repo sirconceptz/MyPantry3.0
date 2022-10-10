@@ -22,6 +22,7 @@ android {
             }
         }
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -54,7 +55,7 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment-ktx:2.5.2'
     implementation 'androidx.navigation:navigation-ui-ktx:2.5.2'
     implementation 'androidx.preference:preference-ktx:1.2.0'
-    implementation 'androidx.work:work-runtime-ktx:2.8.0-beta01'
+    implementation 'androidx.work:work-runtime-ktx:2.8.0-alpha04'
     implementation 'com.google.android.gms:play-services-auth:20.3.0'
 
     //premium payment
@@ -77,8 +78,8 @@ dependencies {
     //dagger
     implementation 'com.google.dagger:hilt-android:2.44'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.test:runner:1.4.0'
     annotationProcessor 'com.google.dagger:hilt-compiler:2.44'
+
 
     //retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
@@ -94,8 +95,7 @@ dependencies {
     implementation 'de.raphaelebner:roomdatabasebackup:1.0.0-beta10'
 
     //test libraries
-    testImplementation 'androidx.test:core:1.4.0'
-    testImplementation 'androidx.test:rules:1.4.0'
+    implementation 'androidx.test:runner:1.4.0'
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'org.mockito:mockito-core:4.8.0'
     androidTestImplementation 'org.mockito:mockito-android:4.8.0'
@@ -107,10 +107,6 @@ dependencies {
     androidTestAnnotationProcessor 'com.google.dagger:hilt-compiler:2.44'
     testImplementation 'com.google.dagger:hilt-android-testing:2.44'
     testAnnotationProcessor 'com.google.dagger:hilt-compiler:2.44'
-    androidTestImplementation 'androidx.navigation:navigation-testing:2.5.2'
-    debugImplementation 'androidx.fragment:fragment-testing:1.5.3'
-    androidTestImplementation 'com.google.dagger:hilt-android-testing:2.44'
-    androidTestAnnotationProcessor 'com.google.dagger:hilt-android-compiler:2.44'
 
     //library used by email notifications
     implementation 'com.mcxiaoke.volley:library:1.0.19'
