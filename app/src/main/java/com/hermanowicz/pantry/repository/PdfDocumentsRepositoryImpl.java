@@ -32,11 +32,6 @@ public class PdfDocumentsRepositoryImpl implements PdfDocumentsRepository {
     }
 
     @Override
-    public Bitmap getThumb() {
-        return PrintQRData.getBitmapQRCode(textToQRCodeArray.get(0), false);
-    }
-
-    @Override
     public void setProductList(List<Product> productList) {
         textToQRCodeArray = PrintQRData.getTextToQRCodeList(productList);
         namesOfProductsArray = PrintQRData.getNamesOfProductsList(productList);
