@@ -106,12 +106,12 @@ public class NewProductUseCaseImpl implements NewProductUseCase {
 
     @Override
     public void setExpirationDate(int year, int month, int day) {
-        expirationDate = year + "." + month + "." + day;
+        expirationDate = year + "-" + month + "-" + day;
     }
 
     @Override
     public void setProductionDate(int year, int month, int day) {
-        productionDate = year + "." + month + "." + day;
+        productionDate = year + "-" + month + "-" + day;
     }
 
     @Override
