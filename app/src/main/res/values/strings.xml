@@ -268,6 +268,7 @@
     <string name="preferences_key_go_premium" translatable="false">GO_PREMIUM</string>
     <string name="preferences_key_database_mode" translatable="false">DATABASE_MODE</string>
     <string name="preferences_key_import_db" translatable="false">IMPORT_OFFLINE_DB_TO_ONLINE</string>
+    <string name="preferences_key_upgraged_from_to_2_to_3_version" translatable="false">UPGRAGED_FROM_2_to_3_APP_VERSION</string>
     <!--Notifications-->
     <string name="notification_title">[My Pantry] Products expiration date is approaching</string>
     <string name="notification_statement">%PRODUCT_NAME% is overdue. You have less than %DAYS% days to make it before this date.</string>

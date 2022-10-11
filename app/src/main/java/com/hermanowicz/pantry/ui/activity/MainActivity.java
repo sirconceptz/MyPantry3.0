@@ -13,6 +13,7 @@ import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.navigation.NavigationView;
 import com.hermanowicz.pantry.R;
 import com.hermanowicz.pantry.databinding.ActivityMainBinding;
+import com.hermanowicz.pantry.util.MigrationAppTo3Version;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        migrationTo3Version();
         initView();
     }
 
@@ -46,6 +48,10 @@ public class MainActivity extends AppCompatActivity {
                 R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+    }
+
+    private void migrationTo3Version() {
+        MigrationAppTo3Version.migrate(this);
     }
 
     @Override
