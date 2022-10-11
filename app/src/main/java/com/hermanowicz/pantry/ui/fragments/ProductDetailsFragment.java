@@ -1,5 +1,6 @@
 package com.hermanowicz.pantry.ui.fragments;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import androidx.navigation.Navigation;
 import com.hermanowicz.pantry.R;
 import com.hermanowicz.pantry.dao.db.product.Product;
 import com.hermanowicz.pantry.databinding.FragmentProductDetailsBinding;
+import com.hermanowicz.pantry.interfaces.ShowPhotoViewActions;
 import com.hermanowicz.pantry.ui.database_mode.DatabaseModeViewModel;
 import com.hermanowicz.pantry.ui.product_details.ProductDetailsViewModel;
 
@@ -21,7 +23,7 @@ import java.util.ArrayList;
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
-public class ProductDetailsFragment extends Fragment {
+public class ProductDetailsFragment extends Fragment implements ShowPhotoViewActions {
 
     private FragmentProductDetailsBinding binding;
     private DatabaseModeViewModel databaseModeViewModel;
@@ -44,6 +46,7 @@ public class ProductDetailsFragment extends Fragment {
 
         binding = FragmentProductDetailsBinding.inflate(inflater, container, false);
         binding.setViewModel(productDetailsViewModel);
+        productDetailsViewModel.setShowPhotoViewActions(this);
 
         view = binding.getRoot();
     }
@@ -123,5 +126,10 @@ public class ProductDetailsFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    @Override
+    public void showPhoto(Product product, Bitmap bitmap) {
+        binding.imageviewPhoto.setImageBitmap(bitmap);
     }
 }

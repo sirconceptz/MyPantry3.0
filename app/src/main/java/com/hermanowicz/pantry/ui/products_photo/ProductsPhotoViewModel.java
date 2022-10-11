@@ -37,7 +37,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.hermanowicz.pantry.dao.db.photo.Photo;
 import com.hermanowicz.pantry.dao.db.product.Product;
 import com.hermanowicz.pantry.interfaces.AvailableDataListener;
-import com.hermanowicz.pantry.interfaces.ProductPhotoViewActions;
+import com.hermanowicz.pantry.interfaces.PhotoEditViewActions;
+import com.hermanowicz.pantry.interfaces.ShowPhotoViewActions;
 import com.hermanowicz.pantry.model.DatabaseMode;
 
 import java.io.File;
@@ -65,7 +66,8 @@ public class ProductsPhotoViewModel extends ViewModel {
     private LiveData<List<Photo>> photoList;
     private final CompositeDisposable disposable = new CompositeDisposable();
     private AvailableDataListener availableDataListener;
-    private ProductPhotoViewActions viewActionsListener;
+    private PhotoEditViewActions photoEditViewActions;
+    private ShowPhotoViewActions showPhotoViewActions;
 
     @Inject
     public ProductsPhotoViewModel(ProductsPhotoUseCaseImpl productsPhotoUseCase){
@@ -95,11 +97,12 @@ public class ProductsPhotoViewModel extends ViewModel {
     public void permissionGranted() {
         useCase.createPhotoFile();
         File photoFile = useCase.getPhotoFile();
-        viewActionsListener.takePhotoIntent(photoFile);
+        photoEditViewActions.takePhotoIntent(photoFile);
     }
 
-    public void setViewActionsListener(ProductPhotoViewActions viewActionsListener) {
-        this.viewActionsListener = viewActionsListener;
+    public void setViewActionsListeners(PhotoEditViewActions photoEditViewActions, ShowPhotoViewActions showPhotoViewActions) {
+        this.photoEditViewActions = photoEditViewActions;
+        this.showPhotoViewActions = showPhotoViewActions;
     }
 
     public File getPhotoFile() {
@@ -113,8 +116,8 @@ public class ProductsPhotoViewModel extends ViewModel {
         if(!photoName.equals("")) {
             useCase.setPhotoFile(photoName);
             Bitmap bitmap = useCase.getPhotoBitmap();
-            viewActionsListener.showPhoto(product, bitmap);
-            viewActionsListener.showDescription(photoDescription);
+            showPhotoViewActions.showPhoto(product, bitmap);
+            photoEditViewActions.showDescription(photoDescription);
         }
     }
 

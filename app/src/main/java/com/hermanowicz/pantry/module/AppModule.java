@@ -7,6 +7,7 @@ import com.hermanowicz.pantry.repository.DatabaseBackupRepositoryImpl;
 import com.hermanowicz.pantry.repository.OwnCategoryRepository;
 import com.hermanowicz.pantry.repository.OwnCategoryRepositoryImpl;
 import com.hermanowicz.pantry.repository.PdfDocumentsRepositoryImpl;
+import com.hermanowicz.pantry.repository.PhotoRepository;
 import com.hermanowicz.pantry.repository.PhotoRepositoryImpl;
 import com.hermanowicz.pantry.repository.ProductRepositoryImpl;
 import com.hermanowicz.pantry.repository.SharedPreferencesRepository;
@@ -104,9 +105,10 @@ public final class AppModule {
     @Singleton
     public ProductDetailsUseCaseImpl provideProductDetailsUseCase(@ApplicationContext Context context) {
         ProductRepositoryImpl productRepository = new ProductRepositoryImpl(context);
+        PhotoRepositoryImpl photoRepository = new PhotoRepositoryImpl(context);
         Resources resources = context.getResources();
         Notifications notifications = new Notifications(context);
-        return new ProductDetailsUseCaseImpl(productRepository, resources, notifications);
+        return new ProductDetailsUseCaseImpl(productRepository, photoRepository, resources, notifications);
     }
 
     @Provides

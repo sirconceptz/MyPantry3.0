@@ -1,6 +1,7 @@
 package com.hermanowicz.pantry.ui.product_details;
 
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 
@@ -10,6 +11,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.hermanowicz.pantry.R;
 import com.hermanowicz.pantry.dao.db.product.Product;
+import com.hermanowicz.pantry.interfaces.ShowPhotoViewActions;
 import com.hermanowicz.pantry.model.DatabaseMode;
 
 import java.util.ArrayList;
@@ -45,6 +47,7 @@ public class ProductDetailsViewModel extends ViewModel {
     public MutableLiveData<String> hasSalt = new MutableLiveData<>("");
 
     //fields visibility, visible if not empty
+    public ObservableField<Integer> photoVisibility = new ObservableField<>(View.GONE);
     public ObservableField<Integer> detailCategoryVisibility = new ObservableField<>(View.GONE);
     public ObservableField<Integer> expirationDateVisibility = new ObservableField<>(View.GONE);
     public ObservableField<Integer> productionDateVisibility = new ObservableField<>(View.GONE);
@@ -58,10 +61,15 @@ public class ProductDetailsViewModel extends ViewModel {
 
     private ArrayList<Product> productArrayList;
     private Bundle arguments;
+    private ShowPhotoViewActions showPhotoViewActions;
 
     @Inject
     public ProductDetailsViewModel(ProductDetailsUseCaseImpl productDetailsUseCase) {
         useCase = productDetailsUseCase;
+    }
+
+    public void setShowPhotoViewActions(ShowPhotoViewActions showPhotoViewActions) {
+        this.showPhotoViewActions = showPhotoViewActions;
     }
 
     public void showProductData(Product product, int productListSize) {
@@ -74,6 +82,8 @@ public class ProductDetailsViewModel extends ViewModel {
             expirationDateInShowFormat = useCase.getDateInFormatToShow(product.getExpirationDate());
         if(!Objects.equals(product.getProductionDate(), "-"))
             productionDateInShowFormat = useCase.getDateInFormatToShow(product.getProductionDate());
+
+        showPhoto(product);
 
         productName.setValue(product.getName());
         mainCategory.setValue(product.getMainCategory());
@@ -113,6 +123,8 @@ public class ProductDetailsViewModel extends ViewModel {
     }
 
     private void setVisibleFieldsIfNotEmpty(Product product) {
+        if (!product.getPhotoName().equals(""))
+            photoVisibility.set(View.VISIBLE);
         if (!product.getDetailCategory().equals(""))
             detailCategoryVisibility.set(View.VISIBLE);
         if (!product.getExpirationDate().equals(""))
@@ -160,6 +172,15 @@ public class ProductDetailsViewModel extends ViewModel {
                 if((product.getId() == productId) && productHashCode.equals(product.getHashCode()))
                     showProductData(product, productArrayList.size());
             }
+        }
+    }
+
+    private void showPhoto(Product product) {
+        String photoName = product.getPhotoName();
+        if(!photoName.equals("")) {
+            useCase.setPhotoFile(photoName);
+            Bitmap bitmap = useCase.getPhotoBitmap();
+            showPhotoViewActions.showPhoto(product, bitmap);
         }
     }
 }

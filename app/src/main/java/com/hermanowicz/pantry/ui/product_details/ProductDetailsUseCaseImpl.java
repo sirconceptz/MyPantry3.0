@@ -1,9 +1,11 @@
 package com.hermanowicz.pantry.ui.product_details;
 
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 
 import com.hermanowicz.pantry.dao.db.product.Product;
 import com.hermanowicz.pantry.model.DatabaseMode;
+import com.hermanowicz.pantry.repository.PhotoRepository;
 import com.hermanowicz.pantry.repository.ProductRepository;
 import com.hermanowicz.pantry.util.Notifications;
 
@@ -16,16 +18,31 @@ import javax.inject.Inject;
 
 public class ProductDetailsUseCaseImpl implements ProductDetailsUseCase {
 
-    private final ProductRepository repository;
+    private final ProductRepository productRepository;
+    private final PhotoRepository photoRepository;
     private final Resources resources;
     private final Notifications notifications;
     private DatabaseMode databaseMode;
 
     @Inject
-    public ProductDetailsUseCaseImpl(ProductRepository productRepository, Resources resources, Notifications notifications) {
-        this.repository = productRepository;
+    public ProductDetailsUseCaseImpl(ProductRepository productRepository, PhotoRepository photoRepository, Resources resources, Notifications notifications) {
+        this.productRepository = productRepository;
+        this.photoRepository = photoRepository;
         this.resources = resources;
         this.notifications = notifications;
+    }
+
+    @Override
+    public void setPhotoFile(String photoName) {
+        if(databaseMode.getDatabaseMode() == DatabaseMode.Mode.LOCAL)
+            photoRepository.setPhotoFileFromOfflineDb(photoName);
+        else if(databaseMode.getDatabaseMode() == DatabaseMode.Mode.ONLINE)
+            photoRepository.setPhotoFileFromOnlineDb(photoName);
+    }
+
+    @Override
+    public Bitmap getPhotoBitmap() {
+        return photoRepository.getPhotoBitmap();
     }
 
     @Override
@@ -40,7 +57,7 @@ public class ProductDetailsUseCaseImpl implements ProductDetailsUseCase {
 
     @Override
     public void deleteProducts(ArrayList<Product> productArrayList) {
-        repository.delete(productArrayList, databaseMode);
+        productRepository.delete(productArrayList, databaseMode);
         notifications.cancelNotifications(productArrayList);
     }
 

@@ -21,7 +21,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
-import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.Manifest;
@@ -40,7 +39,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
@@ -52,7 +50,8 @@ import com.hermanowicz.pantry.R;
 import com.hermanowicz.pantry.dao.db.product.Product;
 import com.hermanowicz.pantry.databinding.FragmentProductsPhotoBinding;
 import com.hermanowicz.pantry.interfaces.AvailableDataListener;
-import com.hermanowicz.pantry.interfaces.ProductPhotoViewActions;
+import com.hermanowicz.pantry.interfaces.PhotoEditViewActions;
+import com.hermanowicz.pantry.interfaces.ShowPhotoViewActions;
 import com.hermanowicz.pantry.ui.database_mode.DatabaseModeViewModel;
 import com.hermanowicz.pantry.ui.products_photo.ProductsPhotoViewModel;
 import com.hermanowicz.pantry.util.ImageRotation;
@@ -60,13 +59,12 @@ import com.hermanowicz.pantry.util.SettingsIntent;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Objects;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
-public class ProductsPhotoFragment extends Fragment implements ProductPhotoViewActions, AvailableDataListener {
+public class ProductsPhotoFragment extends Fragment implements PhotoEditViewActions, ShowPhotoViewActions, AvailableDataListener {
 
     private final int PERMISSION_REQUEST_CODE = 42;
     private final int REQUEST_IMAGE_CAPTURE_CODE = 15;
@@ -94,7 +92,7 @@ public class ProductsPhotoFragment extends Fragment implements ProductPhotoViewA
         binding = FragmentProductsPhotoBinding.inflate(inflater, container, false);
         binding.setViewModel(productsPhotoViewModel);
 
-        productsPhotoViewModel.setViewActionsListener(this);
+        productsPhotoViewModel.setViewActionsListeners(this, this);
         productsPhotoViewModel.setProductArrayListFromArguments(getArguments());
 
         view = binding.getRoot();
