@@ -27,12 +27,13 @@ import com.hermanowicz.pantry.R;
 
 public class MigrationAppTo3Version {
 
-    public static void migrate(@NonNull Context context) {
+    public static boolean migrate(@NonNull Context context) {
         boolean checkIsNotUpgraded = checkIsNotUpragedFromOlderVersion(context);
         if(checkIsNotUpgraded) {
             migratePreferences(context);
             setUpgragedIsDone(context);
         }
+        return checkIsNotUpgraded;
     }
 
     private static boolean checkIsNotUpragedFromOlderVersion(@NonNull Context context) {

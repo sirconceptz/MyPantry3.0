@@ -74,6 +74,7 @@
     <string name="statement_backup_database">Do you want to export databases from to an external file?</string>
     <string name="statement_import_local_db_to_cloud_warning">Import the product database from the device to the cloud (to an internet account). CURRENTLY SAVED DATA IN THE CLOUD WILL BE DELETED AND REPLACED BY PHONE PRODUCTS.</string>
     <string name="statement_choose_product_to_copy">The barcode has been added to the following products. Select the product you want to add from the list.</string>
+    <string name="statement_preferences_was_deleted">Your app settings were deleted during the migration to the latest version. Please perform the settings again.</string>
     <!--Products photo-->
     <string name="products_photo_photo_description">Photo description</string>
     <string name="products_photo_take_photo_of_product">Take photo of the product</string>

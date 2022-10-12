@@ -74,6 +74,7 @@
     <string name="statement_backup_database">Czy chcesz eksportować bazy danych do pliku zewnętrznego?</string>
     <string name="statement_import_local_db_to_cloud_warning">Importuj bazę produktów z urządzenia do chmury (do konta internetowego). AKTUALNIE ZAPISANE DANE W CHMURZE ZOSTANĄ USUNIĘTE I ZASTĄPIONE PRODUKTAMI Z TELEFONU.</string>
     <string name="statement_choose_product_to_copy">Kod kreskowy został dodanych do następujących produktów. Wybierz z listy produkt który chcesz dodać.</string>
+    <string name="statement_preferences_was_deleted">Twoje ustawienia w czasie migracji do nowej wersji zostały usunięte. Proszę ustaw swoje ustawienia ponownie.</string>
     <!--Products photo-->
     <string name="products_photo_photo_description">Opis zdjęcia</string>
     <string name="products_photo_take_photo_of_product">Zrób zdjęcie produktu</string>

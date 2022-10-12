@@ -1,6 +1,7 @@
 package com.hermanowicz.pantry.ui.activity;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
@@ -51,7 +52,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void migrationTo3Version() {
-        MigrationAppTo3Version.migrate(this);
+        if(MigrationAppTo3Version.migrate(this))
+            showToastSettingsWasDeleted();
+    }
+
+    private void showToastSettingsWasDeleted() {
+        Toast.makeText(this, getString(R.string.statement_preferences_was_deleted), Toast.LENGTH_LONG).show();
     }
 
     @Override

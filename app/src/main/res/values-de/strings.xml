@@ -74,6 +74,7 @@
     <string name="statement_backup_database">Möchten Sie Datenbanken in eine externe Datei exportieren?</string>
     <string name="statement_import_local_db_to_cloud_warning">Importieren Sie die Produktdatenbank vom Gerät in die Cloud (in ein Internetkonto). AKTUELL GESPEICHERTE DATEN IN DER CLOUD WERDEN GELÖSCHT UND DURCH TELEFONPRODUKTE ERSETZT.</string>
     <string name="statement_choose_product_to_copy">Der Barcode wurde den folgenden Produkten hinzugefügt. Wählen Sie das Produkt aus der Liste aus, das Sie hinzufügen möchten.</string>
+    <string name="statement_preferences_was_deleted">Ihre App-Einstellungen wurden während der Migration auf die neueste Version gelöscht. Bitte nehmen Sie Ihre Einstellungen erneut vor.</string>
     <!--Products photo-->
     <string name="products_photo_photo_description">Fotobeschreibung</string>
     <string name="products_photo_take_photo_of_product">Machen Sie ein Foto des Produkts</string>

@@ -74,6 +74,7 @@
     <string name="statement_backup_database">Chcete exportovat databáze do externího souboru?</string>
     <string name="statement_import_local_db_to_cloud_warning">Importujte databázi produktů ze zařízení do cloudu (na internetový účet). AKTUÁLNĚ ULOŽENÁ DATA V CLOUDU BUDOU SMAŽENA A NAHRAZENA TELEFONNÍMI PRODUKTY.</string>
     <string name="statement_choose_product_to_copy">Čárový kód byl přidán k následujícím produktům. Ze seznamu vyberte produkt, který chcete přidat.</string>
+    <string name="statement_preferences_was_deleted">Vaše nastavení aplikace byla během migrace na nejnovější verzi smazána. Proveďte znovu nastavení.</string>
     <!--AddPhotoActivity-->
     <string name="products_photo_photo_description">Popis fotografie</string>
     <string name="products_photo_take_photo_of_product">Vyfoťte produkt</string>
