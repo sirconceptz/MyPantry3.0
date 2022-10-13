@@ -28,7 +28,7 @@ import com.hermanowicz.pantry.R;
 public class MigrationAppTo3Version {
 
     public static boolean migrate(@NonNull Context context) {
-        boolean checkIsNotUpgraded = checkIsNotUpragedFromOlderVersion(context);
+        boolean checkIsNotUpgraded = !checkIsUpragedFromOlderVersion(context);
         if(checkIsNotUpgraded) {
             migratePreferences(context);
             setUpgragedIsDone(context);
@@ -36,14 +36,15 @@ public class MigrationAppTo3Version {
         return checkIsNotUpgraded;
     }
 
-    private static boolean checkIsNotUpragedFromOlderVersion(@NonNull Context context) {
+    private static boolean checkIsUpragedFromOlderVersion(@NonNull Context context) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         return sharedPreferences.getBoolean(context.getString(R.string.preferences_key_upgraged_from_to_2_to_3_version), false);
     }
 
     private static void migratePreferences(@NonNull Context context){
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        sharedPreferences.edit()
+        sharedPreferences
+                .edit()
                 .clear()
                 .apply();
     }
