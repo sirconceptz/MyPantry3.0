@@ -88,11 +88,12 @@ public class ProductsPhotoFragment extends Fragment implements PhotoEditViewActi
     private void initView(@NonNull LayoutInflater inflater, @NonNull ViewGroup container) {
         productsPhotoViewModel = new ViewModelProvider(this).get(ProductsPhotoViewModel.class);
         databaseModeViewModel = new ViewModelProvider(this).get(DatabaseModeViewModel.class);
-
+        productsPhotoViewModel.setAvailableDataListener(this);
         binding = FragmentProductsPhotoBinding.inflate(inflater, container, false);
         binding.setViewModel(productsPhotoViewModel);
 
         productsPhotoViewModel.setViewActionsListeners(this, this);
+        productsPhotoViewModel.setDatabaseModeAndShowPhoto(databaseModeViewModel.getDatabaseModeFromSettings());
         productsPhotoViewModel.setProductArrayListFromArguments(getArguments());
 
         view = binding.getRoot();

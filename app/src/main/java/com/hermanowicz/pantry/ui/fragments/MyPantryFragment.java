@@ -58,14 +58,16 @@ public class MyPantryFragment extends Fragment implements AvailableDataListener,
         databaseModeViewModel = new ViewModelProvider(this).get(DatabaseModeViewModel.class);
         settingsViewModel = new ViewModelProvider(this).get(SettingsViewModel.class);
 
+        binding = FragmentMyPantryBinding.inflate(inflater, container, false);
+
+        view = binding.getRoot();
+    }
+
+    private void setupProductViewModel() {
         productViewModel.setFilterModelFromArguments(getArguments());
         productViewModel.setFilteredDataListener(this);
         productViewModel.setAvailableDataListener(this);
         productViewModel.setDefaultDatabaseMode(databaseModeViewModel.getDatabaseModeFromSettings());
-
-        binding = FragmentMyPantryBinding.inflate(inflater, container, false);
-
-        view = binding.getRoot();
     }
 
     private void setupFloatingActionButtons() {
@@ -152,10 +154,11 @@ public class MyPantryFragment extends Fragment implements AvailableDataListener,
     }
 
     @Override
-    public void onStart(){
+    public void onResume(){
+        setupProductViewModel();
         if(productViewModel.isAvailableData())
             observeAvailableData();
-        super.onStart();
+        super.onResume();
     }
 
     @Override

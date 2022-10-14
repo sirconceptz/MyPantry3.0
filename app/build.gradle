@@ -12,7 +12,7 @@ android {
         applicationId "com.hermanowicz.pantry"
         minSdk 26
         targetSdk 33
-        versionCode 62
+        versionCode 65
         versionName "3.0.0"
         multiDexEnabled true
         testInstrumentationRunner "com.hermanowicz.pantry.CustomTestRunner"
@@ -57,6 +57,7 @@ dependencies {
     implementation 'androidx.preference:preference-ktx:1.2.0'
     implementation 'androidx.work:work-runtime-ktx:2.8.0-alpha04'
     implementation 'com.google.android.gms:play-services-auth:20.3.0'
+    implementation 'androidx.security:security-crypto:1.0.0'
 
     //premium payment
     implementation 'com.android.billingclient:billing:5.0.0'

@@ -67,6 +67,8 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Pricin
     public void onResume(){
         initView();
         setListeners();
+        if(productViewModel.isAvailableData())
+            observeAvailableData();
 
         super.onResume();
     }
@@ -269,13 +271,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Pricin
                 productViewModel::updateDataForSelectedDatabase);
         productViewModel.getAllProductList().observe(getViewLifecycleOwner(),
                 settingsViewModel::setProductList);
-    }
-
-    @Override
-    public void onStart(){
-        if(productViewModel.isAvailableData())
-            observeAvailableData();
-        super.onStart();
     }
 
     @Override

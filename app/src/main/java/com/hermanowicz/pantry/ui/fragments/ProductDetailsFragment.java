@@ -33,6 +33,7 @@ public class ProductDetailsFragment extends Fragment implements ShowPhotoViewAct
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         initView(inflater, container);
+        productDetailsViewModel.setDatabaseMode(databaseModeViewModel.getDatabaseModeFromSettings());
         setObservers();
         setListeners();
         getArgumentsAndShowData();

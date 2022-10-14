@@ -68,6 +68,7 @@ public class ProductsPhotoViewModel extends ViewModel {
     private AvailableDataListener availableDataListener;
     private PhotoEditViewActions photoEditViewActions;
     private ShowPhotoViewActions showPhotoViewActions;
+    private boolean observed = false;
 
     @Inject
     public ProductsPhotoViewModel(ProductsPhotoUseCaseImpl productsPhotoUseCase){
@@ -110,14 +111,17 @@ public class ProductsPhotoViewModel extends ViewModel {
     }
 
     private void showPhoto() {
-        Product product = productArrayList.get(0);
-        String photoDescription = product.getPhotoDescription();
-        String photoName = product.getPhotoName();
-        if(!photoName.equals("")) {
-            useCase.setPhotoFile(photoName);
-            Bitmap bitmap = useCase.getPhotoBitmap();
-            showPhotoViewActions.showPhoto(product, bitmap);
-            photoEditViewActions.showDescription(photoDescription);
+        int productListSize = productArrayList.size();
+        if(productListSize > 0) {
+            Product product = productArrayList.get(0);
+            String photoDescription = product.getPhotoDescription();
+            String photoName = product.getPhotoName();
+            if (!photoName.equals("")) {
+                useCase.setPhotoFile(photoName);
+                Bitmap bitmap = useCase.getPhotoBitmap();
+                showPhotoViewActions.showPhoto(product, bitmap);
+                photoEditViewActions.showDescription(photoDescription);
+            }
         }
     }
 
@@ -155,6 +159,7 @@ public class ProductsPhotoViewModel extends ViewModel {
             } else{
                 useCase.setOnlinePhotoList(new MutableLiveData<>());
                 availableDataListener.observeAvailableData();
+                observed = true;
             }
         });
     }
@@ -193,6 +198,8 @@ public class ProductsPhotoViewModel extends ViewModel {
     }
 
     public void setAvailableDataListener(AvailableDataListener availableDataListener) {
+        if(availableDataListener == null && !observed)
+            loadOnlineProducts();
         this.availableDataListener = availableDataListener;
     }
 

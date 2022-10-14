@@ -37,10 +37,15 @@ public class PremiumAccess {
     }
 
     public void enablePremiumAccess() {
-        new SecurePreferences(context).edit().putBoolean("PREMIUM", true).apply();
+        EncryptedPreferences
+                .getSecuredSharedPreferences(context)
+                .edit().putBoolean("PREMIUM", true)
+                .apply();
     }
 
     public boolean isPremium() {
-        return new SecurePreferences(context).getBoolean("PREMIUM", false);
+        return EncryptedPreferences
+                .getSecuredSharedPreferences(context)
+                .getBoolean("PREMIUM", false);
     }
 }

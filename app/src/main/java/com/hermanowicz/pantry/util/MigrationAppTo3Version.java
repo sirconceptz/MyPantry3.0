@@ -41,7 +41,7 @@ public class MigrationAppTo3Version {
         return sharedPreferences.getBoolean(context.getString(R.string.preferences_key_upgraged_from_to_2_to_3_version), false);
     }
 
-    private static void migratePreferences(@NonNull Context context){
+    private static void migratePreferences(@NonNull Context context) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         sharedPreferences
                 .edit()

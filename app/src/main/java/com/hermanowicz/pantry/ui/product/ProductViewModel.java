@@ -49,6 +49,7 @@ public class ProductViewModel extends ViewModel {
     private AvailableDataListener availableDataListener;
     private FilteredDataListener filteredDataListener;
     private LiveData<List<Product>> filteredProductsLiveData;
+    private boolean observed = false;
 
     @Inject
     public ProductViewModel(ProductUseCaseImpl productUseCase) {
@@ -104,9 +105,10 @@ public class ProductViewModel extends ViewModel {
             if(user != null && isInternetConnection()) {
                 Query query = database.getReference().child("products").child(user);
                 query.addValueEventListener(valueEventListener(emitter));
-            } else{
+            } else {
                 useCase.setOnlineProductList(new MutableLiveData<>());
                 availableDataListener.observeAvailableData();
+                observed = true;
             }
         });
     }
@@ -146,8 +148,9 @@ public class ProductViewModel extends ViewModel {
     }
 
     public void setAvailableDataListener(AvailableDataListener listener) {
+        if(availableDataListener == null && !observed)
+            loadOnlineProducts();
         availableDataListener = listener;
-        loadOnlineProducts();
     }
 
     public LiveData<List<Product>> getAllProductList() {
@@ -174,6 +177,7 @@ public class ProductViewModel extends ViewModel {
         if(databaseModeFromSettings.getDatabaseMode() == DatabaseMode.Mode.LOCAL){
             updateDataForSelectedDatabase(databaseModeFromSettings);
             availableDataListener.observeAvailableData();
+            observed = true;
         }
     }
 

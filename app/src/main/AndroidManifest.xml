@@ -12,6 +12,8 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="28" />
     <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
+    <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
+
 
     <application
         android:name=".MyApp"
@@ -60,7 +62,6 @@
             </intent-filter>
         </service>
 
-
         <receiver
             android:name=".receiver.NotificationBroadcastReceiver"
             android:enabled="true"
@@ -85,6 +86,10 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-4025776034769422~3797748160"/>
 
     </application>
 
