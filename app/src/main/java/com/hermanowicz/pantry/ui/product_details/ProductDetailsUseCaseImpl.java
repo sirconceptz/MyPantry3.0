@@ -64,14 +64,18 @@ public class ProductDetailsUseCaseImpl implements ProductDetailsUseCase {
     @Override
     public String getDateInFormatToShow(String dateString) {
         String[] dateArrayString = dateString.split("-");
-        int year = Integer.parseInt(dateArrayString[0]);
-        int month = Integer.parseInt(dateArrayString[1]);
-        int day = Integer.parseInt(dateArrayString[2]);
+        if(dateArrayString.length > 2) {
+            int year = Integer.parseInt(dateArrayString[0]);
+            int month = Integer.parseInt(dateArrayString[1]);
+            int day = Integer.parseInt(dateArrayString[2]);
 
-        DateFormat dateFormat = DateFormat.getDateInstance();
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(year, month, day);
-        Date date = calendar.getTime();
-        return dateFormat.format(date);
+            DateFormat dateFormat = DateFormat.getDateInstance();
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(year, month, day);
+            Date date = calendar.getTime();
+            return dateFormat.format(date);
+            }
+        else
+            return "";
     }
 }

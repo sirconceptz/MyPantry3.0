@@ -29,7 +29,7 @@ public class ScanProductUseCaseImpl implements ScanProductUseCase {
     private List<Product> productList;
     private List<Product> productListToAddBarcode;
     private ScanDecodedResult scanDecodedResultListener;
-    private Resources resources;
+    private final Resources resources;
 
     @Inject
     public ScanProductUseCaseImpl(SharedPreferencesRepository sharedPreferencesRepository, Resources resources) {
@@ -131,10 +131,12 @@ public class ScanProductUseCaseImpl implements ScanProductUseCase {
 
     private void onQrCodeScan(String qrcode) {
         List<Integer> decodedQRCodeAsList = decodeScanQRCodeResult(qrcode);
-        int productId = decodedQRCodeAsList.get(0);
-        int productHashCode = decodedQRCodeAsList.get(1);
-        ArrayList<Product> productArrayList = new ArrayList<>(productList);
-        scanDecodedResultListener.onScanQrCodeSuccess(productId, productHashCode, productArrayList);
+        if(decodedQRCodeAsList.size() > 1) {
+            int productId = decodedQRCodeAsList.get(0);
+            int productHashCode = decodedQRCodeAsList.get(1);
+            ArrayList<Product> productArrayList = new ArrayList<>(productList);
+            scanDecodedResultListener.onScanQrCodeSuccess(productId, productHashCode, productArrayList);
+        }
     }
 
     private void onBarcodeScan(String barcode) {

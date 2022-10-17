@@ -109,6 +109,8 @@ public class Notifications {
     }
 
     public void cancelNotifications(@NonNull List<Product> productList) {
+        if(productList.size() == 0)
+            return;
         if (!productList.get(0).getExpirationDate().equals("-")) {
             for(Product product : productList) {
                 AlarmManager alarmManager = (AlarmManager) (context.getSystemService(Context.ALARM_SERVICE));
