@@ -12,8 +12,8 @@ android {
         applicationId "com.hermanowicz.pantry"
         minSdk 26
         targetSdk 33
-        versionCode 65
-        versionName "3.0.0"
+        versionCode 66
+        versionName "3.0.1"
         multiDexEnabled true
         testInstrumentationRunner "com.hermanowicz.pantry.CustomTestRunner"
         javaCompileOptions {

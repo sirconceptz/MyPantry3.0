@@ -44,7 +44,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginStart="8dp"
             android:layout_marginTop="4dp"
-            android:textSize="24sp"
+            android:textSize="20sp"
             app:layout_constraintStart_toStartOf="@id/product_cardView"
             app:layout_constraintTop_toTopOf="@id/product_cardView" />
 
@@ -55,7 +55,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="34dp"
             android:text="@string/product_quantity"
-            android:textSize="16sp" />
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/text_productWeight"
@@ -63,8 +63,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="56dp"
-            android:text="@string/product_weight"
-            android:textSize="16sp" />
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/text_productVolume"
@@ -73,8 +72,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="78dp"
             android:layout_marginBottom="4dp"
-            android:text="@string/product_volume"
-            android:textSize="16sp" />
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/text_hasSugar"
@@ -84,7 +82,7 @@
             android:layout_marginTop="78dp"
             android:layout_marginEnd="60dp"
             android:text="@string/product_features_with_sugar"
-            android:textSize="16sp"
+            android:textSize="15sp"
             android:visibility="invisible" />
 
         <TextView
@@ -95,7 +93,7 @@
             android:layout_marginTop="78dp"
             android:layout_marginEnd="130dp"
             android:text="@string/product_vege"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:visibility="invisible" />
 
         <TextView
@@ -106,7 +104,7 @@
             android:layout_marginTop="78dp"
             android:layout_marginEnd="190dp"
             android:text="@string/product_bio"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:visibility="invisible" />
 
         <TextView
@@ -119,7 +117,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="4dp"
             android:text="@string/product_features_with_salt"
-            android:textSize="16sp"
+            android:textSize="15sp"
             android:visibility="invisible" />
 
         <TextView
@@ -130,7 +128,7 @@
             android:layout_marginTop="4dp"
             android:layout_marginEnd="8dp"
             android:text="@string/product_expiration_date"
-            android:textSize="16sp" />
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/text_expirationDateValue"
@@ -141,7 +139,7 @@
             android:layout_marginTop="26dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="4dp"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
     </androidx.cardview.widget.CardView>
 
