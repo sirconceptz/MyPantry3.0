@@ -26,8 +26,8 @@ public class ScanProductUseCaseImpl implements ScanProductUseCase {
 
     private String scanType;
     private final SharedPreferencesRepository sharedPreferencesRepository;
-    private List<Product> productList;
-    private List<Product> productListToAddBarcode;
+    private List<Product> productList = new ArrayList<>();
+    private List<Product> productListToAddBarcode = new ArrayList<>();
     private ScanDecodedResult scanDecodedResultListener;
     private final Resources resources;
 

@@ -56,22 +56,24 @@ public class Notifications {
 
     private Calendar createCalendar(@NonNull String expirationDate) {
         String[] dateArray = expirationDate.split("\\.");
-        Calendar calendar = Calendar.getInstance();
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-
-        calendar.set(Calendar.YEAR, Integer.parseInt(dateArray[0]));
-        calendar.set(Calendar.MONTH, (Integer.parseInt(dateArray[1])) - 1);
-        calendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(dateArray[2]));
-        calendar.set(Calendar.HOUR_OF_DAY, Notifications.NOTIFICATION_DEFAULT_HOUR);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.add(Calendar.DAY_OF_MONTH, -preferences.getInt(
-                PREFERENCES_DAYS_TO_NOTIFICATIONS, Notifications.NOTIFICATION_DEFAULT_DAYS));
+        Calendar calendar = null;
+        if(dateArray.length < 3) {
+            calendar = Calendar.getInstance();
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+            calendar.set(Calendar.YEAR, Integer.parseInt(dateArray[0]));
+            calendar.set(Calendar.MONTH, (Integer.parseInt(dateArray[1])) - 1);
+            calendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(dateArray[2]));
+            calendar.set(Calendar.HOUR_OF_DAY, Notifications.NOTIFICATION_DEFAULT_HOUR);
+            calendar.set(Calendar.MINUTE, 0);
+            calendar.set(Calendar.SECOND, 0);
+            calendar.add(Calendar.DAY_OF_MONTH, -preferences.getInt(
+                    PREFERENCES_DAYS_TO_NOTIFICATIONS, Notifications.NOTIFICATION_DEFAULT_DAYS));
+        }
 
         return calendar;
     }
 
-    private void createNotification(@Nullable Product product) {
+    private void createNotification(Product product) {
         Intent intent = new Intent(context, NotificationBroadcastReceiver.class);
         assert product != null;
         intent.putExtra("product_name", product.getName());
@@ -80,9 +82,10 @@ public class Notifications {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         if (!product.getExpirationDate().equals("-")) {
             Calendar calendar = createCalendar(product.getExpirationDate());
-            assert alarmManager != null;
-            alarmManager.set(AlarmManager.RTC_WAKEUP,
-                    calendar.getTimeInMillis(), pendingIntent);
+            if(calendar != null && alarmManager != null) {
+                alarmManager.set(AlarmManager.RTC_WAKEUP,
+                        calendar.getTimeInMillis(), pendingIntent);
+            }
         }
     }
 

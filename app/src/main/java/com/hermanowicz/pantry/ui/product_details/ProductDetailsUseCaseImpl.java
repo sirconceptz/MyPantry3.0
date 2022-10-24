@@ -64,6 +64,8 @@ public class ProductDetailsUseCaseImpl implements ProductDetailsUseCase {
     @Override
     public String getDateInFormatToShow(String dateString) {
         String[] dateArrayString = dateString.split("-");
+        if(dateArrayString.length < 2)
+            dateArrayString = dateString.split("\\.");
         if(dateArrayString.length > 2) {
             int year = Integer.parseInt(dateArrayString[0]);
             int month = Integer.parseInt(dateArrayString[1]);

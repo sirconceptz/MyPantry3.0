@@ -27,6 +27,7 @@ public class DatabaseMode {
 
     public static DatabaseReference getOnlineDatabaseReference(String dbTableName){
         FirebaseDatabase db = FirebaseDatabase.getInstance();
+        db.setPersistenceEnabled(true);
         return db.getReference().child(dbTableName).child(Objects.requireNonNull(FirebaseAuth.getInstance().getUid()));
     }
 }
