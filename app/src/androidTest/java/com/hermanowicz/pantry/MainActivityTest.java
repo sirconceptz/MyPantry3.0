@@ -37,7 +37,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
-import com.hermanowicz.pantry.ui.activity.MainActivity;
+import com.hermanowicz.pantry.ui.MainActivity;
 
 import org.junit.Before;
 import org.junit.Rule;

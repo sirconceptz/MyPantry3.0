@@ -38,7 +38,7 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.hermanowicz.pantry.MyApp;
 import com.hermanowicz.pantry.R;
-import com.hermanowicz.pantry.ui.activity.MainActivity;
+import com.hermanowicz.pantry.ui.MainActivity;
 import com.hermanowicz.pantry.util.Notifications;
 
 import org.json.JSONObject;
