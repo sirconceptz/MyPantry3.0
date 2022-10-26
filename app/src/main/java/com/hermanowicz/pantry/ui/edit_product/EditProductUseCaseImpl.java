@@ -1,18 +1,18 @@
 package com.hermanowicz.pantry.ui.edit_product;
 
 import android.content.res.Resources;
-import android.widget.ArrayAdapter;
 
 import androidx.databinding.ObservableField;
 import androidx.lifecycle.LiveData;
 
 import com.hermanowicz.pantry.R;
-import com.hermanowicz.pantry.dao.db.product.Product;
-import com.hermanowicz.pantry.dao.db.storagelocation.StorageLocation;
+import com.hermanowicz.pantry.data.db.dao.product.Product;
+import com.hermanowicz.pantry.data.db.dao.storagelocation.StorageLocation;
+import com.hermanowicz.pantry.data.repository.OwnCategoryRepository;
+import com.hermanowicz.pantry.data.repository.ProductRepository;
+import com.hermanowicz.pantry.data.repository.StorageLocationRepository;
+import com.hermanowicz.pantry.domain.usecase.EditProductUseCase;
 import com.hermanowicz.pantry.model.DatabaseMode;
-import com.hermanowicz.pantry.repository.OwnCategoryRepository;
-import com.hermanowicz.pantry.repository.ProductRepository;
-import com.hermanowicz.pantry.repository.StorageLocationRepository;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,8 +25,8 @@ public class EditProductUseCaseImpl implements EditProductUseCase {
     private final ProductRepository productRepository;
     private final StorageLocationRepository storageLocationRepository;
     private final OwnCategoryRepository ownCategoryRepository;
-    private DatabaseMode databaseMode;
     private final Resources resources;
+    private DatabaseMode databaseMode;
     private String expirationDate;
     private String productionDate;
     private List<Product> productList;
@@ -73,18 +73,8 @@ public class EditProductUseCaseImpl implements EditProductUseCase {
     }
 
     @Override
-    public void setExpirationDate(String expirationDate) {
-        this.expirationDate = expirationDate;
-    }
-
-    @Override
     public void setProductionDate(int year, int month, int day) {
         productionDate = year + "." + month + "." + day;
-    }
-
-    @Override
-    public void setProductionDate(String productionDate) {
-        this.productionDate = productionDate;
     }
 
     @Override
@@ -103,8 +93,18 @@ public class EditProductUseCaseImpl implements EditProductUseCase {
     }
 
     @Override
+    public void setExpirationDate(String expirationDate) {
+        this.expirationDate = expirationDate;
+    }
+
+    @Override
     public String getProductionDate() {
         return productionDate;
+    }
+
+    @Override
+    public void setProductionDate(String productionDate) {
+        this.productionDate = productionDate;
     }
 
     @Override
@@ -133,33 +133,33 @@ public class EditProductUseCaseImpl implements EditProductUseCase {
     public int getDetailCategorySpinnerPosition(int productMainCategorySpinnerPosition) {
         String[] detailCategoryArray;
         int selection = 0;
-        if(productMainCategorySpinnerPosition == 1 && databaseMode.getDatabaseMode() == DatabaseMode.Mode.LOCAL)
+        if (productMainCategorySpinnerPosition == 1 && databaseMode.getDatabaseMode() == DatabaseMode.Mode.LOCAL)
             detailCategoryArray = ownCategoryRepository.getAllCategoriesNameAsList(databaseMode);
-        else if(productMainCategorySpinnerPosition == 2)
+        else if (productMainCategorySpinnerPosition == 2)
             detailCategoryArray = resources.getStringArray(R.array.product_store_products_array);
-        else if(productMainCategorySpinnerPosition == 3)
+        else if (productMainCategorySpinnerPosition == 3)
             detailCategoryArray = resources.getStringArray(R.array.product_ready_meals_array);
-        else if(productMainCategorySpinnerPosition == 4)
+        else if (productMainCategorySpinnerPosition == 4)
             detailCategoryArray = resources.getStringArray(R.array.product_vegetables_array);
-        else if(productMainCategorySpinnerPosition == 5)
+        else if (productMainCategorySpinnerPosition == 5)
             detailCategoryArray = resources.getStringArray(R.array.product_fruits_array);
-        else if(productMainCategorySpinnerPosition == 6)
+        else if (productMainCategorySpinnerPosition == 6)
             detailCategoryArray = resources.getStringArray(R.array.product_herbs_array);
-        else if(productMainCategorySpinnerPosition == 7)
+        else if (productMainCategorySpinnerPosition == 7)
             detailCategoryArray = resources.getStringArray(R.array.product_liqueurs_array);
-        else if(productMainCategorySpinnerPosition == 8)
+        else if (productMainCategorySpinnerPosition == 8)
             detailCategoryArray = resources.getStringArray(R.array.product_wines_type_array);
-        else if(productMainCategorySpinnerPosition == 9)
+        else if (productMainCategorySpinnerPosition == 9)
             detailCategoryArray = resources.getStringArray(R.array.product_mushrooms_array);
-        else if(productMainCategorySpinnerPosition == 10)
+        else if (productMainCategorySpinnerPosition == 10)
             detailCategoryArray = resources.getStringArray(R.array.product_vinegars_array);
-        else if(productMainCategorySpinnerPosition == 11)
+        else if (productMainCategorySpinnerPosition == 11)
             detailCategoryArray = resources.getStringArray(R.array.product_chemical_products_array);
         else
             detailCategoryArray = resources.getStringArray(R.array.product_other_products_array);
 
-        for(int counter = 0; detailCategoryArray.length > counter; counter++){
-            if(productList.get(0).getDetailCategory().equals(detailCategoryArray[counter]))
+        for (int counter = 0; detailCategoryArray.length > counter; counter++) {
+            if (productList.get(0).getDetailCategory().equals(detailCategoryArray[counter]))
                 selection = counter;
         }
         return selection;
@@ -169,8 +169,8 @@ public class EditProductUseCaseImpl implements EditProductUseCase {
     public int getProductMainCategorySpinnerPosition() {
         String[] productTypesArray = resources.getStringArray(R.array.product_type_of_product_array);
         int selection = 0;
-        for(int counter = 0; productTypesArray.length > counter; counter++){
-            if(productList.get(0).getMainCategory().equals(productTypesArray[counter]))
+        for (int counter = 0; productTypesArray.length > counter; counter++) {
+            if (productList.get(0).getMainCategory().equals(productTypesArray[counter]))
                 selection = counter;
         }
         return selection;
@@ -180,8 +180,8 @@ public class EditProductUseCaseImpl implements EditProductUseCase {
     public int getProductStorageLocationPosition() {
         List<StorageLocation> storageLocationList = storageLocationRepository.getAllStorageLocations(databaseMode).getValue();
         int selection = 0;
-        for(int counter = 0; (storageLocationList != null ? storageLocationList.size() : 0) > counter; counter++){
-            if(productList.get(0).getStorageLocation().equals(storageLocationList.get(counter).getName()))
+        for (int counter = 0; (storageLocationList != null ? storageLocationList.size() : 0) > counter; counter++) {
+            if (productList.get(0).getStorageLocation().equals(storageLocationList.get(counter).getName()))
                 selection = counter;
         }
         return selection;

@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.databinding.ObservableField;
 import androidx.lifecycle.ViewModel;
 
-import com.hermanowicz.pantry.dao.db.storagelocation.StorageLocation;
+import com.hermanowicz.pantry.data.db.dao.storagelocation.StorageLocation;
 import com.hermanowicz.pantry.model.DatabaseMode;
 
 import javax.inject.Inject;

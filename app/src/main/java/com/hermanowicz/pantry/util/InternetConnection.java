@@ -7,7 +7,7 @@ public class InternetConnection {
 
     private final Context context;
 
-    public InternetConnection(Context context){
+    public InternetConnection(Context context) {
         this.context = context;
     }
 

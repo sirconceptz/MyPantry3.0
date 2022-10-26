@@ -14,7 +14,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.hermanowicz.pantry.R;
-import com.hermanowicz.pantry.dao.db.product.Product;
+import com.hermanowicz.pantry.data.db.dao.product.Product;
 import com.hermanowicz.pantry.interfaces.EditProductViewActions;
 import com.hermanowicz.pantry.model.DatabaseMode;
 import com.hermanowicz.pantry.util.CategorySpinnerListener;
@@ -31,13 +31,12 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 @HiltViewModel
 public class EditProductViewModel extends ViewModel {
 
-    @Inject
-    EditProductUseCaseImpl useCase;
+    private final LiveData<String[]> storageLocations;
+    private final LiveData<String[]> ownCategoriesNamesLiveData;
     //fields
     public ObservableField<String> productName = new ObservableField<>();
     public MutableLiveData<String> mainCategory = new MutableLiveData<>("");
     public MutableLiveData<String> detailCategory = new MutableLiveData<>("");
-    private final LiveData<String[]> storageLocations;
     public String storageLocation = "";
     public ObservableField<String> quantity = new ObservableField<>("1");
     public ObservableField<String> composition = new ObservableField<>("");
@@ -45,7 +44,6 @@ public class EditProductViewModel extends ViewModel {
     public ObservableField<String> dosage = new ObservableField<>("");
     public ObservableField<String> weight = new ObservableField<>("");
     public ObservableField<String> volume = new ObservableField<>("");
-    private String taste = "";
     public ObservableField<Boolean> isSweet = new ObservableField<>();
     public ObservableField<Boolean> isSour = new ObservableField<>();
     public ObservableField<Boolean> isSweetAndSour = new ObservableField<>();
@@ -55,10 +53,8 @@ public class EditProductViewModel extends ViewModel {
     public ObservableField<Boolean> isBio = new ObservableField<>();
     public ObservableField<Boolean> hasSugar = new ObservableField<>();
     public ObservableField<Boolean> hasSalt = new ObservableField<>();
-
     //detail category visibility, visible if user set main category, gone if user not set category
     public ObservableField<Integer> detailCategoryVisibility = new ObservableField<>(View.GONE);
-
     //datepickers date int values
     public ObservableField<Integer> expirationDateYear = new ObservableField<>();
     public ObservableField<Integer> expirationDateMonth = new ObservableField<>();
@@ -66,20 +62,18 @@ public class EditProductViewModel extends ViewModel {
     public ObservableField<Integer> productionDateYear = new ObservableField<>();
     public ObservableField<Integer> productionDateMonth = new ObservableField<>();
     public ObservableField<Integer> productionDateDay = new ObservableField<>();
-
     public ObservableField<Boolean> expirationCheckBoxChecked = new ObservableField<>(false);
     public ObservableField<Boolean> productionCheckBoxChecked = new ObservableField<>(false);
     public ObservableField<Integer> expirationDatePickerVisibility = new ObservableField<>(View.VISIBLE);
     public ObservableField<Integer> productionDatePickerVisibility = new ObservableField<>(View.VISIBLE);
-
-    private final LiveData<String[]> ownCategoriesNamesLiveData;
-    private String[] ownCategoriesNamesArray;
-
     public AdapterView.OnItemSelectedListener categorySelectionListener =
             new CategorySpinnerListener(mainCategory, detailCategory, detailCategoryVisibility);
     public AdapterView.OnItemSelectedListener storageLocationSelectionListener =
             new StorageLocationListener(storageLocation);
-
+    @Inject
+    EditProductUseCaseImpl useCase;
+    private String taste = "";
+    private String[] ownCategoriesNamesArray;
     private EditProductViewActions viewActionsListener;
 
     @Inject
@@ -89,7 +83,7 @@ public class EditProductViewModel extends ViewModel {
         ownCategoriesNamesLiveData = useCase.getAllOwnCategoriesNames();
     }
 
-    public void setViewActionsListener (EditProductViewActions viewActionsListener) {
+    public void setViewActionsListener(EditProductViewActions viewActionsListener) {
         this.viewActionsListener = viewActionsListener;
     }
 
@@ -233,45 +227,43 @@ public class EditProductViewModel extends ViewModel {
         useCase.setExpirationDate(product.getExpirationDate());
         useCase.setProductionDate(product.getProductionDate());
 
-        if(!product.getExpirationDate().equals("-")) {
+        if (!product.getExpirationDate().equals("-")) {
             int[] expirationDate = useCase.getExpirationDateArray();
             expirationDateYear.set(expirationDate[0]);
             expirationDateMonth.set(expirationDate[1]);
             expirationDateDay.set(expirationDate[2]);
         }
 
-        if(!product.getProductionDate().equals("-")) {
+        if (!product.getProductionDate().equals("-")) {
             int[] productionDate = useCase.getProductionDateArray();
             productionDateYear.set(productionDate[0]);
             productionDateMonth.set(productionDate[1]);
             productionDateDay.set(productionDate[2]);
         }
 
-        if(product.getExpirationDate().equals("")) {
+        if (product.getExpirationDate().equals("")) {
             expirationCheckBoxChecked.set(true);
             expirationDatePickerVisibility.set(View.GONE);
         }
-        if(product.getProductionDate().equals("")) {
+        if (product.getProductionDate().equals("")) {
             productionCheckBoxChecked.set(true);
             productionDatePickerVisibility.set(View.GONE);
         }
     }
 
-    public void setDatePickerEnabled(CompoundButton checkBox, boolean isChecked){
-        if(checkBox.getId() == R.id.productExpirationDateCheckbox) {
+    public void setDatePickerEnabled(CompoundButton checkBox, boolean isChecked) {
+        if (checkBox.getId() == R.id.productExpirationDateCheckbox) {
             if (isChecked) {
                 expirationDatePickerVisibility.set(View.GONE);
                 useCase.clearExpirationDate();
-            }
-            else
+            } else
                 expirationDatePickerVisibility.set(View.VISIBLE);
         }
-        if(checkBox.getId() == R.id.productProductionDateCheckbox) {
+        if (checkBox.getId() == R.id.productProductionDateCheckbox) {
             if (isChecked) {
                 productionDatePickerVisibility.set(View.GONE);
                 useCase.clearProductionDate();
-            }
-            else
+            } else
                 productionDatePickerVisibility.set(View.VISIBLE);
         }
     }

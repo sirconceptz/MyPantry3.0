@@ -4,8 +4,7 @@ import android.os.Bundle;
 
 import androidx.lifecycle.ViewModel;
 
-import com.hermanowicz.pantry.dao.db.product.Product;
-import com.hermanowicz.pantry.ui.fragments.PrintQRCodesFragment;
+import com.hermanowicz.pantry.data.db.dao.product.Product;
 
 import java.util.ArrayList;
 
@@ -32,7 +31,7 @@ public class PrintQRCodesViewModel extends ViewModel {
     }
 
     public void getProductsArrayListFromArguments() {
-        if(arguments != null){
+        if (arguments != null) {
             ArrayList<Product> productArrayList =
                     arguments.getParcelableArrayList("productArrayList");
             useCase.setProductArrayList(productArrayList);
@@ -43,9 +42,9 @@ public class PrintQRCodesViewModel extends ViewModel {
         getProductsArrayListFromArguments();
         useCase.createPdfWithQRCodes();
         String pdfFileName = useCase.getPdfFileName();
-        if(useCase.getRequestedActionType().equals("PRINT_QR_CODES"))
+        if (useCase.getRequestedActionType().equals("PRINT_QR_CODES"))
             viewActionsListener.openPdfFile(pdfFileName);
-        else if(useCase.getRequestedActionType().equals("SEND_EMAIL_QR_CODES"))
+        else if (useCase.getRequestedActionType().equals("SEND_EMAIL_QR_CODES"))
             viewActionsListener.sendPdfWithQRCodesByEmail(pdfFileName);
     }
 

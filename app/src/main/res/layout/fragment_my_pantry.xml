@@ -10,8 +10,8 @@
             android:id="@+id/recyclerview_products"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:focusableInTouchMode="true"
-            android:focusable="true" />
+            android:focusable="true"
+            android:focusableInTouchMode="true" />
 
         <TextView
             android:id="@+id/text_statement"
@@ -35,9 +35,9 @@
             android:layout_marginBottom="16dp"
             android:backgroundTint="@color/blue_500"
             app:fabCustomSize="50dp"
-            app:srcCompat="@drawable/ic_add_item"
             app:layout_constraintBottom_toTopOf="@id/filterProductFab"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/ic_add_item" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/filterProductFab"
@@ -48,9 +48,9 @@
             android:layout_marginBottom="32dp"
             android:backgroundTint="@color/blue_500"
             app:fabCustomSize="50dp"
-            app:srcCompat="@drawable/ic_search"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/ic_search" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -58,15 +58,14 @@ import dagger.hilt.android.AndroidEntryPoint;
 @AndroidEntryPoint
 public class NotificationService extends IntentService {
 
-    private static final String PREFERENCES_EMAIL_ADDRESS = "EMAIL_ADDRESS";
-    private static final String PREFERENCES_EMAIL_NOTIFICATIONS = "EMAIL_NOTIFICATIONS?";
-    private static final String PREFERENCES_PUSH_NOTIFICATIONS = "PUSH_NOTIFICATIONS?";
-    private static final String PREFERENCES_DAYS_TO_NOTIFICATIONS = "HOW_MANY_DAYS_BEFORE_EXPIRATION_DATE_SEND_A_NOTIFICATION?";
     static final String DAYS_TAG = "%DAYS%";
     static final String PRODUCT_NAME_TAG = "%PRODUCT_NAME%";
     static final String URL_API = "https://www.mypantry.eu/api/";
     static final String API_MAIL_FILE = "mail.php";
-
+    private static final String PREFERENCES_EMAIL_ADDRESS = "EMAIL_ADDRESS";
+    private static final String PREFERENCES_EMAIL_NOTIFICATIONS = "EMAIL_NOTIFICATIONS?";
+    private static final String PREFERENCES_PUSH_NOTIFICATIONS = "PUSH_NOTIFICATIONS?";
+    private static final String PREFERENCES_DAYS_TO_NOTIFICATIONS = "HOW_MANY_DAYS_BEFORE_EXPIRATION_DATE_SEND_A_NOTIFICATION?";
     private String productName;
     private int daysToNotification;
 

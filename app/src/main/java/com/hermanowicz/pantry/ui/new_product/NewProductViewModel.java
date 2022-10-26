@@ -14,7 +14,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.hermanowicz.pantry.R;
-import com.hermanowicz.pantry.dao.db.product.Product;
+import com.hermanowicz.pantry.data.db.dao.product.Product;
 import com.hermanowicz.pantry.interfaces.NewProductViewActions;
 import com.hermanowicz.pantry.model.DatabaseMode;
 import com.hermanowicz.pantry.model.GroupProduct;
@@ -33,30 +33,25 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 @HiltViewModel
 public class NewProductViewModel extends ViewModel {
 
-    @Inject
-    NewProductUseCaseImpl useCase;
-
+    private final String storageLocation = "";
+    private final LiveData<String[]> storageLocations;
+    private final LiveData<String[]> ownCategoriesNamesLiveData;
     //fields
     public ObservableField<String> productName = new ObservableField<>("");
     public MutableLiveData<String> mainCategory = new MutableLiveData<>("");
     public MutableLiveData<String> detailCategory = new MutableLiveData<>("");
-    private final String storageLocation = "";
-    private final LiveData<String[]> storageLocations;
     public ObservableField<String> quantity = new ObservableField<>("1");
     public ObservableField<String> composition = new ObservableField<>("");
     public ObservableField<String> healingProperties = new ObservableField<>("");
     public ObservableField<String> dosage = new ObservableField<>("");
     public ObservableField<String> weight = new ObservableField<>("");
     public ObservableField<String> volume = new ObservableField<>("");
-    private String taste = "";
     public ObservableField<Boolean> isVege = new ObservableField<>(false);
     public ObservableField<Boolean> isBio = new ObservableField<>(false);
     public ObservableField<Boolean> hasSugar = new ObservableField<>(false);
     public ObservableField<Boolean> hasSalt = new ObservableField<>(false);
-
     //detail category visibility, visible if user set main category, gone if user not set category
     public ObservableField<Integer> detailCategoryVisibility = new ObservableField<>(View.GONE);
-
     //datepickers date int values
     public ObservableField<Integer> expirationDateYear = new ObservableField<>();
     public ObservableField<Integer> expirationDateMonth = new ObservableField<>();
@@ -64,20 +59,18 @@ public class NewProductViewModel extends ViewModel {
     public ObservableField<Integer> productionDateYear = new ObservableField<>();
     public ObservableField<Integer> productionDateMonth = new ObservableField<>();
     public ObservableField<Integer> productionDateDay = new ObservableField<>();
-
     public ObservableField<Integer> expirationDatePickerVisibility = new ObservableField<>(View.GONE);
     public ObservableField<Integer> productionDatePickerVisibility = new ObservableField<>(View.GONE);
-
-    private final LiveData<String[]> ownCategoriesNamesLiveData;
-    private String[] ownCategoriesNamesArray;
-
-    private NewProductViewActions newProductViewActions;
-
     //spinners listeners
     public AdapterView.OnItemSelectedListener categorySelectionListener =
             new CategorySpinnerListener(mainCategory, detailCategory, detailCategoryVisibility);
     public AdapterView.OnItemSelectedListener storageLocationSelectionListener =
             new StorageLocationListener(storageLocation);
+    @Inject
+    NewProductUseCaseImpl useCase;
+    private String taste = "";
+    private String[] ownCategoriesNamesArray;
+    private NewProductViewActions newProductViewActions;
 
     @Inject
     public NewProductViewModel(NewProductUseCaseImpl newProductUseCase) {
@@ -128,6 +121,10 @@ public class NewProductViewModel extends ViewModel {
 
     public String[] getOwnCategoriesNamesArray() {
         return ownCategoriesNamesArray;
+    }
+
+    public void setOwnCategoriesNamesArray(String[] ownCategoriesNamesArray) {
+        this.ownCategoriesNamesArray = ownCategoriesNamesArray;
     }
 
     public void onExpirationDateChanged(int year, int month, int day) {
@@ -192,17 +189,12 @@ public class NewProductViewModel extends ViewModel {
         resetDateData();
     }
 
-    public void setOwnCategoriesNamesArray(String[] ownCategoriesNamesArray) {
-        this.ownCategoriesNamesArray = ownCategoriesNamesArray;
-    }
-
-    public void setDatePickerEnabled(CompoundButton checkBox, boolean isChecked){
-        if(checkBox.getId() == R.id.productExpirationDateCheckbox) {
+    public void setDatePickerEnabled(CompoundButton checkBox, boolean isChecked) {
+        if (checkBox.getId() == R.id.productExpirationDateCheckbox) {
             if (isChecked) {
                 expirationDatePickerVisibility.set(View.GONE);
                 useCase.clearExpirationDate();
-            }
-            else {
+            } else {
                 expirationDatePickerVisibility.set(View.VISIBLE);
                 int year = expirationDateYear.get();
                 int month = expirationDateMonth.get();
@@ -210,12 +202,11 @@ public class NewProductViewModel extends ViewModel {
                 useCase.setExpirationDate(year, month, day);
             }
         }
-        if(checkBox.getId() == R.id.productProductionDateCheckbox) {
+        if (checkBox.getId() == R.id.productProductionDateCheckbox) {
             if (isChecked) {
                 productionDatePickerVisibility.set(View.GONE);
                 useCase.clearProductionDate();
-            }
-            else
+            } else
                 productionDatePickerVisibility.set(View.VISIBLE);
             int year = productionDateYear.get();
             int month = productionDateMonth.get();
@@ -229,16 +220,15 @@ public class NewProductViewModel extends ViewModel {
     }
 
     public void showProductDataIfExists(@Nullable Bundle arguments) {
-        if(arguments != null){
+        if (arguments != null) {
             ArrayList<Product> productArrayList =
                     arguments.getParcelableArrayList("productArrayList");
             List<GroupProduct> groupProductArrayList = useCase.setAndGetGroupProductListFromProductList(productArrayList);
-            if(groupProductArrayList.size() == 1) {
+            if (groupProductArrayList.size() == 1) {
                 Product product = groupProductArrayList.get(0).getProduct();
                 int productQuantity = groupProductArrayList.get(0).getQuantity();
                 showProductData(product, productQuantity);
-            }
-            else if(groupProductArrayList.size() > 1) {
+            } else if (groupProductArrayList.size() > 1) {
                 String[] groupProductNames = useCase.getGroupProductNames(productArrayList);
                 newProductViewActions.showDialogChooseProductToCopy(groupProductNames);
             }
@@ -269,7 +259,7 @@ public class NewProductViewModel extends ViewModel {
 
     public boolean isFormValid() {
         boolean isValidForm = false;
-        if(Objects.requireNonNull(productName.get()).length() < 3)
+        if (Objects.requireNonNull(productName.get()).length() < 3)
             newProductViewActions.showErrorNameIsTooShort();
         else
             isValidForm = true;

@@ -22,11 +22,12 @@ import android.graphics.Bitmap;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.hermanowicz.pantry.dao.db.photo.Photo;
-import com.hermanowicz.pantry.dao.db.product.Product;
+import com.hermanowicz.pantry.data.db.dao.photo.Photo;
+import com.hermanowicz.pantry.data.db.dao.product.Product;
+import com.hermanowicz.pantry.data.repository.PhotoRepository;
+import com.hermanowicz.pantry.data.repository.ProductRepository;
+import com.hermanowicz.pantry.domain.usecase.ProductsPhotoUseCase;
 import com.hermanowicz.pantry.model.DatabaseMode;
-import com.hermanowicz.pantry.repository.PhotoRepository;
-import com.hermanowicz.pantry.repository.ProductRepository;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -41,7 +42,7 @@ public class ProductsPhotoUseCaseImpl implements ProductsPhotoUseCase {
     private DatabaseMode databaseMode;
 
     @Inject
-    public ProductsPhotoUseCaseImpl(ProductRepository productRepository, PhotoRepository photoRepository){
+    public ProductsPhotoUseCaseImpl(ProductRepository productRepository, PhotoRepository photoRepository) {
         this.productRepository = productRepository;
         this.photoRepository = photoRepository;
     }
@@ -49,11 +50,10 @@ public class ProductsPhotoUseCaseImpl implements ProductsPhotoUseCase {
     @Override
     public void savePhoto(Bitmap bitmap, String photoDescription, ArrayList<Product> productArrayList) {
         String fileName = photoRepository.getPhotoFileName();
-        if(databaseMode.getDatabaseMode() == DatabaseMode.Mode.LOCAL) {
+        if (databaseMode.getDatabaseMode() == DatabaseMode.Mode.LOCAL) {
             photoRepository.savePhotoInGallery(bitmap, fileName);
             productRepository.addOfflinePhoto(photoDescription, productArrayList, fileName);
-        }
-        else if (databaseMode.getDatabaseMode() == DatabaseMode.Mode.ONLINE) {
+        } else if (databaseMode.getDatabaseMode() == DatabaseMode.Mode.ONLINE) {
             List<Photo> currentPhotoList = photoRepository.getCurrentPhotoList();
             productRepository.addOnlinePhoto(bitmap, photoDescription, productArrayList, currentPhotoList);
         }
@@ -61,11 +61,10 @@ public class ProductsPhotoUseCaseImpl implements ProductsPhotoUseCase {
 
     @Override
     public void deletePhoto(ArrayList<Product> productArrayList) {
-        if(databaseMode.getDatabaseMode() == DatabaseMode.Mode.LOCAL) {
+        if (databaseMode.getDatabaseMode() == DatabaseMode.Mode.LOCAL) {
             productRepository.deleteOfflinePhoto(productArrayList);
             photoRepository.deleteLocalPhotoFile();
-        }
-        else if (databaseMode.getDatabaseMode() == DatabaseMode.Mode.ONLINE) {
+        } else if (databaseMode.getDatabaseMode() == DatabaseMode.Mode.ONLINE) {
             productRepository.deleteOnlinePhoto(productArrayList);
             photoRepository.deleteOnlinePhoto(productArrayList);
         }
@@ -82,6 +81,14 @@ public class ProductsPhotoUseCaseImpl implements ProductsPhotoUseCase {
     }
 
     @Override
+    public void setPhotoFile(String photoName) {
+        if (databaseMode.getDatabaseMode() == DatabaseMode.Mode.LOCAL)
+            photoRepository.setPhotoFileFromOfflineDb(photoName);
+        else if (databaseMode.getDatabaseMode() == DatabaseMode.Mode.ONLINE)
+            photoRepository.setPhotoFileFromOnlineDb(photoName);
+    }
+
+    @Override
     public void createPhotoFile() {
         photoRepository.createPhotoFile();
     }
@@ -89,14 +96,6 @@ public class ProductsPhotoUseCaseImpl implements ProductsPhotoUseCase {
     @Override
     public Bitmap getPhotoBitmap() {
         return photoRepository.getPhotoBitmap();
-    }
-
-    @Override
-    public void setPhotoFile(String photoName) {
-        if(databaseMode.getDatabaseMode() == DatabaseMode.Mode.LOCAL)
-            photoRepository.setPhotoFileFromOfflineDb(photoName);
-        else if(databaseMode.getDatabaseMode() == DatabaseMode.Mode.ONLINE)
-            photoRepository.setPhotoFileFromOnlineDb(photoName);
     }
 
     @Override

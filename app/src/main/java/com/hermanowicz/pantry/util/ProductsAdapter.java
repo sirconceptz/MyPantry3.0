@@ -31,11 +31,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hermanowicz.pantry.R;
-import com.hermanowicz.pantry.dao.db.product.Product;
+import com.hermanowicz.pantry.data.db.dao.product.Product;
 import com.hermanowicz.pantry.databinding.RvSingleGroupProductBinding;
 import com.hermanowicz.pantry.model.GroupProduct;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,13 +48,11 @@ import java.util.List;
 public class ProductsAdapter extends
         RecyclerView.Adapter<ProductsAdapter.ViewHolder> {
 
-    private RvSingleGroupProductBinding binding;
-
     private static final String PREFERENCES_DAYS_TO_NOTIFICATIONS = "HOW_MANY_DAYS_BEFORE_EXPIRATION_DATE_SEND_A_NOTIFICATION?";
-
-    private List<GroupProduct> productList = new ArrayList<>();
     private final SharedPreferences preferences;
     int itemAnimPosition = -1;
+    private RvSingleGroupProductBinding binding;
+    private List<GroupProduct> productList = new ArrayList<>();
 
     public ProductsAdapter(SharedPreferences preferences) {
         this.preferences = preferences;
@@ -140,15 +137,15 @@ public class ProductsAdapter extends
         return new ViewHolder(binding.getRoot());
     }
 
+    @Override
+    public int getItemCount() {
+        return productList.size();
+    }
+
     static class ViewHolder extends RecyclerView.ViewHolder {
 
         ViewHolder(View itemView) {
             super(itemView);
         }
-    }
-
-    @Override
-    public int getItemCount() {
-        return productList.size();
     }
 }

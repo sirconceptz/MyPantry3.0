@@ -1,8 +1,9 @@
 package com.hermanowicz.pantry.ui.print_qr_codes;
 
-import com.hermanowicz.pantry.dao.db.product.Product;
-import com.hermanowicz.pantry.repository.PdfDocumentsRepository;
-import com.hermanowicz.pantry.repository.SharedPreferencesRepository;
+import com.hermanowicz.pantry.data.db.dao.product.Product;
+import com.hermanowicz.pantry.data.repository.PdfDocumentsRepository;
+import com.hermanowicz.pantry.data.repository.SharedPreferencesRepository;
+import com.hermanowicz.pantry.domain.usecase.PrintQRCodesUseCase;
 
 import java.util.ArrayList;
 
@@ -37,12 +38,12 @@ public class PrintQRCodesUseCaseImpl implements PrintQRCodesUseCase {
     }
 
     @Override
-    public void setRequestedActionType(String requestedActionType) {
-        this.requestedActionType = requestedActionType;
+    public String getRequestedActionType() {
+        return requestedActionType;
     }
 
     @Override
-    public String getRequestedActionType() {
-        return requestedActionType;
+    public void setRequestedActionType(String requestedActionType) {
+        this.requestedActionType = requestedActionType;
     }
 }

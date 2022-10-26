@@ -23,7 +23,7 @@ import android.net.Uri;
 import android.provider.Settings;
 
 public class SettingsIntent {
-    public static Intent getSettingsIntent(Activity activity){
+    public static Intent getSettingsIntent(Activity activity) {
         Intent settingsIntent = new Intent();
         settingsIntent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)

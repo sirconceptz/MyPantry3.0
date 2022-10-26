@@ -7,18 +7,19 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.hermanowicz.pantry.BuildConfig;
-import com.hermanowicz.pantry.dao.db.category.Category;
-import com.hermanowicz.pantry.dao.db.product.Product;
-import com.hermanowicz.pantry.dao.db.storagelocation.StorageLocation;
+import com.hermanowicz.pantry.data.db.dao.category.Category;
+import com.hermanowicz.pantry.data.db.dao.product.Product;
+import com.hermanowicz.pantry.data.db.dao.storagelocation.StorageLocation;
+import com.hermanowicz.pantry.data.repository.DatabaseBackupRepository;
+import com.hermanowicz.pantry.data.repository.OwnCategoryRepository;
+import com.hermanowicz.pantry.data.repository.PricingRepository;
+import com.hermanowicz.pantry.data.repository.PricingRepositoryImpl;
+import com.hermanowicz.pantry.data.repository.ProductRepository;
+import com.hermanowicz.pantry.data.repository.SharedPreferencesRepository;
+import com.hermanowicz.pantry.data.repository.StorageLocationRepository;
+import com.hermanowicz.pantry.domain.usecase.SettingsUseCase;
 import com.hermanowicz.pantry.interfaces.PricingListener;
 import com.hermanowicz.pantry.model.DatabaseMode;
-import com.hermanowicz.pantry.repository.DatabaseBackupRepository;
-import com.hermanowicz.pantry.repository.OwnCategoryRepository;
-import com.hermanowicz.pantry.repository.PricingRepository;
-import com.hermanowicz.pantry.repository.PricingRepositoryImpl;
-import com.hermanowicz.pantry.repository.ProductRepository;
-import com.hermanowicz.pantry.repository.SharedPreferencesRepository;
-import com.hermanowicz.pantry.repository.StorageLocationRepository;
 import com.hermanowicz.pantry.util.Notifications;
 import com.hermanowicz.pantry.util.PremiumAccess;
 
@@ -97,7 +98,7 @@ public class SettingsUseCaseImpl implements SettingsUseCase {
     }
 
     private void cleanOnlineDb() {
-        if(FirebaseAuth.getInstance().getUid() != null) {
+        if (FirebaseAuth.getInstance().getUid() != null) {
             FirebaseDatabase.getInstance().getReference()
                     .child("products").child(FirebaseAuth.getInstance().getUid()).removeValue();
             FirebaseDatabase.getInstance().getReference()
@@ -114,17 +115,17 @@ public class SettingsUseCaseImpl implements SettingsUseCase {
     }
 
     private void importProductDb(List<Product> productList) {
-        if(FirebaseAuth.getInstance().getUid() != null) {
+        if (FirebaseAuth.getInstance().getUid() != null) {
             DatabaseReference ref = FirebaseDatabase.getInstance().getReference()
                     .child("products").child(FirebaseAuth.getInstance().getUid());
-            for(Product product : productList){
+            for (Product product : productList) {
                 ref.child(String.valueOf(product.getId())).setValue(product);
             }
         }
     }
 
     private void importCategoryDb(List<Category> categoryList) {
-        if(FirebaseAuth.getInstance().getUid() != null) {
+        if (FirebaseAuth.getInstance().getUid() != null) {
             DatabaseReference ref = FirebaseDatabase.getInstance().getReference()
                     .child("categories").child(FirebaseAuth.getInstance().getUid());
             for (Category category : categoryList) {
@@ -134,7 +135,7 @@ public class SettingsUseCaseImpl implements SettingsUseCase {
     }
 
     private void importStorageLocationDb(List<StorageLocation> storageLocationList) {
-        if(FirebaseAuth.getInstance().getUid() != null) {
+        if (FirebaseAuth.getInstance().getUid() != null) {
             DatabaseReference ref = FirebaseDatabase.getInstance().getReference()
                     .child("storage_locations").child(FirebaseAuth.getInstance().getUid());
             for (StorageLocation storageLocation : storageLocationList) {
@@ -193,7 +194,7 @@ public class SettingsUseCaseImpl implements SettingsUseCase {
 
     @Override
     public void restoreNotificationsIfNeeded() {
-        if(sharedPreferencesRepository.getIsNotificationsToRestore()) {
+        if (sharedPreferencesRepository.getIsNotificationsToRestore()) {
             notifications.cancelNotificationsForAllProducts();
             notifications.createNotificationsForAllProducts();
             sharedPreferencesRepository.setIsNotificationsToRestore(false);

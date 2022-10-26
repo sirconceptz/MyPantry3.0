@@ -3,9 +3,10 @@ package com.hermanowicz.pantry.ui.storage_locations;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.hermanowicz.pantry.dao.db.storagelocation.StorageLocation;
+import com.hermanowicz.pantry.data.db.dao.storagelocation.StorageLocation;
+import com.hermanowicz.pantry.data.repository.StorageLocationRepository;
+import com.hermanowicz.pantry.domain.usecase.StorageLocationsUseCase;
 import com.hermanowicz.pantry.model.DatabaseMode;
-import com.hermanowicz.pantry.repository.StorageLocationRepository;
 
 import java.util.List;
 

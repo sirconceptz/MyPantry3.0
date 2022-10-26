@@ -17,14 +17,14 @@ public class MyApp extends MultiDexApplication {
     private static MyApp instance;
     private RequestQueue requestQueue;
 
+    public static synchronized MyApp getInstance() {
+        return instance;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
         instance = this;
-    }
-
-    public static synchronized MyApp getInstance() {
-        return instance;
     }
 
     public RequestQueue getRequestQueue() {

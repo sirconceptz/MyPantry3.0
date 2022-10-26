@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.hermanowicz.pantry.ui.print_qr_codes.PrintQRCodesViewModel" />
@@ -16,53 +17,53 @@
             android:id="@+id/whatDoYouWantToDo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="64dp"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="64dp"
             android:layout_marginEnd="8dp"
+            android:text="@string/what_do_you_want_to_do"
             android:textAlignment="center"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/what_do_you_want_to_do"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/button_printQRCodes"
-            android:layout_height="wrap_content"
+            style="@style/CustomButton"
             android:layout_width="0dp"
-            android:layout_marginTop="64dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/button_sides_margin"
+            android:layout_marginTop="64dp"
             android:layout_marginEnd="@dimen/button_sides_margin"
             android:text="@string/button_print_qr_codes"
-            style="@style/CustomButton"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/whatDoYouWantToDo" />
 
         <Button
             android:id="@+id/button_sendEmailQRCodes"
-            android:layout_height="wrap_content"
+            style="@style/CustomButton"
             android:layout_width="0dp"
-            android:layout_marginTop="8dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/button_sides_margin"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="@dimen/button_sides_margin"
             android:text="@string/button_send_pdf_via_email"
-            style="@style/CustomButton"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/button_printQRCodes" />
 
         <Button
             android:id="@+id/button_skip"
-            android:layout_height="wrap_content"
+            style="@style/CustomButton"
             android:layout_width="0dp"
-            android:layout_marginTop="8dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/button_sides_margin"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="@dimen/button_sides_margin"
             android:text="@string/button_skip"
-            style="@style/CustomButton"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/button_sendEmailQRCodes" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

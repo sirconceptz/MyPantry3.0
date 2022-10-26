@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.databinding.ObservableField;
 import androidx.lifecycle.ViewModel;
 
-import com.hermanowicz.pantry.dao.db.category.Category;
+import com.hermanowicz.pantry.data.db.dao.category.Category;
 import com.hermanowicz.pantry.model.DatabaseMode;
 
 import java.util.ArrayList;
@@ -16,11 +16,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 @HiltViewModel
 public class NewCategoryViewModel extends ViewModel {
 
-    @Inject
-    NewCategoryUseCaseImpl useCase;
-
     public ObservableField<String> categoryName = new ObservableField<>();
     public ObservableField<String> categoryDescription = new ObservableField<>();
+    @Inject
+    NewCategoryUseCaseImpl useCase;
     private ArrayList<Category> categoryArrayList;
 
     @Inject
@@ -61,11 +60,11 @@ public class NewCategoryViewModel extends ViewModel {
         this.categoryArrayList = categoryArrayList;
     }
 
-    private int getIdLastProduct(){
+    private int getIdLastProduct() {
         int categoryListSize = categoryArrayList.size();
         int id = 0;
-        if(categoryArrayList.size() > 0)
-            id = categoryArrayList.get(categoryListSize-1).getId();
+        if (categoryArrayList.size() > 0)
+            id = categoryArrayList.get(categoryListSize - 1).getId();
         return id;
     }
 }

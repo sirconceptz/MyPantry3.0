@@ -56,12 +56,16 @@ public class ScanOptions {
 
     private Class<?> captureActivity;
 
-    protected Class<?> getDefaultCaptureActivity() {
-        return CaptureActivity.class;
-    }
-
     public ScanOptions() {
 
+    }
+
+    private static List<String> list(String... values) {
+        return Collections.unmodifiableList(Arrays.asList(values));
+    }
+
+    protected Class<?> getDefaultCaptureActivity() {
+        return CaptureActivity.class;
     }
 
     public Class<?> getCaptureActivity() {
@@ -136,7 +140,6 @@ public class ScanOptions {
         addExtra(Intents.Scan.TORCH_ENABLED, enabled);
         return this;
     }
-
 
     /**
      * Set to false to disable beep on scan.
@@ -219,10 +222,6 @@ public class ScanOptions {
         intentScan.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
         attachMoreExtras(intentScan);
         return intentScan;
-    }
-
-    private static List<String> list(String... values) {
-        return Collections.unmodifiableList(Arrays.asList(values));
     }
 
     private void attachMoreExtras(Intent intent) {

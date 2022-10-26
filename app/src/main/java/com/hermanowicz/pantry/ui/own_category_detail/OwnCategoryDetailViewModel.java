@@ -3,7 +3,7 @@ package com.hermanowicz.pantry.ui.own_category_detail;
 import androidx.databinding.ObservableField;
 import androidx.lifecycle.ViewModel;
 
-import com.hermanowicz.pantry.dao.db.category.Category;
+import com.hermanowicz.pantry.data.db.dao.category.Category;
 import com.hermanowicz.pantry.model.DatabaseMode;
 
 import javax.inject.Inject;
@@ -14,10 +14,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 public class OwnCategoryDetailViewModel extends ViewModel {
 
     private final OwnCategoryDetailUseCaseImpl useCase;
-
-    private Category category = new Category();
     public ObservableField<String> categoryName = new ObservableField<>();
     public ObservableField<String> categoryDescription = new ObservableField<>();
+    private Category category = new Category();
 
     @Inject
     public OwnCategoryDetailViewModel(OwnCategoryDetailUseCaseImpl ownCategoryDetailUseCase) {

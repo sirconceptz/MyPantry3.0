@@ -3,23 +3,22 @@ package com.hermanowicz.pantry.module;
 import android.content.Context;
 import android.content.res.Resources;
 
-import com.hermanowicz.pantry.repository.DatabaseBackupRepositoryImpl;
-import com.hermanowicz.pantry.repository.OwnCategoryRepository;
-import com.hermanowicz.pantry.repository.OwnCategoryRepositoryImpl;
-import com.hermanowicz.pantry.repository.PdfDocumentsRepositoryImpl;
-import com.hermanowicz.pantry.repository.PhotoRepository;
-import com.hermanowicz.pantry.repository.PhotoRepositoryImpl;
-import com.hermanowicz.pantry.repository.ProductRepositoryImpl;
-import com.hermanowicz.pantry.repository.SharedPreferencesRepository;
-import com.hermanowicz.pantry.repository.SharedPreferencesRepositoryImpl;
-import com.hermanowicz.pantry.repository.StorageLocationRepositoryImpl;
-import com.hermanowicz.pantry.ui.category.CategoryUseCaseImpl;
+import com.hermanowicz.pantry.data.repository.DatabaseBackupRepositoryImpl;
+import com.hermanowicz.pantry.data.repository.OwnCategoryRepository;
+import com.hermanowicz.pantry.data.repository.OwnCategoryRepositoryImpl;
+import com.hermanowicz.pantry.data.repository.PdfDocumentsRepositoryImpl;
+import com.hermanowicz.pantry.data.repository.PhotoRepositoryImpl;
+import com.hermanowicz.pantry.data.repository.ProductRepositoryImpl;
+import com.hermanowicz.pantry.data.repository.SharedPreferencesRepository;
+import com.hermanowicz.pantry.data.repository.SharedPreferencesRepositoryImpl;
+import com.hermanowicz.pantry.data.repository.StorageLocationRepositoryImpl;
 import com.hermanowicz.pantry.ui.database_mode.DatabaseModeUseCaseImpl;
 import com.hermanowicz.pantry.ui.edit_product.EditProductUseCaseImpl;
 import com.hermanowicz.pantry.ui.filter_product.FilterProductUseCaseImpl;
 import com.hermanowicz.pantry.ui.new_category.NewCategoryUseCaseImpl;
 import com.hermanowicz.pantry.ui.new_product.NewProductUseCaseImpl;
 import com.hermanowicz.pantry.ui.new_storage_location.NewStorageLocationUseCaseImpl;
+import com.hermanowicz.pantry.ui.own_categories.OwnCategoriesUseCaseImpl;
 import com.hermanowicz.pantry.ui.own_category_detail.OwnCategoryDetailUseCaseImpl;
 import com.hermanowicz.pantry.ui.print_qr_codes.PrintQRCodesUseCaseImpl;
 import com.hermanowicz.pantry.ui.product.ProductUseCaseImpl;
@@ -148,9 +147,9 @@ public final class AppModule {
 
     @Provides
     @Singleton
-    public CategoryUseCaseImpl provideCategoryUseCase(@ApplicationContext Context context) {
+    public OwnCategoriesUseCaseImpl provideCategoryUseCase(@ApplicationContext Context context) {
         OwnCategoryRepository ownCategoryRepository = new OwnCategoryRepositoryImpl(context);
-        return new CategoryUseCaseImpl(ownCategoryRepository);
+        return new OwnCategoriesUseCaseImpl(ownCategoryRepository);
     }
 
     @Provides

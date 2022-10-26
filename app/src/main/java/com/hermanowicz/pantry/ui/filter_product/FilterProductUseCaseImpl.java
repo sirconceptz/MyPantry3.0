@@ -1,18 +1,13 @@
 package com.hermanowicz.pantry.ui.filter_product;
 
-import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Transformations;
 
-import com.hermanowicz.pantry.dao.db.product.Product;
+import com.hermanowicz.pantry.data.repository.OwnCategoryRepository;
+import com.hermanowicz.pantry.data.repository.StorageLocationRepository;
+import com.hermanowicz.pantry.domain.usecase.FilterProductUseCase;
 import com.hermanowicz.pantry.model.Filter;
 import com.hermanowicz.pantry.model.FilterModel;
-import com.hermanowicz.pantry.model.GroupProduct;
-import com.hermanowicz.pantry.repository.OwnCategoryRepository;
-import com.hermanowicz.pantry.repository.StorageLocationRepository;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -20,9 +15,9 @@ public class FilterProductUseCaseImpl implements FilterProductUseCase {
 
     private final StorageLocationRepository storageLocationRepository;
     private final OwnCategoryRepository ownCategoryRepository;
+    private final MutableLiveData<FilterModel> filterModelMutableLiveData = new MutableLiveData<>();
     private Filter filter;
     private FilterModel filterModel = new FilterModel();
-    private final MutableLiveData<FilterModel> filterModelMutableLiveData = new MutableLiveData<>();
     private String expirationDateSince = "";
     private String expirationDateFor = "";
     private String productionDateSince = "";

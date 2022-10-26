@@ -16,6 +16,11 @@ public class DatabaseModeViewModel extends ViewModel {
 
     @Inject
     DatabaseModeUseCaseImpl useCase;
+    public SharedPreferences.OnSharedPreferenceChangeListener sharedPreferencesListener = (sharedPreferences, key) -> {
+        if (key.equals("DATABASE_MODE")) {
+            setDatabaseFromSettings();
+        }
+    };
 
     @Inject
     public DatabaseModeViewModel(DatabaseModeUseCaseImpl databaseModeUseCase) {
@@ -23,24 +28,18 @@ public class DatabaseModeViewModel extends ViewModel {
         setDatabaseFromSettings();
     }
 
-    public SharedPreferences.OnSharedPreferenceChangeListener sharedPreferencesListener = (sharedPreferences, key) -> {
-        if (key.equals("DATABASE_MODE")) {
-            setDatabaseFromSettings();
-        }
-    };
-
     private void setDatabaseFromSettings() {
         DatabaseMode databaseMode = useCase.getDatabaseModeFromSettings();
         setDatabaseMode(databaseMode);
     }
 
+    public LiveData<DatabaseMode> getDatabaseMode() {
+        return useCase.getDatabaseMode();
+    }
+
     private void setDatabaseMode(DatabaseMode databaseMode) {
         if (useCase.isDatabaseChanged())
             useCase.setDatabaseMode(databaseMode);
-    }
-
-    public LiveData<DatabaseMode> getDatabaseMode() {
-        return useCase.getDatabaseMode();
     }
 
     public DatabaseMode getDatabaseModeFromSettings() {

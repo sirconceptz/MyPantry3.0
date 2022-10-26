@@ -27,7 +27,7 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
-import com.hermanowicz.pantry.dao.db.product.Product;
+import com.hermanowicz.pantry.data.db.dao.product.Product;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 import org.json.JSONException;
@@ -117,7 +117,7 @@ public class PrintQRData {
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
         BitMatrix bitMatrix = null;
         try {
-            if(isBigQrCode)
+            if (isBigQrCode)
                 bitMatrix = qrCodeWriter.encode(textToQrCode, BarcodeFormat.QR_CODE, BIG_QR_CODE_WIDTH, BIG_QR_CODE_HEIGHT);
             else
                 bitMatrix = qrCodeWriter.encode(textToQrCode, BarcodeFormat.QR_CODE, SMALL_QR_CODE_WIDTH, SMALL_QR_CODE_HEIGHT);

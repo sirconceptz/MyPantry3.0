@@ -2,8 +2,9 @@ package com.hermanowicz.pantry.ui.database_mode;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.hermanowicz.pantry.data.repository.SharedPreferencesRepository;
+import com.hermanowicz.pantry.domain.usecase.DatabaseModeUseCase;
 import com.hermanowicz.pantry.model.DatabaseMode;
-import com.hermanowicz.pantry.repository.SharedPreferencesRepository;
 
 import javax.inject.Inject;
 

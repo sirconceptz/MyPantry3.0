@@ -21,6 +21,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <TextView
                     android:id="@+id/categoryNameText"
                     android:layout_width="match_parent"
@@ -36,15 +37,15 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/edittext_sides_margin"
                     android:text="@={viewModel.categoryName}"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/categoryNameText" />
 
                 <View
                     android:id="@+id/dividerAfterCategoryName"
                     style="@style/Divider"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/categoryNameInput" />
 
                 <TextView
@@ -62,15 +63,15 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/edittext_sides_margin"
                     android:text="@={viewModel.categoryDescription}"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/categoryDescriptionText" />
 
                 <View
                     android:id="@+id/dividerAfterCategoryDescription"
                     style="@style/Divider"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/categoryDescriptionInput" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -79,31 +80,31 @@
 
         <Button
             android:id="@+id/button_updateCategory"
-            android:layout_height="wrap_content"
+            style="@style/CustomButton"
             android:layout_width="0dp"
-            android:onClick="@{() -> viewModel.onClickUpdateCategory()}"
-            android:text="@string/button_save_changes"
+            android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/button_sides_margin"
             android:layout_marginEnd="@dimen/button_sides_margin"
-            style="@style/CustomButton"
-            app:layout_constraintWidth_default="percent"
-            app:layout_constraintWidth_percent=".45"
+            android:onClick="@{() -> viewModel.onClickUpdateCategory()}"
+            android:text="@string/button_save_changes"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent=".45" />
 
         <Button
             android:id="@+id/button_deleteCategory"
-            android:layout_height="wrap_content"
+            style="@style/CustomButton"
             android:layout_width="0dp"
-            android:onClick="@{() -> viewModel.onClickDeleteCategory()}"
+            android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/button_sides_margin"
             android:layout_marginEnd="@dimen/button_sides_margin"
+            android:onClick="@{() -> viewModel.onClickDeleteCategory()}"
             android:text="@string/button_delete_category"
-            style="@style/CustomButton"
-            app:layout_constraintWidth_default="percent"
-            app:layout_constraintWidth_percent=".45"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent=".45" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

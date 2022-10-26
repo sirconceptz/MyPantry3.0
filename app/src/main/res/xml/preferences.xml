@@ -15,63 +15,62 @@
   ~ limitations under the License.
   -->
 
-<PreferenceScreen
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory android:title="@string/settings_general_settings">
 
         <Preference
-            android:icon="@drawable/ic_shopping_cart"
-            android:selectable="true"
             android:enabled="false"
+            android:icon="@drawable/ic_shopping_cart"
             android:key="@string/preferences_key_go_premium"
+            android:selectable="true"
             android:title="@string/settings_go_premium" />
 
         <Preference
-            android:icon="@drawable/ic_person"
-            android:selectable="true"
             android:enabled="false"
+            android:icon="@drawable/ic_person"
             android:key="@string/preferences_key_active_user"
+            android:selectable="true"
             android:title="@string/settings_active_user" />
 
         <ListPreference
-            android:dialogTitle="@string/settings_database_mode"
             android:defaultValue="local"
-            android:selectable="true"
+            android:dialogTitle="@string/settings_database_mode"
             android:enabled="false"
             android:entries="@array/settings_database_mode"
-            app:useSimpleSummaryProvider="true"
             android:entryValues="@array/settings_database_mode_value"
             android:icon="@drawable/ic_backup"
             android:key="@string/preferences_key_database_mode"
-            android:title="@string/settings_database_mode" />
+            android:selectable="true"
+            android:title="@string/settings_database_mode"
+            app:useSimpleSummaryProvider="true" />
 
         <Preference
-            android:icon="@drawable/ic_restore"
-            android:selectable="true"
             android:enabled="true"
+            android:icon="@drawable/ic_restore"
             android:key="@string/preferences_key_import_db"
+            android:selectable="true"
             android:title="@string/settings_import_local_db_to_cloud" />
 
         <ListPreference
-            android:dialogTitle="@string/settings_which_camera_to_scan_products"
             android:defaultValue="0"
+            android:dialogTitle="@string/settings_which_camera_to_scan_products"
             android:entries="@array/settings_camera_to_scan"
-            app:useSimpleSummaryProvider="true"
             android:entryValues="@array/settings_camera_to_scan_value"
             android:icon="@drawable/ic_camera"
             android:key="@string/preferences_key_scan_camera"
-            android:title="@string/settings_which_camera_to_scan_products" />
+            android:title="@string/settings_which_camera_to_scan_products"
+            app:useSimpleSummaryProvider="true" />
 
         <SwitchPreference
             android:dialogTitle="@string/settings_qr_code_sizes"
             android:icon="@drawable/ic_qr_code_sizes"
-            android:summaryOff="@string/settings_qr_code_size_small"
-            app:useSimpleSummaryProvider="true"
-            android:summaryOn="@string/settings_qr_code_size_big"
             android:key="@string/preferences_key_qr_code_size"
-            android:title="@string/settings_qr_code_sizes" />
+            android:summaryOff="@string/settings_qr_code_size_small"
+            android:summaryOn="@string/settings_qr_code_size_big"
+            android:title="@string/settings_qr_code_sizes"
+            app:useSimpleSummaryProvider="true" />
 
         <SwitchPreference
             android:defaultValue="true"
@@ -87,19 +86,19 @@
 
         <SeekBarPreference
             android:defaultValue="3"
-            android:max="14"
-            app:showSeekBarValue="true"
             android:icon="@drawable/ic_days"
             android:key="@string/preferences_key_notification_days_before_expiration"
-            android:title="@string/settings_how_many_days_before_the_expiration_date_send_a_notification" />
+            android:max="14"
+            android:title="@string/settings_how_many_days_before_the_expiration_date_send_a_notification"
+            app:showSeekBarValue="true" />
 
         <EditTextPreference
             android:icon="@drawable/ic_email_address"
-            android:key="@string/preferences_key_email_address"
-            app:useSimpleSummaryProvider="true"
-            android:title="@string/settings_give_email_adress"
             android:inputType="textEmailAddress"
-            android:maxLength="30" />
+            android:key="@string/preferences_key_email_address"
+            android:maxLength="30"
+            android:title="@string/settings_give_email_adress"
+            app:useSimpleSummaryProvider="true" />
 
         <SwitchPreference
             android:defaultValue="true"
@@ -110,8 +109,8 @@
             android:title="@string/settings_notifications_push" />
 
         <SwitchPreference
-            android:dependency="@string/preferences_key_email_address"
             android:defaultValue="false"
+            android:dependency="@string/preferences_key_email_address"
             android:icon="@drawable/ic_notification"
             android:key="@string/preferences_key_email_notifications"
             android:summaryOff="@string/settings_disabled"
@@ -123,66 +122,66 @@
     <PreferenceCategory android:title="@string/settings_database_backup">
 
         <Preference
-            android:icon="@drawable/ic_restore"
-            android:selectable="true"
             android:enabled="true"
+            android:icon="@drawable/ic_restore"
             android:key="@string/preferences_key_restore_product_db"
+            android:selectable="true"
             android:title="@string/settings_restore_product_database" />
 
         <Preference
-            android:icon="@drawable/ic_backup"
-            android:selectable="true"
             android:enabled="true"
+            android:icon="@drawable/ic_backup"
             android:key="@string/preferences_key_backup_product_db"
+            android:selectable="true"
             android:title="@string/settings_backup_product_database" />
 
         <Preference
-            android:icon="@drawable/ic_clear_db"
-            android:selectable="true"
             android:enabled="true"
+            android:icon="@drawable/ic_clear_db"
             android:key="@string/preferences_key_clear_product_db"
+            android:selectable="true"
             android:title="@string/settings_clear_product_database" />
 
         <Preference
-            android:icon="@drawable/ic_restore"
-            android:selectable="true"
             android:enabled="true"
+            android:icon="@drawable/ic_restore"
             android:key="@string/preferences_key_restore_category_db"
+            android:selectable="true"
             android:title="@string/settings_restore_category_database" />
 
         <Preference
-            android:icon="@drawable/ic_backup"
-            android:selectable="true"
             android:enabled="true"
+            android:icon="@drawable/ic_backup"
             android:key="@string/preferences_key_backup_category_db"
+            android:selectable="true"
             android:title="@string/settings_backup_category_database" />
 
         <Preference
-            android:icon="@drawable/ic_clear_db"
-            android:selectable="true"
             android:enabled="true"
+            android:icon="@drawable/ic_clear_db"
             android:key="@string/preferences_key_clear_category_db"
+            android:selectable="true"
             android:title="@string/settings_clear_category_database" />
 
         <Preference
-            android:icon="@drawable/ic_restore"
-            android:selectable="true"
             android:enabled="true"
+            android:icon="@drawable/ic_restore"
             android:key="@string/preferences_key_restore_storage_location_db"
+            android:selectable="true"
             android:title="@string/settings_restore_storage_location_database" />
 
         <Preference
-            android:icon="@drawable/ic_backup"
-            android:selectable="true"
             android:enabled="true"
+            android:icon="@drawable/ic_backup"
             android:key="@string/preferences_key_backup_storage_location_db"
+            android:selectable="true"
             android:title="@string/settings_backup_storage_location_database" />
 
         <Preference
-            android:icon="@drawable/ic_clear_db"
-            android:selectable="true"
             android:enabled="true"
+            android:icon="@drawable/ic_clear_db"
             android:key="@string/preferences_key_clear_storage_location_db"
+            android:selectable="true"
             android:title="@string/settings_clear_storage_location_database" />
 
     </PreferenceCategory>
@@ -190,10 +189,10 @@
     <PreferenceCategory android:title="@string/app_name">
 
         <Preference
-            android:icon="@drawable/ic_version"
-            android:selectable="false"
             android:enabled="true"
+            android:icon="@drawable/ic_version"
             android:key="@string/preferences_key_version"
+            android:selectable="false"
             android:title="@string/settings_version" />
 
     </PreferenceCategory>

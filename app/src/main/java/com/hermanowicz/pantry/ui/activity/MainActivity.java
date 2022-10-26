@@ -1,7 +1,6 @@
 package com.hermanowicz.pantry.ui.activity;
 
 import android.os.Bundle;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,7 +14,6 @@ import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.navigation.NavigationView;
 import com.hermanowicz.pantry.R;
 import com.hermanowicz.pantry.databinding.ActivityMainBinding;
-import com.hermanowicz.pantry.ui.dialogs.ChooseProductToCopyDialog;
 import com.hermanowicz.pantry.ui.dialogs.MigrationDialog;
 import com.hermanowicz.pantry.util.MigrationAppTo3Version;
 
@@ -55,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void migrationTo3Version() {
-        if(MigrationAppTo3Version.migrate(this))
+        if (MigrationAppTo3Version.migrate(this))
             showDialogSettingsWasDeleted();
     }
 

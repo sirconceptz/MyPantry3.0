@@ -3,7 +3,7 @@ package com.hermanowicz.pantry.ui.scan_product;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 
-import com.hermanowicz.pantry.dao.db.product.Product;
+import com.hermanowicz.pantry.data.db.dao.product.Product;
 import com.hermanowicz.pantry.interfaces.ScanDecodedResult;
 import com.hermanowicz.pantry.util.ScanIntentResult;
 import com.hermanowicz.pantry.util.ScanOptions;
@@ -34,11 +34,11 @@ public class ScanProductViewModel extends ViewModel {
         useCase.setScanResult(result);
     }
 
-    public void setViewListener(ScanDecodedResult scanDecodedResult){
+    public void setViewListener(ScanDecodedResult scanDecodedResult) {
         useCase.setScanDecodedResultListener(scanDecodedResult);
     }
 
-    public void setScanType(String scanType){
+    public void setScanType(String scanType) {
         useCase.setScanType(scanType);
     }
 

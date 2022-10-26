@@ -63,6 +63,34 @@ public final class ScanIntentResult {
     }
 
     /**
+     * Parse activity result, without checking the request code.
+     *
+     * @param resultCode result code from {@code onActivityResult()}
+     * @param intent     {@link Intent} from {@code onActivityResult()}
+     * @return an {@link IntentResult} containing the result of the scan. If the user cancelled scanning,
+     * the fields will be null.
+     */
+    public static ScanIntentResult parseActivityResult(int resultCode, Intent intent) {
+        if (resultCode == Activity.RESULT_OK) {
+            String contents = intent.getStringExtra(Intents.Scan.RESULT);
+            String formatName = intent.getStringExtra(Intents.Scan.RESULT_FORMAT);
+            byte[] rawBytes = intent.getByteArrayExtra(Intents.Scan.RESULT_BYTES);
+            int intentOrientation = intent.getIntExtra(Intents.Scan.RESULT_ORIENTATION, Integer.MIN_VALUE);
+            Integer orientation = intentOrientation == Integer.MIN_VALUE ? null : intentOrientation;
+            String errorCorrectionLevel = intent.getStringExtra(Intents.Scan.RESULT_ERROR_CORRECTION_LEVEL);
+            String barcodeImagePath = intent.getStringExtra(Intents.Scan.RESULT_BARCODE_IMAGE_PATH);
+            return new ScanIntentResult(contents,
+                    formatName,
+                    rawBytes,
+                    orientation,
+                    errorCorrectionLevel,
+                    barcodeImagePath,
+                    intent);
+        }
+        return new ScanIntentResult(intent);
+    }
+
+    /**
      * @return raw content of barcode
      */
     public String getContents() {
@@ -121,34 +149,5 @@ public final class ScanIntentResult {
                 "EC level: " + errorCorrectionLevel + '\n' +
                 "Barcode image: " + barcodeImagePath + '\n' +
                 "Original intent: " + originalIntent + '\n';
-    }
-
-
-    /**
-     * Parse activity result, without checking the request code.
-     *
-     * @param resultCode result code from {@code onActivityResult()}
-     * @param intent     {@link Intent} from {@code onActivityResult()}
-     * @return an {@link IntentResult} containing the result of the scan. If the user cancelled scanning,
-     * the fields will be null.
-     */
-    public static ScanIntentResult parseActivityResult(int resultCode, Intent intent) {
-        if (resultCode == Activity.RESULT_OK) {
-            String contents = intent.getStringExtra(Intents.Scan.RESULT);
-            String formatName = intent.getStringExtra(Intents.Scan.RESULT_FORMAT);
-            byte[] rawBytes = intent.getByteArrayExtra(Intents.Scan.RESULT_BYTES);
-            int intentOrientation = intent.getIntExtra(Intents.Scan.RESULT_ORIENTATION, Integer.MIN_VALUE);
-            Integer orientation = intentOrientation == Integer.MIN_VALUE ? null : intentOrientation;
-            String errorCorrectionLevel = intent.getStringExtra(Intents.Scan.RESULT_ERROR_CORRECTION_LEVEL);
-            String barcodeImagePath = intent.getStringExtra(Intents.Scan.RESULT_BARCODE_IMAGE_PATH);
-            return new ScanIntentResult(contents,
-                    formatName,
-                    rawBytes,
-                    orientation,
-                    errorCorrectionLevel,
-                    barcodeImagePath,
-                    intent);
-        }
-        return new ScanIntentResult(intent);
     }
 }

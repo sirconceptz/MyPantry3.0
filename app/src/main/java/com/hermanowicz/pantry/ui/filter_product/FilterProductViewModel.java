@@ -22,14 +22,12 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 @HiltViewModel
 public class FilterProductViewModel extends ViewModel {
 
-    @Inject
-    FilterProductUseCaseImpl useCase;
-
+    private final LiveData<String[]> storageLocations;
+    private final LiveData<String[]> ownCategoriesNamesLiveData;
     //fields
     public ObservableField<String> productName = new ObservableField<>();
     public MutableLiveData<String> mainCategory = new MutableLiveData<>("");
     public MutableLiveData<String> detailCategory = new MutableLiveData<>("");
-    private final LiveData<String[]> storageLocations;
     public String storageLocation = "";
     public ObservableField<String> composition = new ObservableField<>("");
     public ObservableField<String> healingProperties = new ObservableField<>("");
@@ -64,14 +62,13 @@ public class FilterProductViewModel extends ViewModel {
     public ObservableField<Integer> productionDateForYear = new ObservableField<>();
     public ObservableField<Integer> productionDateForMonth = new ObservableField<>();
     public ObservableField<Integer> productionDateForDay = new ObservableField<>();
-
-    private final LiveData<String[]> ownCategoriesNamesLiveData;
-    private String[] ownCategoriesNamesArray;
-
     public AdapterView.OnItemSelectedListener mainCategorySelectedListener =
             new CategorySpinnerListener(mainCategory, detailCategory, detailCategoryVisibility);
     public AdapterView.OnItemSelectedListener storageLocationSelectionListener =
             new StorageLocationListener(storageLocation);
+    @Inject
+    FilterProductUseCaseImpl useCase;
+    private String[] ownCategoriesNamesArray;
 
     @Inject
     public FilterProductViewModel(FilterProductUseCaseImpl filterProductUseCase) {
@@ -108,13 +105,13 @@ public class FilterProductViewModel extends ViewModel {
         filterModel.setComposition(composition.get());
         filterModel.setHealingProperties(healingProperties.get());
         filterModel.setDosage(dosage.get());
-        if(!Objects.equals(weightSince.get(), ""))
+        if (!Objects.equals(weightSince.get(), ""))
             filterModel.setWeightSince(Integer.parseInt(Objects.requireNonNull(weightSince.get())));
-        if(!Objects.equals(weightFor.get(), ""))
+        if (!Objects.equals(weightFor.get(), ""))
             filterModel.setWeightFor(Integer.parseInt(Objects.requireNonNull(weightFor.get())));
-        if(!Objects.equals(volumeSince.get(), ""))
+        if (!Objects.equals(volumeSince.get(), ""))
             filterModel.setVolumeSince(Integer.parseInt(Objects.requireNonNull(volumeSince.get())));
-        if(!Objects.equals(volumeFor.get(), ""))
+        if (!Objects.equals(volumeFor.get(), ""))
             filterModel.setVolumeFor(Integer.parseInt(Objects.requireNonNull(volumeFor.get())));
 
         return filterModel;

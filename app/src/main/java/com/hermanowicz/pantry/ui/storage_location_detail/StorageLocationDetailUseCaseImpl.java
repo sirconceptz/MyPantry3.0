@@ -1,8 +1,9 @@
 package com.hermanowicz.pantry.ui.storage_location_detail;
 
-import com.hermanowicz.pantry.dao.db.storagelocation.StorageLocation;
+import com.hermanowicz.pantry.data.db.dao.storagelocation.StorageLocation;
+import com.hermanowicz.pantry.data.repository.StorageLocationRepository;
+import com.hermanowicz.pantry.domain.usecase.StorageLocationDetailUseCase;
 import com.hermanowicz.pantry.model.DatabaseMode;
-import com.hermanowicz.pantry.repository.StorageLocationRepository;
 
 import javax.inject.Inject;
 

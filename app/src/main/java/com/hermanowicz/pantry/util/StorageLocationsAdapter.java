@@ -30,7 +30,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hermanowicz.pantry.R;
-import com.hermanowicz.pantry.dao.db.storagelocation.StorageLocation;
+import com.hermanowicz.pantry.data.db.dao.storagelocation.StorageLocation;
 import com.hermanowicz.pantry.databinding.RvSingleStorageLocationBinding;
 
 import java.util.ArrayList;
@@ -82,15 +82,15 @@ public class StorageLocationsAdapter extends RecyclerView.Adapter<StorageLocatio
         }
     }
 
+    @Override
+    public int getItemCount() {
+        return storageLocationList.size();
+    }
+
     static class ViewHolder extends RecyclerView.ViewHolder {
 
         ViewHolder(View itemView) {
             super(itemView);
         }
-    }
-
-    @Override
-    public int getItemCount() {
-        return storageLocationList.size();
     }
 }

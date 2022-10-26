@@ -24,16 +24,16 @@
 
                 <ImageView
                     android:id="@+id/imageview_photo"
-                    app:srcCompat="@drawable/ic_no_image"
                     android:layout_width="250dp"
                     android:layout_height="250dp"
-                    android:layout_marginTop="16dp"
                     android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
                     android:layout_marginEnd="8dp"
                     android:visibility="@{viewModel.photoVisibility, default=gone}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_no_image" />
 
                 <TextView
                     android:id="@+id/productNameText"
@@ -41,9 +41,9 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:text="@string/product_name"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/imageview_photo"/>
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/imageview_photo" />
 
                 <TextView
                     android:id="@+id/productName"
@@ -52,15 +52,15 @@
                     android:layout_marginHorizontal="8dp"
                     android:text="@={viewModel.productName}"
                     android:textAppearance="?android:textAppearanceLarge"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/productNameText" />
 
                 <View
                     android:id="@+id/dividerAfterProductName"
                     style="@style/Divider"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/productName" />
 
                 <TextView
@@ -69,8 +69,8 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:text="@string/product_category"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dividerAfterProductName" />
 
                 <TextView
@@ -80,15 +80,15 @@
                     android:layout_marginHorizontal="8dp"
                     android:text="@={viewModel.mainCategory}"
                     android:textAppearance="?android:textAppearanceLarge"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/productMainCategoryText" />
 
                 <View
                     android:id="@+id/dividerAfterMainCategory"
                     style="@style/Divider"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/mainCategory" />
 
                 <TextView
@@ -98,8 +98,8 @@
                     android:layout_margin="8dp"
                     android:text="@string/product_category"
                     android:visibility="@{viewModel.detailCategoryVisibility, default=gone}"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dividerAfterMainCategory" />
 
                 <TextView
@@ -110,16 +110,16 @@
                     android:text="@={viewModel.detailCategory}"
                     android:textAppearance="?android:textAppearanceLarge"
                     android:visibility="@{viewModel.detailCategoryVisibility, default=gone}"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/productDetailCategoryText" />
 
                 <View
                     android:id="@+id/dividerAfterDetailCategory"
                     style="@style/Divider"
                     android:visibility="@{viewModel.detailCategoryVisibility, default=gone}"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/detailCategory" />
 
                 <TextView
@@ -129,8 +129,8 @@
                     android:layout_margin="8dp"
                     android:text="@string/product_storage_location"
                     android:visibility="@{viewModel.storageLocationVisibility, default=gone}"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dividerAfterDetailCategory" />
 
                 <TextView
@@ -139,18 +139,18 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="8dp"
                     android:text="@={viewModel.storageLocation}"
-                    android:visibility="@{viewModel.storageLocationVisibility, default=gone}"
                     android:textAppearance="?android:textAppearanceLarge"
-                    app:layout_constraintStart_toStartOf="parent"
+                    android:visibility="@{viewModel.storageLocationVisibility, default=gone}"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/productStorageLocationText" />
 
                 <View
                     android:id="@+id/dividerAfterStorageLocation"
                     style="@style/Divider"
                     android:visibility="@{viewModel.storageLocationVisibility, default=gone}"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/storageLocation" />
 
                 <TextView
@@ -160,8 +160,8 @@
                     android:layout_margin="8dp"
                     android:text="@string/product_expiration_date"
                     android:visibility="@{viewModel.expirationDateVisibility, default=gone}"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dividerAfterStorageLocation" />
 
                 <TextView
@@ -170,18 +170,18 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="8dp"
                     android:text="@={viewModel.expirationDate}"
-                    android:visibility="@{viewModel.expirationDateVisibility, default=gone}"
                     android:textAppearance="?android:textAppearanceLarge"
-                    app:layout_constraintStart_toStartOf="parent"
+                    android:visibility="@{viewModel.expirationDateVisibility, default=gone}"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/productExpirationDateText" />
 
                 <View
                     android:id="@+id/dividerAfterExpirationDate"
                     style="@style/Divider"
                     android:visibility="@{viewModel.expirationDateVisibility, default=gone}"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/expirationDate" />
 
                 <TextView
@@ -191,8 +191,8 @@
                     android:layout_margin="8dp"
                     android:text="@string/product_production_date"
                     android:visibility="@{viewModel.productionDateVisibility, default=gone}"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dividerAfterExpirationDate" />
 
                 <TextView
@@ -201,18 +201,18 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="8dp"
                     android:text="@={viewModel.productionDate}"
-                    android:visibility="@{viewModel.productionDateVisibility, default=gone}"
                     android:textAppearance="?android:textAppearanceLarge"
-                    app:layout_constraintStart_toStartOf="parent"
+                    android:visibility="@{viewModel.productionDateVisibility, default=gone}"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/productProductionDateText" />
 
                 <View
                     android:id="@+id/dividerAfterProductionDate"
                     style="@style/Divider"
                     android:visibility="@{viewModel.productionDateVisibility, default=gone}"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/productionDate" />
 
                 <TextView
@@ -221,8 +221,8 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:text="@string/product_quantity"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dividerAfterProductionDate" />
 
                 <TextView
@@ -232,15 +232,15 @@
                     android:layout_marginHorizontal="8dp"
                     android:text="@={viewModel.quantity}"
                     android:textAppearance="?android:textAppearanceLarge"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/productQuantityText" />
 
                 <View
                     android:id="@+id/dividerAfterProductQuantity"
                     style="@style/Divider"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/quantity" />
 
                 <TextView
@@ -250,8 +250,8 @@
                     android:layout_margin="8dp"
                     android:text="@string/product_composition"
                     android:visibility="@{viewModel.compositionVisibility, default=gone}"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dividerAfterProductQuantity" />
 
                 <TextView
@@ -260,18 +260,18 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="8dp"
                     android:text="@={viewModel.composition}"
-                    android:visibility="@{viewModel.compositionVisibility, default=gone}"
                     android:textAppearance="?android:textAppearanceLarge"
-                    app:layout_constraintStart_toStartOf="parent"
+                    android:visibility="@{viewModel.compositionVisibility, default=gone}"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/productCompositionText" />
 
                 <View
                     android:id="@+id/dividerAfterComposition"
                     style="@style/Divider"
                     android:visibility="@{viewModel.compositionVisibility, default=gone}"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/composition" />
 
                 <TextView
@@ -281,8 +281,8 @@
                     android:layout_margin="8dp"
                     android:text="@string/product_healing_properties"
                     android:visibility="@{viewModel.healingPropertiesVisibility, default=gone}"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dividerAfterComposition" />
 
                 <TextView
@@ -291,18 +291,18 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="8dp"
                     android:text="@={viewModel.healingProperties}"
-                    android:visibility="@{viewModel.healingPropertiesVisibility, default=gone}"
                     android:textAppearance="?android:textAppearanceLarge"
-                    app:layout_constraintStart_toStartOf="parent"
+                    android:visibility="@{viewModel.healingPropertiesVisibility, default=gone}"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/productHealingPropertiesText" />
 
                 <View
                     android:id="@+id/dividerAfterHealingProperties"
                     style="@style/Divider"
                     android:visibility="@{viewModel.healingPropertiesVisibility, default=gone}"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/healingProperties" />
 
                 <TextView
@@ -312,8 +312,8 @@
                     android:layout_margin="8dp"
                     android:text="@string/product_dosage"
                     android:visibility="@{viewModel.dosageVisibility, default=gone}"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dividerAfterHealingProperties" />
 
                 <TextView
@@ -322,18 +322,18 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="8dp"
                     android:text="@={viewModel.dosage}"
-                    android:visibility="@{viewModel.dosageVisibility, default=gone}"
                     android:textAppearance="?android:textAppearanceLarge"
-                    app:layout_constraintStart_toStartOf="parent"
+                    android:visibility="@{viewModel.dosageVisibility, default=gone}"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/productDosageText" />
 
                 <View
                     android:id="@+id/dividerAfterDosage"
                     style="@style/Divider"
                     android:visibility="@{viewModel.dosageVisibility, default=gone}"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dosage" />
 
                 <TextView
@@ -343,8 +343,8 @@
                     android:layout_margin="8dp"
                     android:text="@string/product_weight"
                     android:visibility="@{viewModel.weightVisibility, default=gone}"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dividerAfterDosage" />
 
                 <TextView
@@ -353,18 +353,18 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="8dp"
                     android:text="@={viewModel.weight}"
-                    android:visibility="@{viewModel.weightVisibility, default=gone}"
                     android:textAppearance="?android:textAppearanceLarge"
-                    app:layout_constraintStart_toStartOf="parent"
+                    android:visibility="@{viewModel.weightVisibility, default=gone}"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/productWeightText" />
 
                 <View
                     android:id="@+id/dividerAfterProductWeight"
                     style="@style/Divider"
                     android:visibility="@{viewModel.weightVisibility, default=gone}"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/weight" />
 
                 <TextView
@@ -374,8 +374,8 @@
                     android:layout_margin="8dp"
                     android:text="@string/product_volume"
                     android:visibility="@{viewModel.volumeVisibility, default=gone}"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dividerAfterProductWeight" />
 
                 <TextView
@@ -384,18 +384,18 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="8dp"
                     android:text="@={viewModel.volume}"
-                    android:visibility="@{viewModel.volumeVisibility, default=gone}"
                     android:textAppearance="?android:textAppearanceLarge"
-                    app:layout_constraintStart_toStartOf="parent"
+                    android:visibility="@{viewModel.volumeVisibility, default=gone}"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/productVolumeText" />
 
                 <View
                     android:id="@+id/dividerAfterProductVolume"
                     style="@style/Divider"
                     android:visibility="@{viewModel.volumeVisibility, default=gone}"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/volume" />
 
                 <TextView
@@ -405,8 +405,8 @@
                     android:layout_margin="8dp"
                     android:text="@string/product_taste"
                     android:visibility="@{viewModel.tasteVisibility, default=gone}"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dividerAfterProductVolume" />
 
                 <TextView
@@ -415,18 +415,18 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="8dp"
                     android:text="@={viewModel.taste}"
-                    android:visibility="@{viewModel.tasteVisibility, default=gone}"
                     android:textAppearance="?android:textAppearanceLarge"
-                    app:layout_constraintStart_toStartOf="parent"
+                    android:visibility="@{viewModel.tasteVisibility, default=gone}"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/productTasteText" />
 
                 <View
                     android:id="@+id/dividerAfterProductTaste"
                     style="@style/Divider"
                     android:visibility="@{viewModel.tasteVisibility, default=gone}"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/taste" />
 
                 <TextView
@@ -435,8 +435,8 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:text="@string/product_vege"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dividerAfterProductTaste" />
 
                 <TextView
@@ -446,15 +446,15 @@
                     android:layout_marginHorizontal="8dp"
                     android:text="@={viewModel.isVege}"
                     android:textAppearance="?android:textAppearanceLarge"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/productIsVegeText" />
 
                 <View
                     android:id="@+id/dividerAfterIsVege"
                     style="@style/Divider"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/isVege" />
 
                 <TextView
@@ -463,8 +463,8 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:text="@string/product_bio"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dividerAfterIsVege" />
 
                 <TextView
@@ -474,15 +474,15 @@
                     android:layout_marginHorizontal="8dp"
                     android:text="@={viewModel.isBio}"
                     android:textAppearance="?android:textAppearanceLarge"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/productIsBioText" />
 
                 <View
                     android:id="@+id/dividerAfterIsBio"
                     style="@style/Divider"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/isBio" />
 
                 <TextView
@@ -491,8 +491,8 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:text="@string/product_has_sugar"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dividerAfterIsBio" />
 
                 <TextView
@@ -502,15 +502,15 @@
                     android:layout_marginHorizontal="8dp"
                     android:text="@={viewModel.hasSugar}"
                     android:textAppearance="?android:textAppearanceLarge"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/productHasSugarText" />
 
                 <View
                     android:id="@+id/dividerAfterHasSugar"
                     style="@style/Divider"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/hasSugar" />
 
                 <TextView
@@ -519,8 +519,8 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:text="@string/product_has_salt"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dividerAfterHasSugar" />
 
                 <TextView
@@ -530,15 +530,15 @@
                     android:layout_marginHorizontal="8dp"
                     android:text="@={viewModel.hasSalt}"
                     android:textAppearance="?android:textAppearanceLarge"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/productHasSaltText" />
 
                 <View
                     android:id="@+id/dividerAfterHasSalt"
                     style="@style/Divider"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/hasSalt" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -547,66 +547,66 @@
 
         <Button
             android:id="@+id/button_editProduct"
-            android:layout_height="wrap_content"
+            style="@style/CustomButton"
             android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/button_sides_margin"
             android:layout_marginEnd="@dimen/button_sides_margin"
             android:text="@string/button_edit_product"
-            style="@style/CustomButton"
-            app:layout_constraintWidth_default="percent"
-            app:layout_constraintWidth_percent=".45"
+            app:layout_constraintBottom_toTopOf="@id/button_printQRCodes"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/button_printQRCodes" />
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent=".45" />
 
         <Button
             android:id="@+id/button_addPhoto"
-            android:layout_height="wrap_content"
+            style="@style/CustomButton"
             android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/button_sides_margin"
             android:layout_marginEnd="@dimen/button_sides_margin"
             android:text="@string/button_add_photo"
-            style="@style/CustomButton"
-            app:layout_constraintWidth_default="percent"
-            app:layout_constraintWidth_percent=".45"
+            app:layout_constraintBottom_toTopOf="@id/button_addBarcode"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/button_addBarcode" />
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent=".45" />
 
         <Button
             android:id="@+id/button_printQRCodes"
-            android:layout_height="wrap_content"
+            style="@style/CustomButton"
             android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/button_sides_margin"
             android:layout_marginEnd="@dimen/button_sides_margin"
             android:text="@string/button_print_qr_codes"
-            style="@style/CustomButton"
-            app:layout_constraintWidth_default="percent"
-            app:layout_constraintWidth_percent=".45"
+            app:layout_constraintBottom_toTopOf="@id/button_deleteProduct"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/button_deleteProduct" />
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent=".45" />
 
         <Button
             android:id="@+id/button_addBarcode"
-            android:layout_height="wrap_content"
+            style="@style/CustomButton"
             android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/button_sides_margin"
             android:layout_marginEnd="@dimen/button_sides_margin"
             android:text="@string/button_add_barcode"
-            style="@style/CustomButton"
-            app:layout_constraintWidth_default="percent"
-            app:layout_constraintWidth_percent=".45"
+            app:layout_constraintBottom_toTopOf="@id/button_deleteProduct"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/button_deleteProduct" />
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent=".45" />
 
         <Button
             android:id="@+id/button_deleteProduct"
-            android:layout_height="wrap_content"
+            style="@style/CustomButton"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/button_sides_margin"
             android:layout_marginEnd="@dimen/button_sides_margin"
             android:text="@string/button_delete_product"
-            style="@style/CustomButton"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

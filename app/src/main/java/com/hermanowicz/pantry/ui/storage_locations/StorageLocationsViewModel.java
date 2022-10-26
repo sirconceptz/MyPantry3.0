@@ -14,7 +14,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.hermanowicz.pantry.dao.db.storagelocation.StorageLocation;
+import com.hermanowicz.pantry.data.db.dao.storagelocation.StorageLocation;
 import com.hermanowicz.pantry.interfaces.AvailableDataListener;
 import com.hermanowicz.pantry.model.DatabaseMode;
 
@@ -35,11 +35,11 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 @HiltViewModel
 public class StorageLocationsViewModel extends ViewModel {
 
+    private final String TAG = "RxJava-Categories";
+    private final CompositeDisposable disposable = new CompositeDisposable();
     @Inject
     StorageLocationsUseCaseImpl useCase;
-    private final String TAG = "RxJava-Categories";
     private LiveData<List<StorageLocation>> storageLocationListLiveData;
-    private final CompositeDisposable disposable = new CompositeDisposable();
     private AvailableDataListener availableDataListener;
 
     @Inject
@@ -79,7 +79,7 @@ public class StorageLocationsViewModel extends ViewModel {
         return Observable.create(emitter -> {
             String user = FirebaseAuth.getInstance().getUid();
             FirebaseDatabase database = FirebaseDatabase.getInstance();
-            if(user != null && isInternetConnection()) {
+            if (user != null && isInternetConnection()) {
                 Query query = database.getReference().child("storage_locations").child(user);
                 query.addValueEventListener(valueEventListener(emitter));
             } else {
@@ -89,7 +89,7 @@ public class StorageLocationsViewModel extends ViewModel {
         });
     }
 
-    private ValueEventListener valueEventListener (Emitter<List<StorageLocation>> emitter){
+    private ValueEventListener valueEventListener(Emitter<List<StorageLocation>> emitter) {
         return new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -129,16 +129,16 @@ public class StorageLocationsViewModel extends ViewModel {
         return Objects.requireNonNull(storageLocationListLiveData.getValue()).get(id);
     }
 
-    public boolean isAvailableData(){
+    public boolean isAvailableData() {
         return storageLocationListLiveData != null;
     }
 
-    private boolean isInternetConnection(){
+    private boolean isInternetConnection() {
         return useCase.checkIsInternetConnection();
     }
 
     public void setDefaultDatabaseMode(DatabaseMode databaseModeFromSettings) {
-        if(databaseModeFromSettings.getDatabaseMode() == DatabaseMode.Mode.LOCAL){
+        if (databaseModeFromSettings.getDatabaseMode() == DatabaseMode.Mode.LOCAL) {
             updateDataForSelectedDatabase(databaseModeFromSettings);
             availableDataListener.observeAvailableData();
         }

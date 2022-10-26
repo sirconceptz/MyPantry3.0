@@ -34,8 +34,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.hermanowicz.pantry.dao.db.photo.Photo;
-import com.hermanowicz.pantry.dao.db.product.Product;
+import com.hermanowicz.pantry.data.db.dao.photo.Photo;
+import com.hermanowicz.pantry.data.db.dao.product.Product;
 import com.hermanowicz.pantry.interfaces.AvailableDataListener;
 import com.hermanowicz.pantry.interfaces.PhotoEditViewActions;
 import com.hermanowicz.pantry.interfaces.ShowPhotoViewActions;
@@ -59,24 +59,40 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 @HiltViewModel
 public class ProductsPhotoViewModel extends ViewModel {
 
+    private final String TAG = "RxJava-Photos";
+    private final CompositeDisposable disposable = new CompositeDisposable();
+    private final DisposableObserver<List<Photo>> disposableObserver = new DisposableObserver<>() {
+        @Override
+        public void onComplete() {
+            Log.d(TAG, "onComplete()");
+        }
+
+        @Override
+        public void onError(@NonNull Throwable e) {
+            Log.e(TAG, "onError()", e);
+        }
+
+        @Override
+        public void onNext(@NonNull List<Photo> productList) {
+            Log.i(TAG, "onNext()");
+        }
+    };
     @Inject
     ProductsPhotoUseCaseImpl useCase;
-    private final String TAG = "RxJava-Photos";
     private ArrayList<Product> productArrayList = new ArrayList<>();
     private LiveData<List<Photo>> photoList;
-    private final CompositeDisposable disposable = new CompositeDisposable();
     private AvailableDataListener availableDataListener;
     private PhotoEditViewActions photoEditViewActions;
     private ShowPhotoViewActions showPhotoViewActions;
     private boolean observed = false;
 
     @Inject
-    public ProductsPhotoViewModel(ProductsPhotoUseCaseImpl productsPhotoUseCase){
+    public ProductsPhotoViewModel(ProductsPhotoUseCaseImpl productsPhotoUseCase) {
         useCase = productsPhotoUseCase;
         loadOnlineProducts();
     }
 
-    public void deletePhoto(){
+    public void deletePhoto() {
         useCase.deletePhoto(productArrayList);
     }
 
@@ -84,14 +100,14 @@ public class ProductsPhotoViewModel extends ViewModel {
         useCase.savePhoto(bitmap, photoDescription, productArrayList);
     }
 
-    public void setDatabaseModeAndShowPhoto(DatabaseMode databaseMode){
+    public void setDatabaseModeAndShowPhoto(DatabaseMode databaseMode) {
         useCase.setDatabaseMode(databaseMode);
         photoList = useCase.getPhotoList(databaseMode);
         showPhoto();
     }
 
     public void setProductArrayListFromArguments(@Nullable Bundle arguments) {
-        if(arguments != null)
+        if (arguments != null)
             productArrayList = arguments.getParcelableArrayList("productArrayList");
     }
 
@@ -112,7 +128,7 @@ public class ProductsPhotoViewModel extends ViewModel {
 
     private void showPhoto() {
         int productListSize = productArrayList.size();
-        if(productListSize > 0) {
+        if (productListSize > 0) {
             Product product = productArrayList.get(0);
             String photoDescription = product.getPhotoDescription();
             String photoName = product.getPhotoName();
@@ -126,37 +142,20 @@ public class ProductsPhotoViewModel extends ViewModel {
     }
 
     private void loadOnlineProducts() {
-        Disposable photoDisposable =photoList().subscribeOn(Schedulers.io())
+        Disposable photoDisposable = photoList().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(disposableObserver);
         disposable.add(photoDisposable);
     }
 
-    private final DisposableObserver<List<Photo>> disposableObserver = new DisposableObserver<>() {
-        @Override
-        public void onComplete() {
-            Log.d(TAG, "onComplete()");
-        }
-
-        @Override
-        public void onError(@NonNull Throwable e) {
-            Log.e(TAG, "onError()", e);
-        }
-
-        @Override
-        public void onNext(@NonNull List<Photo> productList) {
-            Log.i(TAG, "onNext()");
-        }
-    };
-
     private Observable<List<Photo>> photoList() {
         return Observable.create(emitter -> {
             String user = FirebaseAuth.getInstance().getUid();
             FirebaseDatabase database = FirebaseDatabase.getInstance();
-            if(user != null && isInternetConnection()) {
+            if (user != null && isInternetConnection()) {
                 Query query = database.getReference().child("photos").child(user);
                 query.addValueEventListener(valueEventListener(emitter));
-            } else{
+            } else {
                 useCase.setOnlinePhotoList(new MutableLiveData<>());
                 availableDataListener.observeAvailableData();
                 observed = true;
@@ -198,7 +197,7 @@ public class ProductsPhotoViewModel extends ViewModel {
     }
 
     public void setAvailableDataListener(AvailableDataListener availableDataListener) {
-        if(availableDataListener == null && !observed)
+        if (availableDataListener == null && !observed)
             loadOnlineProducts();
         this.availableDataListener = availableDataListener;
     }

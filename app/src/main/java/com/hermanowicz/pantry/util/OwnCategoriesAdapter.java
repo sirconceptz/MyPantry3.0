@@ -29,7 +29,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hermanowicz.pantry.R;
-import com.hermanowicz.pantry.dao.db.category.Category;
+import com.hermanowicz.pantry.data.db.dao.category.Category;
 import com.hermanowicz.pantry.databinding.RvSingleCategoryBinding;
 
 import java.util.ArrayList;
@@ -82,15 +82,15 @@ public class OwnCategoriesAdapter extends RecyclerView.Adapter<OwnCategoriesAdap
 
     }
 
+    @Override
+    public int getItemCount() {
+        return categoryList.size();
+    }
+
     static class ViewHolder extends RecyclerView.ViewHolder {
 
         ViewHolder(View itemView) {
             super(itemView);
         }
-    }
-
-    @Override
-    public int getItemCount() {
-        return categoryList.size();
     }
 }

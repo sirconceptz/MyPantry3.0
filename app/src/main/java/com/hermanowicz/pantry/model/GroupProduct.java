@@ -19,7 +19,7 @@ package com.hermanowicz.pantry.model;
 
 import androidx.annotation.NonNull;
 
-import com.hermanowicz.pantry.dao.db.product.Product;
+import com.hermanowicz.pantry.data.db.dao.product.Product;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,22 +38,6 @@ public final class GroupProduct {
 
     public GroupProduct(@NonNull Product product, int quantity) {
         this.secondProductToCompare = product;
-        this.quantity = quantity;
-    }
-
-    public Product getProduct() {
-        return secondProductToCompare;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setProduct(Product product) {
-        this.secondProductToCompare = product;
-    }
-
-    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 
@@ -86,10 +70,10 @@ public final class GroupProduct {
         return groupProductList;
     }
 
-    public static String[] getGroupProductNamesArray(List<Product> productList){
+    public static String[] getGroupProductNamesArray(List<Product> productList) {
         List<GroupProduct> groupProductList = getGroupProducts(productList);
         String[] groupProductNamesArray = new String[groupProductList.size()];
-        for(int counter = 0; counter <= groupProductList.size(); counter++){
+        for (int counter = 0; counter <= groupProductList.size(); counter++) {
             groupProductNamesArray[counter] = groupProductList.get(counter).getProduct().getName();
         }
         return groupProductNamesArray;
@@ -125,5 +109,21 @@ public final class GroupProduct {
                 && firstProductToCompare.getPhotoName().equals(secondProductToCompare.getPhotoName())
                 && firstProductToCompare.getPhotoDescription().equals(secondProductToCompare.getPhotoDescription())
                 && firstProductToCompare.getTaste().equals(secondProductToCompare.getTaste());
+    }
+
+    public Product getProduct() {
+        return secondProductToCompare;
+    }
+
+    public void setProduct(Product product) {
+        this.secondProductToCompare = product;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }

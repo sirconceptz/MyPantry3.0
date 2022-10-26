@@ -26,28 +26,28 @@ import java.io.IOException;
  * <h1>ImageRotation</h1>
  * Class used to rotate a photo in the correct direction
  *
- * @author  Mateusz Hermanowicz
+ * @author Mateusz Hermanowicz
  */
 
 public class ImageRotation {
 
-    public static int isNeededRotation(File ff)
-    {
-        try
-        {
+    public static int isNeededRotation(File ff) {
+        try {
             ExifInterface exif = new ExifInterface(ff.getAbsolutePath());
             int orientation = exif.getAttributeInt(
                     ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-            if (orientation == ExifInterface.ORIENTATION_ROTATE_270)
-            { return 270; }
-            if (orientation == ExifInterface.ORIENTATION_ROTATE_180)
-            { return 180; }
-            if (orientation == ExifInterface.ORIENTATION_ROTATE_90)
-            { return 90; }
+            if (orientation == ExifInterface.ORIENTATION_ROTATE_270) {
+                return 270;
+            }
+            if (orientation == ExifInterface.ORIENTATION_ROTATE_180) {
+                return 180;
+            }
+            if (orientation == ExifInterface.ORIENTATION_ROTATE_90) {
+                return 90;
+            }
             return 0;
 
-        } catch (IOException e)
-        {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return 0;

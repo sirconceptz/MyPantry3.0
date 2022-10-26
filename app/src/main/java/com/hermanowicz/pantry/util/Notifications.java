@@ -25,9 +25,8 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
-import com.hermanowicz.pantry.dao.db.product.Product;
+import com.hermanowicz.pantry.data.db.dao.product.Product;
 import com.hermanowicz.pantry.receiver.NotificationBroadcastReceiver;
 
 import java.sql.Date;
@@ -57,7 +56,7 @@ public class Notifications {
     private Calendar createCalendar(@NonNull String expirationDate) {
         String[] dateArray = expirationDate.split("\\.");
         Calendar calendar = null;
-        if(dateArray.length < 3) {
+        if (dateArray.length < 3) {
             calendar = Calendar.getInstance();
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
             calendar.set(Calendar.YEAR, Integer.parseInt(dateArray[0]));
@@ -82,7 +81,7 @@ public class Notifications {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         if (!product.getExpirationDate().equals("-")) {
             Calendar calendar = createCalendar(product.getExpirationDate());
-            if(calendar != null && alarmManager != null) {
+            if (calendar != null && alarmManager != null) {
                 alarmManager.set(AlarmManager.RTC_WAKEUP,
                         calendar.getTimeInMillis(), pendingIntent);
             }
@@ -90,13 +89,13 @@ public class Notifications {
     }
 
     public void createNotification(@NonNull List<Product> productList) {
-        for(Product product : productList) {
+        for (Product product : productList) {
             createNotification(product);
         }
     }
 
     public void createNotificationsForAllProducts() {
-        if(productList.size() > 0) {
+        if (productList.size() > 0) {
             for (int counter = 0; counter < productList.size(); counter++) {
                 Product selectedProduct = productList.get(counter);
                 String productExpiration = selectedProduct.getExpirationDate();
@@ -112,10 +111,10 @@ public class Notifications {
     }
 
     public void cancelNotifications(@NonNull List<Product> productList) {
-        if(productList.size() == 0)
+        if (productList.size() == 0)
             return;
         if (!productList.get(0).getExpirationDate().equals("-")) {
-            for(Product product : productList) {
+            for (Product product : productList) {
                 AlarmManager alarmManager = (AlarmManager) (context.getSystemService(Context.ALARM_SERVICE));
                 Intent intent = new Intent(context, NotificationBroadcastReceiver.class);
                 PendingIntent pendingIntent = PendingIntent.getBroadcast(context, product.getId(), intent, PendingIntent.FLAG_IMMUTABLE);

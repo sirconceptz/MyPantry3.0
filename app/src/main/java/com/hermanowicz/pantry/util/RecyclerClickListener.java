@@ -35,15 +35,8 @@ import com.google.firebase.database.annotations.NotNull;
 
 public class RecyclerClickListener implements RecyclerView.OnItemTouchListener {
 
-    public interface OnItemClickListener {
-        void onItemClick(View view, int position);
-
-        void onItemLongClick(View view, int position);
-    }
-
     private final OnItemClickListener listener;
     private final GestureDetector gestureDetector;
-
     public RecyclerClickListener(Context context, final RecyclerView recyclerView, OnItemClickListener listener) {
         this.listener = listener;
 
@@ -80,5 +73,11 @@ public class RecyclerClickListener implements RecyclerView.OnItemTouchListener {
 
     @Override
     public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(View view, int position);
+
+        void onItemLongClick(View view, int position);
     }
 }

@@ -8,9 +8,10 @@ import androidx.annotation.NonNull;
 
 import com.google.zxing.client.android.Intents;
 import com.hermanowicz.pantry.R;
-import com.hermanowicz.pantry.dao.db.product.Product;
+import com.hermanowicz.pantry.data.db.dao.product.Product;
+import com.hermanowicz.pantry.data.repository.SharedPreferencesRepository;
+import com.hermanowicz.pantry.domain.usecase.ScanProductUseCase;
 import com.hermanowicz.pantry.interfaces.ScanDecodedResult;
-import com.hermanowicz.pantry.repository.SharedPreferencesRepository;
 import com.hermanowicz.pantry.util.ScanIntentResult;
 import com.hermanowicz.pantry.util.ScanOptions;
 
@@ -24,12 +25,12 @@ import javax.inject.Inject;
 
 public class ScanProductUseCaseImpl implements ScanProductUseCase {
 
-    private String scanType;
     private final SharedPreferencesRepository sharedPreferencesRepository;
+    private final Resources resources;
+    private String scanType;
     private List<Product> productList = new ArrayList<>();
     private List<Product> productListToAddBarcode = new ArrayList<>();
     private ScanDecodedResult scanDecodedResultListener;
-    private final Resources resources;
 
     @Inject
     public ScanProductUseCaseImpl(SharedPreferencesRepository sharedPreferencesRepository, Resources resources) {
@@ -64,12 +65,12 @@ public class ScanProductUseCaseImpl implements ScanProductUseCase {
 
     @Override
     public void setScanResult(ScanIntentResult result) {
-        if(result.getContents() == null) {
+        if (result.getContents() == null) {
             Intent originalIntent = result.getOriginalIntent();
             if (originalIntent == null) {
                 Log.d("Scanner", "Scan canceled");
                 scanDecodedResultListener.onScanCanceled();
-            } else if(originalIntent.hasExtra(Intents.Scan.MISSING_CAMERA_PERMISSION)) {
+            } else if (originalIntent.hasExtra(Intents.Scan.MISSING_CAMERA_PERMISSION)) {
                 Log.d("Scanner", "No camera permission");
                 scanDecodedResultListener.onNoCameraPermission();
             }
@@ -97,7 +98,7 @@ public class ScanProductUseCaseImpl implements ScanProductUseCase {
 
         if (scanType.equals("QRCODE"))
             prompt = resources.getString(R.string.scan_qr_code);
-        else if(scanType.equals("BARCODE"))
+        else if (scanType.equals("BARCODE"))
             prompt = resources.getString(R.string.scan_barcode);
 
         ScanOptions options = new ScanOptions();
@@ -131,7 +132,7 @@ public class ScanProductUseCaseImpl implements ScanProductUseCase {
 
     private void onQrCodeScan(String qrcode) {
         List<Integer> decodedQRCodeAsList = decodeScanQRCodeResult(qrcode);
-        if(decodedQRCodeAsList.size() > 1) {
+        if (decodedQRCodeAsList.size() > 1) {
             int productId = decodedQRCodeAsList.get(0);
             int productHashCode = decodedQRCodeAsList.get(1);
             ArrayList<Product> productArrayList = new ArrayList<>(productList);
@@ -159,8 +160,8 @@ public class ScanProductUseCaseImpl implements ScanProductUseCase {
 
     private ArrayList<Product> getProductListWithBarcode(String barcode) {
         ArrayList<Product> productListWithBarcode = new ArrayList<>();
-        for(Product product : productList) {
-            if(product.getBarcode().equals(barcode))
+        for (Product product : productList) {
+            if (product.getBarcode().equals(barcode))
                 productListWithBarcode.add(product);
         }
         return productListWithBarcode;

@@ -42,9 +42,8 @@ import com.hermanowicz.pantry.interfaces.ProductToCopyView;
 
 public class ChooseProductToCopyDialog extends AppCompatDialogFragment {
 
-    private Activity activity;
     private final String[] namesProductList;
-
+    private Activity activity;
     private View view;
     private ProductToCopyView productToCopyView;
     private Spinner chooseProductToCopySpinner;
@@ -61,7 +60,7 @@ public class ChooseProductToCopyDialog extends AppCompatDialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 
         builder.setView(view).setNegativeButton(getString(android.R.string.cancel), (dialog, which) -> {
-        })
+                })
                 .setPositiveButton(getString(R.string.general_choose), (dialog, which) -> {
                     productToCopyView.setSelectedProductToCopy(chooseProductToCopySpinner.getSelectedItemPosition());
                 });

@@ -28,7 +28,6 @@ import android.provider.MediaStore;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -53,8 +52,7 @@ public class PdfFile {
                 OutputStream fos = resolver.openOutputStream(pdfUri);
                 pdfDocument.writeTo(fos);
                 fos.close();
-            }
-            else {
+            } else {
                 FileOutputStream pdfOutputStream = new FileOutputStream(Environment.getExternalStorageDirectory()
                         + File.separator + fileName, false);
                 pdfDocument.writeTo(pdfOutputStream);

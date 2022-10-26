@@ -3,7 +3,7 @@ package com.hermanowicz.pantry.ui.storage_location_detail;
 import androidx.databinding.ObservableField;
 import androidx.lifecycle.ViewModel;
 
-import com.hermanowicz.pantry.dao.db.storagelocation.StorageLocation;
+import com.hermanowicz.pantry.data.db.dao.storagelocation.StorageLocation;
 import com.hermanowicz.pantry.model.DatabaseMode;
 
 import javax.inject.Inject;
@@ -14,10 +14,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 public class StorageLocationDetailViewModel extends ViewModel {
 
     private final StorageLocationDetailUseCaseImpl useCase;
-
-    private StorageLocation storageLocation = new StorageLocation();
     public ObservableField<String> storageLocationName = new ObservableField<>();
     public ObservableField<String> storageLocationDescription = new ObservableField<>();
+    private StorageLocation storageLocation = new StorageLocation();
 
     @Inject
     public StorageLocationDetailViewModel(StorageLocationDetailUseCaseImpl storageLocationDetailUseCase) {

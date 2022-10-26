@@ -37,29 +37,29 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="8dp"
-                    app:endIconMode="clear_text"
                     app:counterEnabled="true"
                     app:counterMaxLength="40"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:endIconMode="clear_text"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/categoryNameText"
                     tools:ignore="Autofill">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        style="@style/CustomEditText"
                         android:id="@+id/categoryNameInput"
-                        android:inputType="textCapSentences"
-                        android:text="@={viewModel.categoryName}"
+                        style="@style/CustomEditText"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:inputType="textCapSentences"
+                        android:text="@={viewModel.categoryName}" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <View
                     android:id="@+id/dividerAfterCategoryName"
                     style="@style/Divider"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/layout_name" />
 
                 <TextView
@@ -76,29 +76,29 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="8dp"
-                    app:endIconMode="clear_text"
                     app:counterEnabled="true"
                     app:counterMaxLength="200"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:endIconMode="clear_text"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/categoryDescriptionText"
                     tools:ignore="Autofill">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        style="@style/CustomEditText"
                         android:id="@+id/categoryDescriptionInput"
-                        android:inputType="textCapSentences"
-                        android:text="@={viewModel.categoryDescription}"
+                        style="@style/CustomEditText"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:inputType="textCapSentences"
+                        android:text="@={viewModel.categoryDescription}" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <View
                     android:id="@+id/dividerAfterCategoryDescription"
                     style="@style/Divider"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/layout_description" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -107,31 +107,31 @@
 
         <Button
             android:id="@+id/button_addNewCategory"
-            android:layout_height="wrap_content"
+            style="@style/CustomButton"
             android:layout_width="0dp"
-            android:onClick="@{() -> viewModel.onClickAddCategory()}"
-            android:text="@string/title_new_category"
+            android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/button_sides_margin"
             android:layout_marginEnd="@dimen/button_sides_margin"
-            style="@style/CustomButton"
-            app:layout_constraintWidth_default="percent"
-            app:layout_constraintWidth_percent=".45"
+            android:onClick="@{() -> viewModel.onClickAddCategory()}"
+            android:text="@string/title_new_category"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent=".45" />
 
         <Button
             android:id="@+id/button_clearFields"
-            android:layout_height="wrap_content"
+            style="@style/CustomButton"
             android:layout_width="0dp"
-            android:onClick="@{() -> viewModel.onClickClearFields()}"
+            android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/button_sides_margin"
             android:layout_marginEnd="@dimen/button_sides_margin"
+            android:onClick="@{() -> viewModel.onClickClearFields()}"
             android:text="@string/button_clear"
-            style="@style/CustomButton"
-            app:layout_constraintWidth_default="percent"
-            app:layout_constraintWidth_percent=".45"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent=".45" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

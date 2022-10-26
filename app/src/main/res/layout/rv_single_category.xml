@@ -17,41 +17,41 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:context=".ui.activity.MainActivity">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/category_cardView"
+        style="@style/Theme.MyPantry"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        app:cardCornerRadius="10dp"
-        app:layout_constraintTop_toTopOf="parent"
-        style="@style/Theme.MyPantry"
+        android:layout_marginBottom="8dp"
         android:clickable="true"
-        android:focusable="true">
+        android:focusable="true"
+        app:cardCornerRadius="10dp"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/edittext_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textStyle="bold|italic"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:gravity="center"
             android:text=""
             android:textSize="22sp"
-            app:layout_constraintStart_toStartOf="@id/category_cardView"
+            android:textStyle="bold|italic"
             app:layout_constraintEnd_toEndOf="@id/category_cardView"
+            app:layout_constraintStart_toStartOf="@id/category_cardView"
             app:layout_constraintTop_toTopOf="@id/category_cardView" />
 
         <TextView
@@ -62,8 +62,8 @@
             android:layout_alignParentTop="true"
             android:layout_marginStart="8dp"
             android:layout_marginTop="40dp"
-            android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
             android:text=""
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="@id/storageLocation_cardView"

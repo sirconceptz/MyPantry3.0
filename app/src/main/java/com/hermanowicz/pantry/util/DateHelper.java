@@ -21,7 +21,6 @@ import androidx.annotation.NonNull;
 import androidx.databinding.ObservableField;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -45,15 +44,6 @@ public class DateHelper {
             dateArray = date.split("-");
     }
 
-    public String getDateInLocalFormat() {
-        if (dateArray.length >= 2) {
-            calendar.set(Integer.parseInt(dateArray[0]), Integer.parseInt(dateArray[1]) - 1, Integer.parseInt(dateArray[2]));
-            Date date = calendar.getTime();
-            return localDateFormat.format(date);
-        } else
-            return "-";
-    }
-
     public static String getTimeStamp() {
         return new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
     }
@@ -67,5 +57,14 @@ public class DateHelper {
         year.set(now.get(Calendar.YEAR));
         month.set(now.get(Calendar.MONTH));
         day.set(now.get(Calendar.DAY_OF_MONTH));
+    }
+
+    public String getDateInLocalFormat() {
+        if (dateArray.length >= 2) {
+            calendar.set(Integer.parseInt(dateArray[0]), Integer.parseInt(dateArray[1]) - 1, Integer.parseInt(dateArray[2]));
+            Date date = calendar.getTime();
+            return localDateFormat.format(date);
+        } else
+            return "-";
     }
 }

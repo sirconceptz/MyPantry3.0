@@ -29,7 +29,7 @@ public class MigrationAppTo3Version {
 
     public static boolean migrate(@NonNull Context context) {
         boolean checkIsNotUpgraded = !checkIsUpragedFromOlderVersion(context);
-        if(checkIsNotUpgraded) {
+        if (checkIsNotUpgraded) {
             migratePreferences(context);
             setUpgragedIsDone(context);
         }

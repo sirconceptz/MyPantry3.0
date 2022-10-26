@@ -17,12 +17,12 @@
 
 package com.hermanowicz.pantry;
 
-import static org.junit.Assert.assertEquals;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static org.junit.Assert.assertEquals;
 
 import android.content.Context;
 import android.content.Intent;
@@ -51,14 +51,12 @@ import dagger.hilt.android.testing.HiltAndroidTest;
 @RunWith(AndroidJUnit4.class)
 public class MainActivityTest {
 
-    private Context context;
-
     @Rule
     public HiltAndroidRule hiltRule = new HiltAndroidRule(this);
-
     @Rule
     public ActivityTestRule<MainActivity> activityRule =
             new ActivityTestRule<>(MainActivity.class, false, false);
+    private Context context;
 
     @Before
     public void init() {
@@ -80,7 +78,7 @@ public class MainActivityTest {
         });
     }
 
-    private Fragment getForegroundFragment(){
+    private Fragment getForegroundFragment() {
         MainActivity activity = activityRule.getActivity();
         Fragment navHostFragment = activity.getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_content_main);
         return navHostFragment == null ? null : navHostFragment.getChildFragmentManager().getFragments().get(0);

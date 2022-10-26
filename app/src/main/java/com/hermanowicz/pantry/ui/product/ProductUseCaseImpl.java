@@ -4,19 +4,15 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
-import com.hermanowicz.pantry.dao.db.product.Product;
+import com.hermanowicz.pantry.data.db.dao.product.Product;
+import com.hermanowicz.pantry.data.repository.ProductRepository;
+import com.hermanowicz.pantry.domain.usecase.ProductUseCase;
 import com.hermanowicz.pantry.model.DatabaseMode;
 import com.hermanowicz.pantry.model.Filter;
 import com.hermanowicz.pantry.model.FilterModel;
 import com.hermanowicz.pantry.model.GroupProduct;
-import com.hermanowicz.pantry.repository.ProductRepository;
 
-import java.text.DateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 import javax.inject.Inject;
 

@@ -26,11 +26,22 @@ import androidx.annotation.NonNull;
  * <h1>FilterModel</h1>
  * The filter model is used to store the data needed to find products in the pantry.
  *
- * @author  Mateusz Hermanowicz
+ * @author Mateusz Hermanowicz
  */
 
 public class FilterModel implements Parcelable {
 
+    public static final Creator<FilterModel> CREATOR = new Creator<FilterModel>() {
+        @Override
+        public FilterModel createFromParcel(Parcel in) {
+            return new FilterModel(in);
+        }
+
+        @Override
+        public FilterModel[] newArray(int size) {
+            return new FilterModel[size];
+        }
+    };
     private String name = null;
     private String typeOfProduct = null;
     private String productFeatures = null;
@@ -68,18 +79,6 @@ public class FilterModel implements Parcelable {
         weightFor = in.readInt();
         taste = in.readString();
     }
-
-    public static final Creator<FilterModel> CREATOR = new Creator<FilterModel>() {
-        @Override
-        public FilterModel createFromParcel(Parcel in) {
-            return new FilterModel(in);
-        }
-
-        @Override
-        public FilterModel[] newArray(int size) {
-            return new FilterModel[size];
-        }
-    };
 
     public FilterModel() {
 

@@ -3,10 +3,11 @@ package com.hermanowicz.pantry.ui.product_details;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 
-import com.hermanowicz.pantry.dao.db.product.Product;
+import com.hermanowicz.pantry.data.db.dao.product.Product;
+import com.hermanowicz.pantry.data.repository.PhotoRepository;
+import com.hermanowicz.pantry.data.repository.ProductRepository;
+import com.hermanowicz.pantry.domain.usecase.ProductDetailsUseCase;
 import com.hermanowicz.pantry.model.DatabaseMode;
-import com.hermanowicz.pantry.repository.PhotoRepository;
-import com.hermanowicz.pantry.repository.ProductRepository;
 import com.hermanowicz.pantry.util.Notifications;
 
 import java.text.DateFormat;
@@ -34,9 +35,9 @@ public class ProductDetailsUseCaseImpl implements ProductDetailsUseCase {
 
     @Override
     public void setPhotoFile(String photoName) {
-        if(databaseMode.getDatabaseMode() == DatabaseMode.Mode.LOCAL)
+        if (databaseMode.getDatabaseMode() == DatabaseMode.Mode.LOCAL)
             photoRepository.setPhotoFileFromOfflineDb(photoName);
-        else if(databaseMode.getDatabaseMode() == DatabaseMode.Mode.ONLINE)
+        else if (databaseMode.getDatabaseMode() == DatabaseMode.Mode.ONLINE)
             photoRepository.setPhotoFileFromOnlineDb(photoName);
     }
 
@@ -64,9 +65,9 @@ public class ProductDetailsUseCaseImpl implements ProductDetailsUseCase {
     @Override
     public String getDateInFormatToShow(String dateString) {
         String[] dateArrayString = dateString.split("-");
-        if(dateArrayString.length < 2)
+        if (dateArrayString.length < 2)
             dateArrayString = dateString.split("\\.");
-        if(dateArrayString.length > 2) {
+        if (dateArrayString.length > 2) {
             int year = Integer.parseInt(dateArrayString[0]);
             int month = Integer.parseInt(dateArrayString[1]);
             int day = Integer.parseInt(dateArrayString[2]);
@@ -76,8 +77,7 @@ public class ProductDetailsUseCaseImpl implements ProductDetailsUseCase {
             calendar.set(year, month, day);
             Date date = calendar.getTime();
             return dateFormat.format(date);
-            }
-        else
+        } else
             return "";
     }
 }

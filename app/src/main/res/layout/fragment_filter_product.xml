@@ -37,29 +37,29 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="8dp"
-                    app:endIconMode="clear_text"
                     app:counterEnabled="true"
                     app:counterMaxLength="40"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:endIconMode="clear_text"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/productNameText"
                     tools:ignore="Autofill">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        style="@style/CustomEditText"
                         android:id="@+id/productNameInput"
-                        android:inputType="textCapSentences|textAutoCorrect"
-                        android:text="@={viewModel.productName}"
+                        style="@style/CustomEditText"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:inputType="textCapSentences|textAutoCorrect"
+                        android:text="@={viewModel.productName}" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <View
                     android:id="@+id/dividerAfterProductName"
                     style="@style/Divider"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/layout_name" />
 
                 <TextView
@@ -68,8 +68,8 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:text="@string/product_category"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dividerAfterProductName" />
 
                 <androidx.appcompat.widget.AppCompatSpinner
@@ -77,18 +77,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:spinnerMode="dropdown"
                     android:entries="@array/product_type_of_product_array"
-                    tools:setOnItemSelectedListener="@{viewModel.mainCategorySelectedListener}"
-                    app:layout_constraintStart_toStartOf="parent"
+                    android:spinnerMode="dropdown"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/productMainCategoryText" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/productMainCategoryText"
+                    tools:setOnItemSelectedListener="@{viewModel.mainCategorySelectedListener}" />
 
                 <View
                     android:id="@+id/dividerAfterMainCategory"
                     style="@style/Divider"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/mainCategoryInput" />
 
                 <TextView
@@ -98,8 +98,8 @@
                     android:layout_margin="8dp"
                     android:text="@string/product_features"
                     android:visibility="@{viewModel.detailCategoryVisibility, default=gone}"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dividerAfterMainCategory" />
 
                 <androidx.appcompat.widget.AppCompatSpinner
@@ -107,20 +107,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:spinnerMode="dropdown"
                     android:entries="@array/product_type_of_product_array"
-                    tools:setOnItemSelectedListener="@{viewModel.mainCategorySelectedListener}"
+                    android:spinnerMode="dropdown"
                     android:visibility="@{viewModel.detailCategoryVisibility, default=gone}"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/productDetailCategoryText" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/productDetailCategoryText"
+                    tools:setOnItemSelectedListener="@{viewModel.mainCategorySelectedListener}" />
 
                 <View
                     android:id="@+id/dividerAfterDetailCategory"
                     style="@style/Divider"
                     android:visibility="@{viewModel.detailCategoryVisibility, default=gone}"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/detailCategoryInput" />
 
                 <TextView
@@ -129,8 +129,8 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:text="@string/product_storage_location"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dividerAfterDetailCategory" />
 
                 <androidx.appcompat.widget.AppCompatSpinner
@@ -139,16 +139,16 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:spinnerMode="dropdown"
-                    tools:setOnItemSelectedListener="@{viewModel.storageLocationSelectionListener}"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/productStorageLocationText" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/productStorageLocationText"
+                    tools:setOnItemSelectedListener="@{viewModel.storageLocationSelectionListener}" />
 
                 <View
                     android:id="@+id/dividerAfterStorageLocation"
                     style="@style/Divider"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/storageLocationInput" />
 
                 <TextView
@@ -157,8 +157,8 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:text="@string/product_expiration_date"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dividerAfterStorageLocation" />
 
                 <CheckBox
@@ -177,21 +177,21 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/edittext_sides_margin"
-                    android:year="@={viewModel.expirationDateSinceYear}"
-                    android:month="@={viewModel.expirationDateSinceMonth}"
-                    android:day="@={viewModel.expirationDateSinceDay}"
-                    android:onDateChanged="@{(v, year, month, day) -> viewModel.onExpirationDateSinceChanged(year, month, day)}"
-                    android:datePickerMode="spinner"
                     android:calendarViewShown="false"
-                    app:layout_constraintStart_toStartOf="parent"
+                    android:datePickerMode="spinner"
+                    android:day="@={viewModel.expirationDateSinceDay}"
+                    android:month="@={viewModel.expirationDateSinceMonth}"
+                    android:onDateChanged="@{(v, year, month, day) -> viewModel.onExpirationDateSinceChanged(year, month, day)}"
+                    android:year="@={viewModel.expirationDateSinceYear}"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/productExpirationDateSinceCheckbox" />
 
                 <View
                     android:id="@+id/dividerAfterExpirationSinceDate"
                     style="@style/Divider"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/productExpirationDateSinceInput" />
 
                 <TextView
@@ -200,8 +200,8 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:text="@string/product_expiration_date"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dividerAfterExpirationSinceDate" />
 
                 <CheckBox
@@ -220,21 +220,21 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/edittext_sides_margin"
-                    android:year="@={viewModel.expirationDateForYear}"
-                    android:month="@={viewModel.expirationDateForMonth}"
-                    android:day="@={viewModel.expirationDateForDay}"
-                    android:onDateChanged="@{(v, year, month, day) -> viewModel.onExpirationDateForChanged(year, month, day)}"
-                    android:datePickerMode="spinner"
                     android:calendarViewShown="false"
-                    app:layout_constraintStart_toStartOf="parent"
+                    android:datePickerMode="spinner"
+                    android:day="@={viewModel.expirationDateForDay}"
+                    android:month="@={viewModel.expirationDateForMonth}"
+                    android:onDateChanged="@{(v, year, month, day) -> viewModel.onExpirationDateForChanged(year, month, day)}"
+                    android:year="@={viewModel.expirationDateForYear}"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/productExpirationDateForCheckbox" />
 
                 <View
                     android:id="@+id/dividerAfterExpirationForDate"
                     style="@style/Divider"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/productExpirationDateForInput" />
 
                 <TextView
@@ -243,8 +243,8 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:text="@string/product_production_date"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dividerAfterExpirationForDate" />
 
                 <CheckBox
@@ -263,21 +263,21 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/edittext_sides_margin"
-                    android:year="@={viewModel.productionDateSinceYear}"
-                    android:month="@={viewModel.productionDateSinceMonth}"
-                    android:day="@={viewModel.productionDateSinceDay}"
-                    android:onDateChanged="@{(v, year, month, day) -> viewModel.onProductionDateSinceChanged(year, month, day)}"
-                    android:datePickerMode="spinner"
                     android:calendarViewShown="false"
-                    app:layout_constraintStart_toStartOf="parent"
+                    android:datePickerMode="spinner"
+                    android:day="@={viewModel.productionDateSinceDay}"
+                    android:month="@={viewModel.productionDateSinceMonth}"
+                    android:onDateChanged="@{(v, year, month, day) -> viewModel.onProductionDateSinceChanged(year, month, day)}"
+                    android:year="@={viewModel.productionDateSinceYear}"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/productProductionDateSinceCheckbox" />
 
                 <View
                     android:id="@+id/dividerAfterProductionSinceDate"
                     style="@style/Divider"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/productProductionDateSinceInput" />
 
                 <TextView
@@ -286,8 +286,8 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:text="@string/product_production_date"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dividerAfterProductionSinceDate" />
 
                 <CheckBox
@@ -306,21 +306,21 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/edittext_sides_margin"
-                    android:year="@={viewModel.productionDateForYear}"
-                    android:month="@={viewModel.productionDateForMonth}"
-                    android:day="@={viewModel.productionDateForDay}"
-                    android:onDateChanged="@{(v, year, month, day) -> viewModel.onProductionDateForChanged(year, month, day)}"
-                    android:datePickerMode="spinner"
                     android:calendarViewShown="false"
-                    app:layout_constraintStart_toStartOf="parent"
+                    android:datePickerMode="spinner"
+                    android:day="@={viewModel.productionDateForDay}"
+                    android:month="@={viewModel.productionDateForMonth}"
+                    android:onDateChanged="@{(v, year, month, day) -> viewModel.onProductionDateForChanged(year, month, day)}"
+                    android:year="@={viewModel.productionDateForYear}"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/productProductionDateForCheckbox" />
 
                 <View
                     android:id="@+id/dividerAfterProductionForDate"
                     style="@style/Divider"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/productProductionDateForInput" />
 
                 <TextView
@@ -329,8 +329,8 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:text="@string/product_composition"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dividerAfterProductionForDate" />
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -338,31 +338,31 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="8dp"
-                    app:endIconMode="clear_text"
                     app:counterEnabled="true"
                     app:counterMaxLength="200"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:endIconMode="clear_text"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/productCompositionText"
                     tools:ignore="Autofill">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        style="@style/CustomEditText"
                         android:id="@+id/productCompositionInput"
-                        android:text="@={viewModel.composition}"
+                        style="@style/CustomEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:inputType="textCapSentences|textMultiLine"
                         android:maxLength="200"
                         android:minLines="2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:text="@={viewModel.composition}" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <View
                     android:id="@+id/dividerAfterComposition"
                     style="@style/Divider"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/layout_composition" />
 
                 <TextView
@@ -371,8 +371,8 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:text="@string/product_healing_properties"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dividerAfterComposition" />
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -380,31 +380,31 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="8dp"
-                    app:endIconMode="clear_text"
                     app:counterEnabled="true"
                     app:counterMaxLength="200"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:endIconMode="clear_text"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/productHealingPropertiesText"
                     tools:ignore="Autofill">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        style="@style/CustomEditText"
                         android:id="@+id/productHealingPropertiesInput"
-                        android:text="@={viewModel.healingProperties}"
+                        style="@style/CustomEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:inputType="textCapSentences|textMultiLine"
                         android:maxLength="200"
                         android:minLines="2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:text="@={viewModel.healingProperties}" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <View
                     android:id="@+id/dividerAfterHealingProperties"
                     style="@style/Divider"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/layout_healingProperties" />
 
                 <TextView
@@ -413,8 +413,8 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:text="@string/product_dosage"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dividerAfterHealingProperties" />
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -422,31 +422,31 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="8dp"
-                    app:endIconMode="clear_text"
                     app:counterEnabled="true"
                     app:counterMaxLength="150"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:endIconMode="clear_text"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/productDosageText"
                     tools:ignore="Autofill">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        style="@style/CustomEditText"
                         android:id="@+id/productDosageInput"
-                        android:text="@={viewModel.dosage}"
+                        style="@style/CustomEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:inputType="textCapSentences|textMultiLine"
                         android:maxLength="150"
                         android:minLines="2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:text="@={viewModel.dosage}" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <View
                     android:id="@+id/dividerAfterDosage"
                     style="@style/Divider"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/layout_dosage" />
 
                 <TextView
@@ -455,8 +455,8 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:text="@string/product_weight"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dividerAfterDosage" />
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -465,20 +465,20 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="8dp"
                     app:endIconMode="clear_text"
-                    app:layout_constraintWidth_default="percent"
-                    app:layout_constraintWidth_percent=".45"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/productWeightText"
+                    app:layout_constraintWidth_default="percent"
+                    app:layout_constraintWidth_percent=".45"
                     tools:ignore="Autofill">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        style="@style/CustomEditText"
                         android:id="@+id/productWeightSinceInput"
-                        android:inputType="numberDecimal"
-                        android:text="@={viewModel.weightSince}"
-                        android:maxLength="10"
+                        style="@style/CustomEditText"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal"
+                        android:maxLength="10"
+                        android:text="@={viewModel.weightSince}" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -498,28 +498,28 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="8dp"
                     app:endIconMode="clear_text"
-                    app:layout_constraintWidth_default="percent"
-                    app:layout_constraintWidth_percent=".45"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/productWeightText"
+                    app:layout_constraintWidth_default="percent"
+                    app:layout_constraintWidth_percent=".45"
                     tools:ignore="Autofill">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        style="@style/CustomEditText"
                         android:id="@+id/productWeightForInput"
-                        android:inputType="numberDecimal"
-                        android:text="@={viewModel.weightFor}"
-                        android:maxLength="10"
+                        style="@style/CustomEditText"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal"
+                        android:maxLength="10"
+                        android:text="@={viewModel.weightFor}" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <View
                     android:id="@+id/dividerAfterProductWeight"
                     style="@style/Divider"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/layout_weightSince" />
 
                 <TextView
@@ -528,8 +528,8 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:text="@string/product_volume"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dividerAfterProductWeight" />
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -538,20 +538,20 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="8dp"
                     app:endIconMode="clear_text"
-                    app:layout_constraintWidth_default="percent"
-                    app:layout_constraintWidth_percent=".45"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/productVolumeText"
+                    app:layout_constraintWidth_default="percent"
+                    app:layout_constraintWidth_percent=".45"
                     tools:ignore="Autofill">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        style="@style/CustomEditText"
                         android:id="@+id/productVolumeSinceInput"
-                        android:inputType="numberDecimal"
-                        android:text="@={viewModel.volumeSince}"
-                        android:maxLength="10"
+                        style="@style/CustomEditText"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal"
+                        android:maxLength="10"
+                        android:text="@={viewModel.volumeSince}" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -571,28 +571,28 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="8dp"
                     app:endIconMode="clear_text"
-                    app:layout_constraintWidth_default="percent"
-                    app:layout_constraintWidth_percent=".45"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/productVolumeText"
+                    app:layout_constraintWidth_default="percent"
+                    app:layout_constraintWidth_percent=".45"
                     tools:ignore="Autofill">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        style="@style/CustomEditText"
                         android:id="@+id/productVolumeForInput"
-                        android:inputType="numberDecimal"
-                        android:text="@={viewModel.volumeFor}"
-                        android:maxLength="10"
+                        style="@style/CustomEditText"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal"
+                        android:maxLength="10"
+                        android:text="@={viewModel.volumeFor}" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <View
                     android:id="@+id/dividerAfterProductVolume"
                     style="@style/Divider"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/layout_volumeSince" />
 
                 <TextView
@@ -601,17 +601,17 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:text="@string/product_taste"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dividerAfterProductVolume" />
 
                 <CheckBox
                     android:id="@+id/taste_sweet"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/product_sweet"
                     android:layout_marginHorizontal="@dimen/edittext_sides_margin"
                     android:checked="@={viewModel.isSweet}"
+                    android:text="@string/product_sweet"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/productTasteText" />
 
@@ -619,9 +619,9 @@
                     android:id="@+id/taste_sour"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/product_sour"
                     android:layout_marginHorizontal="@dimen/edittext_sides_margin"
                     android:checked="@={viewModel.isSour}"
+                    android:text="@string/product_sour"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/taste_sweet" />
 
@@ -639,9 +639,9 @@
                     android:id="@+id/taste_bitter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/product_bitter"
                     android:layout_marginHorizontal="@dimen/edittext_sides_margin"
                     android:checked="@={viewModel.isBitter}"
+                    android:text="@string/product_bitter"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/taste_sweet_and_sour" />
 
@@ -649,17 +649,17 @@
                     android:id="@+id/taste_salty"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/product_salty"
                     android:layout_marginHorizontal="@dimen/edittext_sides_margin"
                     android:checked="@={viewModel.isSalty}"
+                    android:text="@string/product_salty"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/taste_bitter" />
 
                 <View
                     android:id="@+id/dividerAfterProductTaste"
                     style="@style/Divider"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/taste_salty" />
 
                 <TextView
@@ -668,17 +668,17 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:text="@string/product_features"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dividerAfterProductTaste" />
 
                 <CheckBox
                     android:id="@+id/product_isVege"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/product_vege"
                     android:layout_marginHorizontal="@dimen/edittext_sides_margin"
                     android:checked="@={viewModel.isVege}"
+                    android:text="@string/product_vege"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/productFeaturesText" />
 
@@ -686,9 +686,9 @@
                     android:id="@+id/product_isBio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/product_bio"
                     android:layout_marginHorizontal="@dimen/edittext_sides_margin"
                     android:checked="@={viewModel.isBio}"
+                    android:text="@string/product_bio"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/product_isVege" />
 
@@ -696,9 +696,9 @@
                     android:id="@+id/product_hasSugar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/product_has_sugar"
                     android:layout_marginHorizontal="@dimen/edittext_sides_margin"
                     android:checked="@={viewModel.hasSugar}"
+                    android:text="@string/product_has_sugar"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/product_isBio" />
 
@@ -706,9 +706,9 @@
                     android:id="@+id/product_hasSalt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/product_has_salt"
                     android:layout_marginHorizontal="@dimen/edittext_sides_margin"
                     android:checked="@={viewModel.hasSalt}"
+                    android:text="@string/product_has_salt"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/product_hasSugar" />
 
@@ -718,27 +718,27 @@
 
         <Button
             android:id="@+id/button_filterProduct"
-            android:layout_height="wrap_content"
             android:layout_width="0dp"
-            android:text="@string/button_filter"
+            android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/button_sides_margin"
             android:layout_marginEnd="@dimen/button_sides_margin"
-            app:layout_constraintWidth_default="percent"
-            app:layout_constraintWidth_percent=".45"
+            android:text="@string/button_filter"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent=".45" />
 
         <Button
-            android:layout_height="wrap_content"
             android:layout_width="0dp"
-            android:onClick="@{() -> viewModel.onClickClearFilter()}"
+            android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/button_sides_margin"
             android:layout_marginEnd="@dimen/button_sides_margin"
+            android:onClick="@{() -> viewModel.onClickClearFilter()}"
             android:text="@string/button_clear_filters"
-            app:layout_constraintWidth_default="percent"
-            app:layout_constraintWidth_percent=".45"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent=".45" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

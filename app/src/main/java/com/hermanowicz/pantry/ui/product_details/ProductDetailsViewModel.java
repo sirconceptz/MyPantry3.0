@@ -10,7 +10,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.hermanowicz.pantry.R;
-import com.hermanowicz.pantry.dao.db.product.Product;
+import com.hermanowicz.pantry.data.db.dao.product.Product;
 import com.hermanowicz.pantry.interfaces.ShowPhotoViewActions;
 import com.hermanowicz.pantry.model.DatabaseMode;
 
@@ -23,9 +23,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 
 @HiltViewModel
 public class ProductDetailsViewModel extends ViewModel {
-
-    @Inject
-    ProductDetailsUseCaseImpl useCase;
 
     //fields
     public MutableLiveData<String> productName = new MutableLiveData<>("");
@@ -45,7 +42,6 @@ public class ProductDetailsViewModel extends ViewModel {
     public MutableLiveData<String> isBio = new MutableLiveData<>("");
     public MutableLiveData<String> hasSugar = new MutableLiveData<>("");
     public MutableLiveData<String> hasSalt = new MutableLiveData<>("");
-
     //fields visibility, visible if not empty
     public ObservableField<Integer> photoVisibility = new ObservableField<>(View.GONE);
     public ObservableField<Integer> detailCategoryVisibility = new ObservableField<>(View.GONE);
@@ -58,7 +54,8 @@ public class ProductDetailsViewModel extends ViewModel {
     public ObservableField<Integer> weightVisibility = new ObservableField<>(View.GONE);
     public ObservableField<Integer> volumeVisibility = new ObservableField<>(View.GONE);
     public ObservableField<Integer> tasteVisibility = new ObservableField<>(View.GONE);
-
+    @Inject
+    ProductDetailsUseCaseImpl useCase;
     private ArrayList<Product> productArrayList;
     private Bundle arguments;
     private ShowPhotoViewActions showPhotoViewActions;
@@ -78,9 +75,9 @@ public class ProductDetailsViewModel extends ViewModel {
         String no = resources.getString(R.string.general_no);
         String expirationDateInShowFormat = "", productionDateInShowFormat = "";
 
-        if(!Objects.equals(product.getExpirationDate(), "-"))
+        if (!Objects.equals(product.getExpirationDate(), "-"))
             expirationDateInShowFormat = useCase.getDateInFormatToShow(product.getExpirationDate());
-        if(!Objects.equals(product.getProductionDate(), "-"))
+        if (!Objects.equals(product.getProductionDate(), "-"))
             productionDateInShowFormat = useCase.getDateInFormatToShow(product.getProductionDate());
 
         showPhoto(product);
@@ -163,13 +160,13 @@ public class ProductDetailsViewModel extends ViewModel {
         this.arguments = arguments;
     }
 
-    public void showProductDataIfExists(){
-        if(arguments != null){
+    public void showProductDataIfExists() {
+        if (arguments != null) {
             int productId = arguments.getInt("productId");
             String productHashCode = arguments.getString("productHashCode");
             productArrayList = arguments.getParcelableArrayList("productArrayList");
-            for(Product product : productArrayList){
-                if((product.getId() == productId) && productHashCode.equals(product.getHashCode()))
+            for (Product product : productArrayList) {
+                if ((product.getId() == productId) && productHashCode.equals(product.getHashCode()))
                     showProductData(product, productArrayList.size());
             }
         }
@@ -177,7 +174,7 @@ public class ProductDetailsViewModel extends ViewModel {
 
     private void showPhoto(Product product) {
         String photoName = product.getPhotoName();
-        if(!photoName.equals("")) {
+        if (!photoName.equals("")) {
             useCase.setPhotoFile(photoName);
             Bitmap bitmap = useCase.getPhotoBitmap();
             showPhotoViewActions.showPhoto(product, bitmap);

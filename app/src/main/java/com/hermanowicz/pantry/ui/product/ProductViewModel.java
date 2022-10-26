@@ -15,7 +15,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.hermanowicz.pantry.dao.db.product.Product;
+import com.hermanowicz.pantry.data.db.dao.product.Product;
 import com.hermanowicz.pantry.interfaces.AvailableDataListener;
 import com.hermanowicz.pantry.interfaces.FilteredDataListener;
 import com.hermanowicz.pantry.model.DatabaseMode;
@@ -40,12 +40,28 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 @HiltViewModel
 public class ProductViewModel extends ViewModel {
 
-    @Inject
-    ProductUseCaseImpl useCase;
     private final String TAG = "RxJava-Products";
-    private LiveData<List<Product>> productListLiveData;
     private final MutableLiveData<List<GroupProduct>> groupProductList = new MutableLiveData<>();
     private final CompositeDisposable disposable = new CompositeDisposable();
+    private final DisposableObserver<List<Product>> disposableObserver = new DisposableObserver<>() {
+        @Override
+        public void onComplete() {
+            Log.d(TAG, "onComplete()");
+        }
+
+        @Override
+        public void onError(@NonNull Throwable e) {
+            Log.e(TAG, "onError()", e);
+        }
+
+        @Override
+        public void onNext(@NonNull List<Product> productList) {
+            Log.i(TAG, "onNext()");
+        }
+    };
+    @Inject
+    ProductUseCaseImpl useCase;
+    private LiveData<List<Product>> productListLiveData;
     private AvailableDataListener availableDataListener;
     private FilteredDataListener filteredDataListener;
     private LiveData<List<Product>> filteredProductsLiveData;
@@ -81,28 +97,11 @@ public class ProductViewModel extends ViewModel {
         disposable.add(productDisposable);
     }
 
-    private final DisposableObserver<List<Product>> disposableObserver = new DisposableObserver<>() {
-        @Override
-        public void onComplete() {
-            Log.d(TAG, "onComplete()");
-        }
-
-        @Override
-        public void onError(@NonNull Throwable e) {
-            Log.e(TAG, "onError()", e);
-        }
-
-        @Override
-        public void onNext(@NonNull List<Product> productList) {
-            Log.i(TAG, "onNext()");
-        }
-    };
-
     private Observable<List<Product>> productList() {
         return Observable.create(emitter -> {
             String user = FirebaseAuth.getInstance().getUid();
             FirebaseDatabase database = FirebaseDatabase.getInstance();
-            if(user != null && isInternetConnection()) {
+            if (user != null && isInternetConnection()) {
                 Query query = database.getReference().child("products").child(user);
                 query.addValueEventListener(valueEventListener(emitter));
             } else {
@@ -148,7 +147,7 @@ public class ProductViewModel extends ViewModel {
     }
 
     public void setAvailableDataListener(AvailableDataListener listener) {
-        if(availableDataListener == null && !observed)
+        if (availableDataListener == null && !observed)
             loadOnlineProducts();
         availableDataListener = listener;
     }
@@ -165,7 +164,7 @@ public class ProductViewModel extends ViewModel {
         return new ArrayList<>(similarProducts);
     }
 
-    public boolean isAvailableData(){
+    public boolean isAvailableData() {
         return productListLiveData != null;
     }
 
@@ -174,7 +173,7 @@ public class ProductViewModel extends ViewModel {
     }
 
     public void setDefaultDatabaseMode(DatabaseMode databaseModeFromSettings) {
-        if(databaseModeFromSettings.getDatabaseMode() == DatabaseMode.Mode.LOCAL){
+        if (databaseModeFromSettings.getDatabaseMode() == DatabaseMode.Mode.LOCAL) {
             updateDataForSelectedDatabase(databaseModeFromSettings);
             availableDataListener.observeAvailableData();
             observed = true;
@@ -186,9 +185,9 @@ public class ProductViewModel extends ViewModel {
     }
 
     public void setFilterModelFromArguments(Bundle arguments) {
-        if(arguments != null) {
+        if (arguments != null) {
             FilterModel filterModel = arguments.getParcelable("filterModel");
-            if(filterModel != null)
+            if (filterModel != null)
                 setFilterModel(filterModel);
         }
     }

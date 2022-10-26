@@ -15,7 +15,11 @@ public class DatabaseMode {
 
     private Mode databaseMode = Mode.LOCAL; // default value
 
-    public enum Mode { LOCAL, ONLINE }
+    public static DatabaseReference getOnlineDatabaseReference(String dbTableName) {
+        FirebaseDatabase db = FirebaseDatabase.getInstance();
+        db.setPersistenceEnabled(true);
+        return db.getReference().child(dbTableName).child(Objects.requireNonNull(FirebaseAuth.getInstance().getUid()));
+    }
 
     public Mode getDatabaseMode() {
         return databaseMode;
@@ -25,9 +29,5 @@ public class DatabaseMode {
         this.databaseMode = databaseMode;
     }
 
-    public static DatabaseReference getOnlineDatabaseReference(String dbTableName){
-        FirebaseDatabase db = FirebaseDatabase.getInstance();
-        db.setPersistenceEnabled(true);
-        return db.getReference().child(dbTableName).child(Objects.requireNonNull(FirebaseAuth.getInstance().getUid()));
-    }
+    public enum Mode {LOCAL, ONLINE}
 }

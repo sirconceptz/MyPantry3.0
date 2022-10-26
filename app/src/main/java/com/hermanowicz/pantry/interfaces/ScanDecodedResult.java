@@ -1,6 +1,6 @@
 package com.hermanowicz.pantry.interfaces;
 
-import com.hermanowicz.pantry.dao.db.product.Product;
+import com.hermanowicz.pantry.data.db.dao.product.Product;
 
 import java.util.ArrayList;
 

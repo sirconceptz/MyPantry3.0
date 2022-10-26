@@ -1,8 +1,9 @@
 package com.hermanowicz.pantry.ui.own_category_detail;
 
-import com.hermanowicz.pantry.dao.db.category.Category;
+import com.hermanowicz.pantry.data.db.dao.category.Category;
+import com.hermanowicz.pantry.data.repository.OwnCategoryRepository;
+import com.hermanowicz.pantry.domain.usecase.OwnCategoryDetailUseCase;
 import com.hermanowicz.pantry.model.DatabaseMode;
-import com.hermanowicz.pantry.repository.OwnCategoryRepository;
 
 import javax.inject.Inject;
 
