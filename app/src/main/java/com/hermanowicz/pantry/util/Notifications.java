@@ -56,7 +56,9 @@ public class Notifications {
     private Calendar createCalendar(@NonNull String expirationDate) {
         String[] dateArray = expirationDate.split("\\.");
         Calendar calendar = null;
-        if (dateArray.length < 3) {
+        if (dateArray.length < 3)
+            dateArray = expirationDate.split("-");
+        if (dateArray.length > 3) {
             calendar = Calendar.getInstance();
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
             calendar.set(Calendar.YEAR, Integer.parseInt(dateArray[0]));

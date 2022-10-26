@@ -61,6 +61,7 @@ public class ProductViewModel extends ViewModel {
     };
     @Inject
     ProductUseCaseImpl useCase;
+    private LiveData<ProductUIState> uiState;
     private LiveData<List<Product>> productListLiveData;
     private AvailableDataListener availableDataListener;
     private FilteredDataListener filteredDataListener;
