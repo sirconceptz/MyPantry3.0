@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.hermanowicz.pantry.data.repository;
+package com.hermanowicz.pantry.domain.repository;
 
 import com.hermanowicz.pantry.data.db.dao.product.Product;
 

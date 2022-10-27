@@ -26,6 +26,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.hermanowicz.pantry.data.db.dao.category.Category;
 import com.hermanowicz.pantry.data.db.dao.category.CategoryDao;
 import com.hermanowicz.pantry.data.db.dao.category.CategoryDb;
+import com.hermanowicz.pantry.domain.repository.OwnCategoryRepository;
 import com.hermanowicz.pantry.model.DatabaseMode;
 import com.hermanowicz.pantry.util.InternetConnection;
 

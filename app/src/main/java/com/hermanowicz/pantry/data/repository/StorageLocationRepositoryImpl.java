@@ -26,6 +26,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.hermanowicz.pantry.data.db.dao.storagelocation.StorageLocation;
 import com.hermanowicz.pantry.data.db.dao.storagelocation.StorageLocationDao;
 import com.hermanowicz.pantry.data.db.dao.storagelocation.StorageLocationDb;
+import com.hermanowicz.pantry.domain.repository.StorageLocationRepository;
 import com.hermanowicz.pantry.model.DatabaseMode;
 import com.hermanowicz.pantry.util.InternetConnection;
 

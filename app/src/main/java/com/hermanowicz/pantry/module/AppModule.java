@@ -4,12 +4,12 @@ import android.content.Context;
 import android.content.res.Resources;
 
 import com.hermanowicz.pantry.data.repository.DatabaseBackupRepositoryImpl;
-import com.hermanowicz.pantry.data.repository.OwnCategoryRepository;
+import com.hermanowicz.pantry.domain.repository.OwnCategoryRepository;
 import com.hermanowicz.pantry.data.repository.OwnCategoryRepositoryImpl;
 import com.hermanowicz.pantry.data.repository.PdfDocumentsRepositoryImpl;
 import com.hermanowicz.pantry.data.repository.PhotoRepositoryImpl;
 import com.hermanowicz.pantry.data.repository.ProductRepositoryImpl;
-import com.hermanowicz.pantry.data.repository.SharedPreferencesRepository;
+import com.hermanowicz.pantry.domain.repository.SharedPreferencesRepository;
 import com.hermanowicz.pantry.data.repository.SharedPreferencesRepositoryImpl;
 import com.hermanowicz.pantry.data.repository.StorageLocationRepositoryImpl;
 import com.hermanowicz.pantry.ui.database_mode.DatabaseModeUseCaseImpl;

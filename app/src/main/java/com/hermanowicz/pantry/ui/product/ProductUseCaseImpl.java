@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
 import com.hermanowicz.pantry.data.db.dao.product.Product;
-import com.hermanowicz.pantry.data.repository.ProductRepository;
+import com.hermanowicz.pantry.domain.repository.ProductRepository;
 import com.hermanowicz.pantry.domain.usecase.ProductUseCase;
 import com.hermanowicz.pantry.model.DatabaseMode;
 import com.hermanowicz.pantry.model.Filter;

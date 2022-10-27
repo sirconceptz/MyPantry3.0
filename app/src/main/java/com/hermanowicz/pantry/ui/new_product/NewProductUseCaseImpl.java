@@ -6,9 +6,9 @@ import androidx.databinding.ObservableField;
 import androidx.lifecycle.LiveData;
 
 import com.hermanowicz.pantry.data.db.dao.product.Product;
-import com.hermanowicz.pantry.data.repository.OwnCategoryRepository;
-import com.hermanowicz.pantry.data.repository.ProductRepository;
-import com.hermanowicz.pantry.data.repository.StorageLocationRepository;
+import com.hermanowicz.pantry.domain.repository.OwnCategoryRepository;
+import com.hermanowicz.pantry.domain.repository.ProductRepository;
+import com.hermanowicz.pantry.domain.repository.StorageLocationRepository;
 import com.hermanowicz.pantry.domain.usecase.NewProductUseCase;
 import com.hermanowicz.pantry.model.DatabaseMode;
 import com.hermanowicz.pantry.model.GroupProduct;

@@ -3,8 +3,8 @@ package com.hermanowicz.pantry.ui.filter_product;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.hermanowicz.pantry.data.repository.OwnCategoryRepository;
-import com.hermanowicz.pantry.data.repository.StorageLocationRepository;
+import com.hermanowicz.pantry.domain.repository.OwnCategoryRepository;
+import com.hermanowicz.pantry.domain.repository.StorageLocationRepository;
 import com.hermanowicz.pantry.domain.usecase.FilterProductUseCase;
 import com.hermanowicz.pantry.model.Filter;
 import com.hermanowicz.pantry.model.FilterModel;

@@ -21,6 +21,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 
 import com.hermanowicz.pantry.data.db.dao.product.Product;
+import com.hermanowicz.pantry.domain.repository.PdfDocumentsRepository;
 import com.hermanowicz.pantry.util.PdfData;
 import com.hermanowicz.pantry.util.PdfFile;
 import com.hermanowicz.pantry.util.PrintQRData;

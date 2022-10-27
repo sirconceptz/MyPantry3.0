@@ -23,6 +23,7 @@ import android.content.SharedPreferences;
 import androidx.lifecycle.MutableLiveData;
 import androidx.preference.PreferenceManager;
 
+import com.hermanowicz.pantry.domain.repository.SharedPreferencesRepository;
 import com.hermanowicz.pantry.model.DatabaseMode;
 
 import java.util.Objects;

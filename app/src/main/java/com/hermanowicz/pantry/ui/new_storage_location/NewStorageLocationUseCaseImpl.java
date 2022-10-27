@@ -1,7 +1,7 @@
 package com.hermanowicz.pantry.ui.new_storage_location;
 
 import com.hermanowicz.pantry.data.db.dao.storagelocation.StorageLocation;
-import com.hermanowicz.pantry.data.repository.StorageLocationRepository;
+import com.hermanowicz.pantry.domain.repository.StorageLocationRepository;
 import com.hermanowicz.pantry.domain.usecase.NewStorageLocationUseCase;
 import com.hermanowicz.pantry.model.DatabaseMode;
 

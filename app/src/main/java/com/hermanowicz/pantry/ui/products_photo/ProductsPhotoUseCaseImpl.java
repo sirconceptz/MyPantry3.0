@@ -24,8 +24,8 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.hermanowicz.pantry.data.db.dao.photo.Photo;
 import com.hermanowicz.pantry.data.db.dao.product.Product;
-import com.hermanowicz.pantry.data.repository.PhotoRepository;
-import com.hermanowicz.pantry.data.repository.ProductRepository;
+import com.hermanowicz.pantry.domain.repository.PhotoRepository;
+import com.hermanowicz.pantry.domain.repository.ProductRepository;
 import com.hermanowicz.pantry.domain.usecase.ProductsPhotoUseCase;
 import com.hermanowicz.pantry.model.DatabaseMode;
 

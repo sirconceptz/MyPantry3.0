@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import com.google.zxing.client.android.Intents;
 import com.hermanowicz.pantry.R;
 import com.hermanowicz.pantry.data.db.dao.product.Product;
-import com.hermanowicz.pantry.data.repository.SharedPreferencesRepository;
+import com.hermanowicz.pantry.domain.repository.SharedPreferencesRepository;
 import com.hermanowicz.pantry.domain.usecase.ScanProductUseCase;
 import com.hermanowicz.pantry.interfaces.ScanDecodedResult;
 import com.hermanowicz.pantry.util.ScanIntentResult;

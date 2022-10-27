@@ -15,34 +15,32 @@
  * limitations under the License.
  */
 
-package com.hermanowicz.pantry.data.repository;
+package com.hermanowicz.pantry.domain.repository;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.hermanowicz.pantry.data.db.dao.category.Category;
+import com.hermanowicz.pantry.data.db.dao.storagelocation.StorageLocation;
 import com.hermanowicz.pantry.model.DatabaseMode;
 
 import java.util.List;
 
-public interface OwnCategoryRepository {
-    LiveData<List<Category>> getAllCategories(DatabaseMode databaseMode);
+public interface StorageLocationRepository {
+    LiveData<List<StorageLocation>> getAllStorageLocations(DatabaseMode databaseMode);
 
-    LiveData<String[]> getOwnCategoriesNames();
+    LiveData<String[]> getAllStorageLocationsNames();
 
-    void insert(Category category, DatabaseMode databaseMode);
+    void insert(StorageLocation storageLocation, DatabaseMode databaseMode);
 
-    void update(Category category, DatabaseMode databaseMode);
+    void update(StorageLocation storageLocation, DatabaseMode databaseMode);
 
-    void delete(Category category, DatabaseMode databaseMode);
+    void delete(StorageLocation storageLocation, DatabaseMode databaseMode);
 
     void deleteAll(DatabaseMode databaseMode);
 
-    void setOnlineCategoryList(MutableLiveData<List<Category>> onlineCategoryList);
+    void setOnlineStorageLocationList(MutableLiveData<List<StorageLocation>> onlineStorageLocationList);
 
     boolean checkIsInternetConnection();
 
-    List<Category> getAllLocalCategoriesAsList();
-
-    String[] getAllCategoriesNameAsList(DatabaseMode databaseMode);
+    List<StorageLocation> getAllLocalStorageLocationsAsList();
 }

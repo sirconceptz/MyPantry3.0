@@ -15,18 +15,26 @@
  * limitations under the License.
  */
 
-package com.hermanowicz.pantry.data.repository;
+package com.hermanowicz.pantry.domain.repository;
 
-public interface DatabaseBackupRepository {
-    void backupProductDb();
+import androidx.lifecycle.MutableLiveData;
 
-    void backupCategoryDb();
+import com.hermanowicz.pantry.model.DatabaseMode;
 
-    void backupStorageLocationDb();
+public interface SharedPreferencesRepository {
+    MutableLiveData<DatabaseMode> getDatabaseMode();
 
-    void restoreProductDb();
+    void setDatabaseMode(DatabaseMode databaseMode);
 
-    void restoreCategoryDb();
+    DatabaseMode getDatabaseModeFromSettings();
 
-    void restoreStorageLocationDb();
+    int getSelectedCameraType();
+
+    boolean getSelectedSoundMode();
+
+    boolean getIsBigPrintQRCode();
+
+    boolean getIsNotificationsToRestore();
+
+    void setIsNotificationsToRestore(boolean notificationsToRestore);
 }

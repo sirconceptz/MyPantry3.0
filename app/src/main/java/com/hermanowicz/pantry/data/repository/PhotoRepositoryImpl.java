@@ -34,6 +34,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.google.firebase.database.DatabaseReference;
 import com.hermanowicz.pantry.data.db.dao.photo.Photo;
 import com.hermanowicz.pantry.data.db.dao.product.Product;
+import com.hermanowicz.pantry.domain.repository.PhotoRepository;
 import com.hermanowicz.pantry.model.DatabaseMode;
 import com.hermanowicz.pantry.util.DateHelper;
 import com.hermanowicz.pantry.util.InternetConnection;

@@ -1,8 +1,8 @@
 package com.hermanowicz.pantry.ui.print_qr_codes;
 
 import com.hermanowicz.pantry.data.db.dao.product.Product;
-import com.hermanowicz.pantry.data.repository.PdfDocumentsRepository;
-import com.hermanowicz.pantry.data.repository.SharedPreferencesRepository;
+import com.hermanowicz.pantry.domain.repository.PdfDocumentsRepository;
+import com.hermanowicz.pantry.domain.repository.SharedPreferencesRepository;
 import com.hermanowicz.pantry.domain.usecase.PrintQRCodesUseCase;
 
 import java.util.ArrayList;
