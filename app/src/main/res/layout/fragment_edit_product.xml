@@ -625,7 +625,7 @@
             android:layout_marginStart="@dimen/button_sides_margin"
             android:layout_marginEnd="@dimen/button_sides_margin"
             android:onClick="@{() -> viewModel.onClickUpdateProduct()}"
-            android:text="@string/button_edit_product"
+            android:text="@string/button_save_changes"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintWidth_default="percent"
