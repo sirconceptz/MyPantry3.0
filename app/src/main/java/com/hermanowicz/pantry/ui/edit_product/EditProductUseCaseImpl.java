@@ -110,12 +110,16 @@ public class EditProductUseCaseImpl implements EditProductUseCase {
     @Override
     public int[] getExpirationDateArray() {
         String[] dateArrayString = expirationDate.split("\\.");
+        if(dateArrayString.length < 3)
+            dateArrayString = expirationDate.split("-");
         return Arrays.stream(dateArrayString).mapToInt(Integer::parseInt).toArray();
     }
 
     @Override
     public int[] getProductionDateArray() {
         String[] dateArrayString = productionDate.split("\\.");
+        if(dateArrayString.length < 3)
+            dateArrayString = expirationDate.split("-");
         return Arrays.stream(dateArrayString).mapToInt(Integer::parseInt).toArray();
     }
 

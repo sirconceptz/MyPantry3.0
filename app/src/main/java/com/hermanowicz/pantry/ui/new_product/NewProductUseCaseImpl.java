@@ -95,11 +95,13 @@ public class NewProductUseCaseImpl implements NewProductUseCase {
 
     @Override
     public void setExpirationDate(int year, int month, int day) {
+        month--;
         expirationDate = year + "-" + month + "-" + day;
     }
 
     @Override
     public void setProductionDate(int year, int month, int day) {
+        month--;
         productionDate = year + "-" + month + "-" + day;
     }
 

@@ -61,7 +61,7 @@ public class DateHelper {
 
     public String getDateInLocalFormat() {
         if (dateArray.length >= 2) {
-            calendar.set(Integer.parseInt(dateArray[0]), Integer.parseInt(dateArray[1]) - 1, Integer.parseInt(dateArray[2]));
+            calendar.set(Integer.parseInt(dateArray[0]), Integer.parseInt(dateArray[1]), Integer.parseInt(dateArray[2]));
             Date date = calendar.getTime();
             return localDateFormat.format(date);
         } else
