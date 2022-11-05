@@ -1,8 +1,5 @@
 package com.hermanowicz.pantry.ui.settings;
 
-import android.app.Activity;
-import android.content.Context;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -12,16 +9,12 @@ import com.hermanowicz.pantry.data.db.dao.product.Product;
 import com.hermanowicz.pantry.data.db.dao.storagelocation.StorageLocation;
 import com.hermanowicz.pantry.domain.repository.DatabaseBackupRepository;
 import com.hermanowicz.pantry.domain.repository.OwnCategoryRepository;
-import com.hermanowicz.pantry.domain.repository.PricingRepository;
-import com.hermanowicz.pantry.data.repository.PricingRepositoryImpl;
 import com.hermanowicz.pantry.domain.repository.ProductRepository;
 import com.hermanowicz.pantry.domain.repository.SharedPreferencesRepository;
 import com.hermanowicz.pantry.domain.repository.StorageLocationRepository;
 import com.hermanowicz.pantry.domain.usecase.SettingsUseCase;
-import com.hermanowicz.pantry.interfaces.PricingListener;
 import com.hermanowicz.pantry.model.DatabaseMode;
 import com.hermanowicz.pantry.util.Notifications;
-import com.hermanowicz.pantry.util.PremiumAccess;
 
 import java.util.List;
 
@@ -29,8 +22,6 @@ import javax.inject.Inject;
 
 public class SettingsUseCaseImpl implements SettingsUseCase {
 
-    private final PricingRepository pricingRepository = new PricingRepositoryImpl();
-    private final PremiumAccess premiumAccess;
     private final ProductRepository productRepository;
     private final OwnCategoryRepository ownCategoryRepository;
     private final StorageLocationRepository storageLocationRepository;
@@ -39,40 +30,18 @@ public class SettingsUseCaseImpl implements SettingsUseCase {
     private final Notifications notifications;
 
     @Inject
-    public SettingsUseCaseImpl(PremiumAccess premiumAccess,
-                               ProductRepository productRepository,
+    public SettingsUseCaseImpl(ProductRepository productRepository,
                                OwnCategoryRepository ownCategoryRepository,
                                StorageLocationRepository storageLocationRepository,
                                DatabaseBackupRepository databaseBackupRepository,
                                SharedPreferencesRepository sharedPreferencesRepository,
                                Notifications notifications) {
-        this.premiumAccess = premiumAccess;
         this.productRepository = productRepository;
         this.ownCategoryRepository = ownCategoryRepository;
         this.storageLocationRepository = storageLocationRepository;
         this.databaseBackupRepository = databaseBackupRepository;
         this.sharedPreferencesRepository = sharedPreferencesRepository;
         this.notifications = notifications;
-    }
-
-    @Override
-    public void setPremiumActivationListenerAndSetupBillingClient(Context context, PricingListener pricingListener) {
-        pricingRepository.setPremiumActivationListenerAndBuildBillingClient(context, pricingListener);
-    }
-
-    @Override
-    public void initPremiumPurchase(Activity activity) {
-        pricingRepository.initPremiumPurchase(activity);
-    }
-
-    @Override
-    public void activatePremiumAccess() {
-        premiumAccess.enablePremiumAccess();
-    }
-
-    @Override
-    public PremiumAccess getPremiumAccess() {
-        return premiumAccess;
     }
 
     @Override

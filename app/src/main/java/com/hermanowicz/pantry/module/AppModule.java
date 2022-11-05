@@ -29,7 +29,6 @@ import com.hermanowicz.pantry.ui.settings.SettingsUseCaseImpl;
 import com.hermanowicz.pantry.ui.storage_location_detail.StorageLocationDetailUseCaseImpl;
 import com.hermanowicz.pantry.ui.storage_locations.StorageLocationsUseCaseImpl;
 import com.hermanowicz.pantry.util.Notifications;
-import com.hermanowicz.pantry.util.PremiumAccess;
 
 import javax.inject.Singleton;
 
@@ -121,14 +120,13 @@ public final class AppModule {
     @Provides
     @Singleton
     public SettingsUseCaseImpl provideSettingsUseCase(@ApplicationContext Context context) {
-        PremiumAccess premiumAccess = new PremiumAccess(context);
         ProductRepositoryImpl productRepository = new ProductRepositoryImpl(context);
         OwnCategoryRepositoryImpl ownCategoryRepository = new OwnCategoryRepositoryImpl(context);
         StorageLocationRepositoryImpl storageLocationRepository = new StorageLocationRepositoryImpl(context);
         DatabaseBackupRepositoryImpl databaseBackupRepository = new DatabaseBackupRepositoryImpl(context);
         SharedPreferencesRepositoryImpl sharedPreferencesRepository = new SharedPreferencesRepositoryImpl(context);
         Notifications notifications = new Notifications(context);
-        return new SettingsUseCaseImpl(premiumAccess, productRepository, ownCategoryRepository, storageLocationRepository, databaseBackupRepository, sharedPreferencesRepository, notifications);
+        return new SettingsUseCaseImpl(productRepository, ownCategoryRepository, storageLocationRepository, databaseBackupRepository, sharedPreferencesRepository, notifications);
     }
 
     @Provides

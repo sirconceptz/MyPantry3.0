@@ -4,8 +4,4 @@ public interface PreferencesListener {
     void showAppVersion(String version);
 
     void showActiveUserEmail(String email);
-
-    void initPremiumPurchase();
-
-    void showInfoForPremiumUserOnly();
 }

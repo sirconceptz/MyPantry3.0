@@ -21,14 +21,7 @@
     <PreferenceCategory android:title="@string/settings_general_settings">
 
         <Preference
-            android:enabled="false"
-            android:icon="@drawable/ic_shopping_cart"
-            android:key="@string/preferences_key_go_premium"
-            android:selectable="true"
-            android:title="@string/settings_go_premium" />
-
-        <Preference
-            android:enabled="false"
+            android:enabled="true"
             android:icon="@drawable/ic_person"
             android:key="@string/preferences_key_active_user"
             android:selectable="true"
@@ -37,7 +30,7 @@
         <ListPreference
             android:defaultValue="local"
             android:dialogTitle="@string/settings_database_mode"
-            android:enabled="false"
+            android:enabled="true"
             android:entries="@array/settings_database_mode"
             android:entryValues="@array/settings_database_mode_value"
             android:icon="@drawable/ic_backup"

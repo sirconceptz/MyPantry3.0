@@ -21,19 +21,10 @@ import android.app.Activity;
 import android.content.Context;
 
 import com.hermanowicz.pantry.data.db.dao.product.Product;
-import com.hermanowicz.pantry.interfaces.PricingListener;
-import com.hermanowicz.pantry.util.PremiumAccess;
 
 import java.util.List;
 
 public interface SettingsUseCase {
-    void setPremiumActivationListenerAndSetupBillingClient(Context context, PricingListener pricingListener);
-
-    PremiumAccess getPremiumAccess();
-
-    void initPremiumPurchase(Activity activity);
-
-    void activatePremiumAccess();
 
     String getAppVersion();
 

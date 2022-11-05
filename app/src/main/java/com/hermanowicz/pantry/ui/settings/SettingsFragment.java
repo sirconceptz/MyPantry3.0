@@ -37,7 +37,6 @@ import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult;
 import com.hermanowicz.pantry.R;
 import com.hermanowicz.pantry.interfaces.AvailableDataListener;
 import com.hermanowicz.pantry.interfaces.PreferencesListener;
-import com.hermanowicz.pantry.interfaces.PricingListener;
 import com.hermanowicz.pantry.ui.database_mode.DatabaseModeViewModel;
 import com.hermanowicz.pantry.ui.dialogs.SettingsDialogs;
 import com.hermanowicz.pantry.ui.product.ProductViewModel;
@@ -48,7 +47,7 @@ import java.util.List;
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
-public class SettingsFragment extends PreferenceFragmentCompat implements PricingListener, PreferencesListener, AvailableDataListener {
+public class SettingsFragment extends PreferenceFragmentCompat implements PreferencesListener, AvailableDataListener {
 
     private SettingsViewModel settingsViewModel;
     private DatabaseModeViewModel databaseModeViewModel;
@@ -57,8 +56,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Pricin
     private SharedPreferences.OnSharedPreferenceChangeListener preferenceChangeListener;
     private SharedPreferences sharedPreferences;
 
-    private Preference goPremium;
-    private Preference databaseMode;
     private Preference importDb;
     private Preference activeUser;
     private final ActivityResultLauncher<Intent> signInLauncher = registerForActivityResult(
@@ -98,8 +95,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Pricin
         productViewModel.setDefaultDatabaseMode(databaseModeViewModel.getDatabaseModeFromSettings());
 
         setPreferencesFromResource(R.xml.preferences, null);
-        goPremium = findPreference(getString(R.string.preferences_key_go_premium));
-        databaseMode = findPreference(getString(R.string.preferences_key_database_mode));
         importDb = findPreference(getString(R.string.preferences_key_import_db));
         activeUser = findPreference(getString(R.string.preferences_key_active_user));
         appVersion = findPreference(getString(R.string.preferences_key_version));
@@ -113,16 +108,11 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Pricin
         backupStorageLocationDb = findPreference(getString(R.string.preferences_key_backup_storage_location_db));
         clearStorageLocationDb = findPreference(getString(R.string.preferences_key_clear_storage_location_db));
 
-        settingsViewModel.setPremiumActivationListenerAndSetupBillingClient(requireActivity(), this);
         settingsViewModel.setPreferenceListener(this);
         settingsViewModel.showPreferences();
     }
 
     private void setListeners() {
-        goPremium.setOnPreferenceClickListener(preference -> {
-            initPremiumPurchase();
-            return false;
-        });
         activeUser.setOnPreferenceClickListener(this::showLoginAndRegisterForm);
         backupProductDb.setOnPreferenceClickListener(this::showDialogBackupProductDb);
         restoreProductDb.setOnPreferenceClickListener(this::showDialogRestoreProductDb);
@@ -164,27 +154,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Pricin
             activeUser.setSummary(settingsViewModel.getActiveUserEmail());
     }
 
-    public void initPremiumPurchase() {
-        settingsViewModel.initPremiumPurchase(requireActivity());
-        activeUser.setEnabled(true);
-    }
-
-    @Override
-    public void isBillingClientReady() {
-        goPremium.setEnabled(true);
-    }
-
-    @Override
-    public void activatePremiumFeatures() {
-        enablePremiumFeatures();
-    }
-
-    private void enablePremiumFeatures() {
-        activeUser.setEnabled(true);
-        databaseMode.setEnabled(true);
-        importDb.setEnabled(true);
-    }
-
     @Override
     public void showAppVersion(String version) {
         appVersion.setSummary(version);
@@ -193,11 +162,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Pricin
     @Override
     public void showActiveUserEmail(String email) {
         activeUser.setSummary(email);
-    }
-
-    @Override
-    public void showInfoForPremiumUserOnly() {
-        Toast.makeText(getContext(), getString(R.string.error_for_premium_users_only), Toast.LENGTH_SHORT).show();
     }
 
     public boolean showDialogBackupProductDb(Preference preference) {

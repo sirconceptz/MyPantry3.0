@@ -7,8 +7,6 @@ import androidx.lifecycle.ViewModel;
 
 import com.hermanowicz.pantry.data.db.dao.product.Product;
 import com.hermanowicz.pantry.interfaces.PreferencesListener;
-import com.hermanowicz.pantry.interfaces.PricingListener;
-import com.hermanowicz.pantry.util.PremiumAccess;
 
 import java.util.List;
 
@@ -17,24 +15,17 @@ import javax.inject.Inject;
 import dagger.hilt.android.lifecycle.HiltViewModel;
 
 @HiltViewModel
-public class SettingsViewModel extends ViewModel implements PricingListener {
+public class SettingsViewModel extends ViewModel {
 
-    private final PremiumAccess isPremiumAccess;
     @Inject
     SettingsUseCaseImpl useCase;
-    private PricingListener pricingListener;
     private PreferencesListener preferencesListener;
 
     @Inject
     public SettingsViewModel(SettingsUseCaseImpl settingsUseCase) {
         useCase = settingsUseCase;
-        isPremiumAccess = useCase.getPremiumAccess();
     }
 
-    private void activatePremiumFeaturesIfPremiumUser() {
-        if (isPremiumAccess.isPremium())
-            activatePremiumFeatures();
-    }
 
     public void setPreferenceListener(PreferencesListener preferencesListener) {
         this.preferencesListener = preferencesListener;
@@ -45,43 +36,16 @@ public class SettingsViewModel extends ViewModel implements PricingListener {
         preferencesListener.showActiveUserEmail(useCase.getActiveUserEmail());
     }
 
-    public void setPremiumActivationListenerAndSetupBillingClient(Context context, PricingListener pricingListener) {
-        this.pricingListener = pricingListener;
-        useCase.setPremiumActivationListenerAndSetupBillingClient(context, this);
-        activatePremiumFeaturesIfPremiumUser();
-    }
-
-    public void initPremiumPurchase(Activity activity) {
-        useCase.initPremiumPurchase(activity);
-    }
-
-    @Override
-    public void isBillingClientReady() {
-        pricingListener.isBillingClientReady();
-    }
-
-    @Override
-    public void activatePremiumFeatures() {
-        useCase.activatePremiumAccess();
-        pricingListener.activatePremiumFeatures();
-    }
-
     public String getActiveUserEmail() {
         return useCase.getActiveUserEmail();
     }
 
     public void onClickBackupProductDatabase() {
-        if (isPremiumAccess.isPremium())
-            useCase.backupProductDbToFile();
-        else
-            preferencesListener.showInfoForPremiumUserOnly();
+        useCase.backupProductDbToFile();
     }
 
     public void onClickRestoreProductDatabase() {
-        if (isPremiumAccess.isPremium())
-            useCase.restoreProductDbFromFile();
-        else
-            preferencesListener.showInfoForPremiumUserOnly();
+        useCase.restoreProductDbFromFile();
     }
 
     public void onClickClearProductDatabase() {
@@ -89,17 +53,11 @@ public class SettingsViewModel extends ViewModel implements PricingListener {
     }
 
     public void onClickBackupCategoryDatabase() {
-        if (isPremiumAccess.isPremium())
-            useCase.backupOwnCategoriesDbToFile();
-        else
-            preferencesListener.showInfoForPremiumUserOnly();
+        useCase.backupOwnCategoriesDbToFile();
     }
 
     public void onClickRestoreCategoryDatabase() {
-        if (isPremiumAccess.isPremium())
-            useCase.restoreOwnCategoriesDbFromFile();
-        else
-            preferencesListener.showInfoForPremiumUserOnly();
+        useCase.restoreOwnCategoriesDbFromFile();
     }
 
     public void onClickClearCategoryDatabase() {
@@ -107,17 +65,11 @@ public class SettingsViewModel extends ViewModel implements PricingListener {
     }
 
     public void onClickBackupStorageLocationDatabase() {
-        if (isPremiumAccess.isPremium())
-            useCase.backupStorageLocationsDbToFile();
-        else
-            preferencesListener.showInfoForPremiumUserOnly();
+        useCase.backupStorageLocationsDbToFile();
     }
 
     public void onClickRestoreStorageLocationDatabase() {
-        if (isPremiumAccess.isPremium())
-            useCase.restoreStorageLocationDbFromFile();
-        else
-            preferencesListener.showInfoForPremiumUserOnly();
+        useCase.restoreStorageLocationDbFromFile();
     }
 
     public void onClickClearStorageLocationDatabase() {
@@ -125,10 +77,7 @@ public class SettingsViewModel extends ViewModel implements PricingListener {
     }
 
     public void onClickImportLocalDatabaseToCloud() {
-        if (isPremiumAccess.isPremium())
-            useCase.importLocalDataToCloud();
-        else
-            preferencesListener.showInfoForPremiumUserOnly();
+        useCase.importLocalDataToCloud();
     }
 
     public void setProductList(List<Product> productList) {
